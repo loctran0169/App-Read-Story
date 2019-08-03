@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TruyenQQ</string>
+    <string name="lbHome">Trang Chủ</string>
+    <string name="lbKind">Thể Loại</string>
+    <string name="lbStory">Tủ Sách</string>
+    <string name="lbNew">Khám Phá</string>
+    <string name="lbUser">Cá Nhân</string>
+    <string name="lbRank">Xếp hạng</string>
+    <string name="lbCalendar">Lịch</string>
+    <string name="lbNewStory">Truyện Mới</string>
+    <string name="lbDiscuss">Thảo Luận</string>
+    <string name="lbNewStoryUpdate">Truyện mới cập nhật</string>
+    <string name="lbMoreItem">Xem thêm</string>
+    <string name="lbStoryMale">Truyện con trai</string>
+    <string name="lbStoryFemale">Truyện con gái</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lbName">Tên Truyện</string>
+</resources>
