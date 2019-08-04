@@ -71,7 +71,6 @@
             <ImageButton
                     android:id="@+id/imgCalendar"
                     android:background="@drawable/ic_calendar"
-                    android:onClick="showScheduler"
                     app:layout_constraintStart_toEndOf="@id/imgRank"
                     app:layout_constraintTop_toTopOf="@id/imgRank"
                     app:layout_constraintEnd_toStartOf="@id/imgNewStory"

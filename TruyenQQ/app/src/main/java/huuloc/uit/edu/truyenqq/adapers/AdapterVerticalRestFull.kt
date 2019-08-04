@@ -29,7 +29,7 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
         Glide.with(context)
             .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
             .into(holder.itemImage)
-        holder.itemTime.text = p0.modified
+        holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
     }
 
     fun updateData(list: List<StoryInformation>) {

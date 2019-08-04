@@ -38,7 +38,7 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
             layoutManager = FlexboxLayoutManager(context)
             adapter = AdapterFlexBoxLayout(context, p0.category)
         }
-        holder.itemTime.text = p0.modified
+        holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
     }
 
     fun updateData(list: List<StoryInformation>) {

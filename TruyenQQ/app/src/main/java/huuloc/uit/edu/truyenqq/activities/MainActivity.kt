@@ -21,6 +21,7 @@ import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
 import huuloc.uit.edu.truyenqq.fragments.home.ViewModelHome
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         ViewModelProviders
             .of(this)
             .get(ViewModelHome::class.java)
@@ -64,14 +64,8 @@ class MainActivity : AppCompatActivity() {
                     Log.w("###", "getInstanceId failed", task.exception)
                     return@OnCompleteListener
                 }
-
                 // Get new Instance ID token
                 val token = task.result?.token
-
-                // Log and toast
-                //val msg = getString(R.string.msg, token)
-                Log.d("###", token)
-                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
             })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -82,8 +76,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == 101) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-            {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 println("###xin thành công")
             }
         }
@@ -115,13 +108,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun showScheduler(view: View) {
-        var dialog = AlertDialog.Builder(this)
-        dialog.setView(R.layout.fragment_schedule)
-        val dislay = dialog.create()
-        dislay.setTitle("Lịch ra truyện")
-        dislay.show()
-    }
+
 
     fun showNewStory(view: View) {
         startActivity(Intent(this, Activity_NewStory::class.java))

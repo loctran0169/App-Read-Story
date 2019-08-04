@@ -16,11 +16,9 @@ class HtmlOrJsonConverterFactory : Converter.Factory() {
     ): Converter<ResponseBody, *>? {
         for (annotation in annotations) {
             if (annotation.toString() == "@"+Html::class.java.name+"()") {
-                println("### success")
                 return _html.responseBodyConverter(type, annotations, retrofit)
             }
             if (annotation.toString() == "@"+Json::class.java.name+"()") {
-                println("### success")
                 return _json.responseBodyConverter(type, annotations, retrofit)
             }
         }

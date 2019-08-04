@@ -37,7 +37,7 @@ class FCMservies : FirebaseMessagingService() {
                 RingtoneManager.TYPE_NOTIFICATION
             )
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_discussion)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setSound(defaultRingtone)
             .setContentIntent(pending)
             .setContentTitle(notice.title)

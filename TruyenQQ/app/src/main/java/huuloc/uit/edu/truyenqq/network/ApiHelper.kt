@@ -33,7 +33,7 @@ interface ApiHelper {
         @Query("typeList") typeList: String?
     ): Call<List<StoryInformation>>
 
-    @GET("/book/category?type_category=2&typeList=menu")
+    @GET("book/category?type_category=2&typeList=menu")
     fun getListCategory(@Header("token") token: String = token_api): Call<List<Category>>
 
     @FormUrlEncoded
@@ -45,6 +45,11 @@ interface ApiHelper {
         @Field("Expire") expire: Int = 1
     ): Call<StatusLogin>
 
+    @GET("book/schedule")
+    fun getSchduleStory(
+        @Header("token" )token : String = token_api,
+        @Query("date") date :String
+    ): Call<ScheduleStoryList>
 
 }
 

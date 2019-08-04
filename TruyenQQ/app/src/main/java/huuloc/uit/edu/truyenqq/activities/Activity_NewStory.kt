@@ -32,6 +32,7 @@ class Activity_NewStory : AppCompatActivity() {
         btnBackNewStory.setOnClickListener {
             onBackPressed()
         }
+
         apiManager.geListTop(0, 20, "created")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -1,9 +1,6 @@
 package huuloc.uit.edu.truyenqq.network
 
-import huuloc.uit.edu.truyenqq.data.Category
-import huuloc.uit.edu.truyenqq.data.ListStory
-import huuloc.uit.edu.truyenqq.data.StoryInfo
-import huuloc.uit.edu.truyenqq.data.StoryInformation
+import huuloc.uit.edu.truyenqq.data.*
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Callback
@@ -59,7 +56,6 @@ class ApiManager {
         return Single.create {
             call.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
-                    println("### 1" + it)
                     it.onSuccess(response.body()!!)
                 }
 
@@ -85,6 +81,9 @@ class ApiManager {
 
     fun getListNewUpdate(_offset: Int, _limit: Int, _typeList:String="category"): Single<List<StoryInformation>> {
         return buildRequest(_apiRestFull.getListNewUpdate(offset=_offset,limit = _limit,typeList = _typeList))
+    }
+    fun getSchedule(_date : String): Single<ScheduleStoryList> {
+        return buildRequest(_apiRestFull.getSchduleStory(date=_date))
     }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
