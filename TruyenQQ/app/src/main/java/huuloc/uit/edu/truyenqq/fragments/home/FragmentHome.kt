@@ -11,35 +11,37 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalHtml
 import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
-import huuloc.uit.edu.truyenqq.adapers.AdapterVertical
+import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalRestFull
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class FragmentHome : Fragment() {
 
-    private val adapterNew: AdapterVertical by lazy {
-        AdapterVertical(activity!!, mutableListOf())
+    private val adapterNewRestFull: AdapterVerticalRestFull by lazy {
+        AdapterVerticalRestFull(activity!!, mutableListOf())
     }
-    private val adapterStoryMale: AdapterVertical by lazy {
-        AdapterVertical(activity!!, mutableListOf())
+    private val adapterStoryMaleHtml: AdapterVerticalHtml by lazy {
+        AdapterVerticalHtml(activity!!, mutableListOf())
     }
-    private val adapterStoryFemale: AdapterVertical by lazy {
-        AdapterVertical(activity!!, mutableListOf())
+    private val adapterStoryFemaleHtml: AdapterVerticalHtml by lazy {
+        AdapterVerticalHtml(activity!!, mutableListOf())
     }
     val viewModel: ViewModelHome by lazy {
         ViewModelProviders
             .of(activity!!)
             .get(ViewModelHome::class.java)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var binding =FragmentHomeBinding.inflate(inflater,container,false)
-        binding.viewModel=viewModel
-        binding.lifecycleOwner=this@FragmentHome
+        var binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this@FragmentHome
         return binding.root
 
     }
@@ -47,50 +49,50 @@ class FragmentHome : Fragment() {
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rcvNewUpdate.run {
-            layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
-            adapter=adapterNew
+            layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
+            adapter = adapterNewRestFull
             addItemDecoration(SpaceItem(4))
         }
         rcvStoryMale.run {
-            layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
-            adapter=adapterStoryMale
+            layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
+            adapter = adapterStoryMaleHtml
             addItemDecoration(SpaceItem(4))
 
         }
         rcvStoryFemale.run {
-            layoutManager=LinearLayoutManager(activity,LinearLayout.HORIZONTAL,false)
-            adapter=adapterStoryFemale
+            layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
+            adapter = adapterStoryFemaleHtml
             addItemDecoration(SpaceItem(4))
         }
         //New
         viewModel.sLoadingNew.observe(this@FragmentHome, Observer {
-            if(it)
-                progressNewStory.visibility= View.INVISIBLE
+            if (it)
+                progressNewStory.visibility = View.INVISIBLE
             else
-                progressNewStory.visibility= View.VISIBLE
+                progressNewStory.visibility = View.VISIBLE
         })
         viewModel.storyNew.observe(this@FragmentHome, Observer {
-            adapterNew.updateData(it)
+            adapterNewRestFull.updateData(it)
         })
         //Male
         viewModel.sLoadingStoryMale.observe(this@FragmentHome, Observer {
-            if(it)
-                progressStoryMale.visibility= View.INVISIBLE
+            if (it)
+                progressStoryMale.visibility = View.INVISIBLE
             else
-                progressStoryMale.visibility= View.VISIBLE
+                progressStoryMale.visibility = View.VISIBLE
         })
         viewModel.storyStoryMale.observe(this@FragmentHome, Observer {
-            adapterStoryMale.updateData(it)
+            adapterStoryMaleHtml.updateData(it)
         })
         //Female
         viewModel.sLoadingStoryFemale.observe(this@FragmentHome, Observer {
-            if(it)
-                progressStoryFeMale.visibility= View.INVISIBLE
+            if (it)
+                progressStoryFeMale.visibility = View.INVISIBLE
             else
-                progressStoryFeMale.visibility= View.VISIBLE
+                progressStoryFeMale.visibility = View.VISIBLE
         })
         viewModel.storyStoryFemale.observe(this@FragmentHome, Observer {
-            adapterStoryFemale.updateData(it)
+            adapterStoryFemaleHtml.updateData(it)
         })
         flipperView.isAutoStart = true
         flipperView.flipInterval = 5000

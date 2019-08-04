@@ -5,25 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.siyamed.shapeimageview.RoundedImageView
-import com.google.android.flexbox.FlexboxLayout
-import com.google.android.flexbox.FlexboxLayoutManager
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.data.ListStory
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 
-class AdapterHorizontal(var context: Context, var items: List<StoryInformation>) :
-
-    RecyclerView.Adapter<AdapterHorizontal.BaseItem>() {
+class AdapterVerticalRestFull(var context: Context, var items: List<StoryInformation>) :
+    RecyclerView.Adapter<AdapterVerticalRestFull.BaseItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItem {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item_story_horizontal, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_story_vertical, null)
         return BaseItem(view)
     }
 
     override fun getItemCount(): Int {
+        if (items.isNullOrEmpty()) return 0
         return items.size
     }
 
@@ -33,11 +29,6 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
         Glide.with(context)
             .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
             .into(holder.itemImage)
-        holder.itemChap.text = "Chương " + p0.episode
-        holder.itemRecycle.run {
-            layoutManager = FlexboxLayoutManager(context)
-            adapter = AdapterFlexBoxLayout(context, p0.category)
-        }
         holder.itemTime.text = p0.modified
     }
 
@@ -47,10 +38,8 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
     }
 
     inner class BaseItem(view: View) : RecyclerView.ViewHolder(view) {
-        val itemImage = view.findViewById<RoundedImageView>(R.id.imgStoryItemHorizontal)
-        val itemName = view.findViewById<TextView>(R.id.tvStoryNameHorizontal)
-        val itemTime = view.findViewById<TextView>(R.id.tvStoryTimeHorizontal)
-        val itemChap = view.findViewById<TextView>(R.id.tvChapHorizontal)
-        val itemRecycle = view.findViewById<RecyclerView>(R.id.rcvCategoryHorizontal)
+        val itemImage = view.findViewById<RoundedImageView>(R.id.imgStoryItemVertical)
+        val itemName = view.findViewById<TextView>(R.id.tvStoryName)
+        val itemTime = view.findViewById<TextView>(R.id.tvStoryTime)
     }
 }

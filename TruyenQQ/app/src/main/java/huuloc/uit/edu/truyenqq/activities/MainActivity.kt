@@ -1,13 +1,21 @@
 package huuloc.uit.edu.truyenqq.activities
 
+import android.Manifest
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
@@ -50,6 +58,35 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("###", "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                //val msg = getString(R.string.msg, token)
+                Log.d("###", token)
+                Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            })
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+            requestPermissions(permission, 101)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode == 101) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            {
+                println("###xin thành công")
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -69,13 +106,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openActivityRank(view: View) {
-        val intent =Intent(this, Activity_Rank::class.java)
+        val intent = Intent(this, Activity_Rank::class.java)
         startActivity(intent)
     }
+
     fun openActivityNewUpdateStory(view: View) {
-        val intent =Intent(this, Activity_NewUpdateStory::class.java)
+        val intent = Intent(this, Activity_NewUpdateStory::class.java)
         startActivity(intent)
     }
+
     fun showScheduler(view: View) {
         var dialog = AlertDialog.Builder(this)
         dialog.setView(R.layout.fragment_schedule)

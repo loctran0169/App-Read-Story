@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.github.siyamed.shapeimageview.RoundedImageView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.data.StoryInfo
+import huuloc.uit.edu.truyenqq.data.StoryInformation
 
-class AdapterVertical(var context: Context, var items: List<StoryInfo>) :
-    RecyclerView.Adapter<AdapterVertical.BaseItem>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItem {
+class AdapterVerticalHtml(var context: Context, var items: List<StoryInfo>) :
+    RecyclerView.Adapter<AdapterVerticalHtml.BaseItem>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :BaseItem {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_story_vertical, null)
         return BaseItem(view)
     }

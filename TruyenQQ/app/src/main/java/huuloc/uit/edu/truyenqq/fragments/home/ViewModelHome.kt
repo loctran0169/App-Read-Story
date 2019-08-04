@@ -3,6 +3,7 @@ package huuloc.uit.edu.truyenqq.fragments.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import huuloc.uit.edu.truyenqq.data.StoryInfo
+import huuloc.uit.edu.truyenqq.data.StoryInformation
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -10,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 
 class ViewModelHome : ViewModel() {
     val sLoadingNew = MutableLiveData<Boolean>().apply { value = false }
-    val storyNew = MutableLiveData<List<StoryInfo>>().apply { value = mutableListOf() }
+    val storyNew = MutableLiveData<List<StoryInformation>>().apply { value = mutableListOf() }
 
     val sLoadingStoryMale = MutableLiveData<Boolean>().apply { value = false }
     val storyStoryMale = MutableLiveData<List<StoryInfo>>().apply { value = mutableListOf() }
@@ -33,7 +34,7 @@ class ViewModelHome : ViewModel() {
     fun loadNewStory() {
         sLoadingNew.value = false
         compo.add(
-            apiManager.getListStory("truyen-moi-cap-nhat.html")
+            apiManager.getListNewUpdate(0, 20, "list")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

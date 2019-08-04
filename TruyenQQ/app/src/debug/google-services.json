@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "139180851302",
+    "firebase_url": "https://truyenqq-c3bba.firebaseio.com",
+    "project_id": "truyenqq-c3bba",
+    "storage_bucket": "truyenqq-c3bba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139180851302:android:e3e49bd9f979f194",
+        "android_client_info": {
+          "package_name": "huuloc.uit.edu.truyenqq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139180851302-c0jb4bhju5nr016pa13b92sl4uoj7qdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAyAqGn40cYutNTPLb5XBT4SZVVBzxr1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139180851302-c0jb4bhju5nr016pa13b92sl4uoj7qdn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

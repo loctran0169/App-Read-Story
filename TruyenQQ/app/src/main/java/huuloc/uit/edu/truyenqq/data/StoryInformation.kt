@@ -20,6 +20,9 @@ data class StoryInformation(
     @SerializedName("current_episode")
     val episode : String,
     @Expose
+    @SerializedName("modified")
+    var modified : String,
+    @Expose
     @SerializedName("array_category")
     val category: List<Category>
 )
