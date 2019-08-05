@@ -33,8 +33,8 @@ interface ApiHelper {
         @Query("typeList") typeList: String?
     ): Call<List<StoryInformation>>
 
-    @GET("book/category?type_category=2&typeList=menu")
-    fun getListCategory(@Header("token") token: String = token_api): Call<List<Category>>
+    @GET("book/category?type_category=2")
+    fun getListCategory(@Header("token") token: String = token_api): Call<CategoryList>
 
     @FormUrlEncoded
     @POST("frontend/public/login")

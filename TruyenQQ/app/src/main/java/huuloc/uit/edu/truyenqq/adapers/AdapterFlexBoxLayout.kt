@@ -1,7 +1,6 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ class AdapterFlexBoxLayout(val context: Context, val list: List<Category>) :
     RecyclerView.Adapter<AdapterFlexBoxLayout.Item>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterFlexBoxLayout.Item {
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item_category, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_category_horizontal, parent, false)
         return Item(view)
     }
 

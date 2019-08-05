@@ -14,14 +14,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
 import huuloc.uit.edu.truyenqq.adapers.AdapterSchedule
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalHtml
 import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalRestFull
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_schedule.view.*
-import org.w3c.dom.Text
 import java.util.*
 
 class FragmentHome : Fragment() {

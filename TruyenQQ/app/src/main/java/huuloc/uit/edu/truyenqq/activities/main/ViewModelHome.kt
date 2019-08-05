@@ -1,8 +1,8 @@
-package huuloc.uit.edu.truyenqq.fragments.home
+package huuloc.uit.edu.truyenqq.activities.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import huuloc.uit.edu.truyenqq.data.ScheduleStory
+import huuloc.uit.edu.truyenqq.data.CategoryList
 import huuloc.uit.edu.truyenqq.data.ScheduleStoryList
 import huuloc.uit.edu.truyenqq.data.StoryInfo
 import huuloc.uit.edu.truyenqq.data.StoryInformation
@@ -26,6 +26,7 @@ class ViewModelHome : ViewModel() {
 
     val sLoadingSchedulers = MutableLiveData<ScheduleStoryList>().apply { value = ScheduleStoryList(mutableListOf()) }
 
+    val sLoadingCategory = MutableLiveData<CategoryList>().apply { value = CategoryList(mutableListOf()) }
 
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
@@ -35,6 +36,7 @@ class ViewModelHome : ViewModel() {
         loadStoryMale()
         loadStoryFemale()
         loadSchedule()
+        loadCategory()
     }
 
     fun loadNewStory() {
@@ -84,11 +86,23 @@ class ViewModelHome : ViewModel() {
 
     fun loadSchedule() {
         compo.add(
-            apiManager.getSchedule("${cal.get(Calendar.YEAR)}-${cal.get(Calendar.MONTH)+1}-${cal.get(Calendar.DATE)}")
+            apiManager.getSchedule("${cal.get(Calendar.YEAR)}-${cal.get(Calendar.MONTH) + 1}-${cal.get(Calendar.DATE)}")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    sLoadingSchedulers.value=it
+                    sLoadingSchedulers.value = it
+                }, {
+                })
+        )
+    }
+
+    fun loadCategory() {
+        compo.add(
+            apiManager.getListCategory()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    sLoadingCategory.value = it
                 }, {
                 })
         )

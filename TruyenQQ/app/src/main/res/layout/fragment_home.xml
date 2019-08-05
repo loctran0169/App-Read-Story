@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="huuloc.uit.edu.truyenqq.fragments.home.ViewModelHome"/>
+                type="huuloc.uit.edu.truyenqq.activities.main.ViewModelHome"/>
     </data>
 
     <androidx.core.widget.NestedScrollView

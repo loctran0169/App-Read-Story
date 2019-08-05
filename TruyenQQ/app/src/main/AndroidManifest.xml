@@ -15,15 +15,15 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Activity_Rank"/>
-        <activity android:name=".activities.Activity_NewStory"/>
-        <activity android:name=".activities.Activity_NewUpdateStory"/>
+        <activity android:name=".activities.rank.Activity_Rank"/>
+        <activity android:name=".activities.newstory.Activity_NewStory"/>
+        <activity android:name=".activities.newupdatestory.Activity_NewUpdateStory"/>
 
         <service android:name=".services.FCMservies"
             android:exported="false">

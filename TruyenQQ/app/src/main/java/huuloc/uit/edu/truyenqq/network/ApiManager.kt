@@ -71,7 +71,7 @@ class ApiManager {
         return buildRequest(_apiServices.getListTruyen("_qlg=90298_1f62cfd35d2745c4769db10b4ac0b508", url, country))
     }
 
-    fun getListCategory(): Single<List<Category>> {
+    fun getListCategory(): Single<CategoryList> {
         return buildRequest(_apiRestFull.getListCategory())
     }
 

@@ -1,6 +1,5 @@
 package huuloc.uit.edu.truyenqq.services
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -12,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.activities.MainActivity
+import huuloc.uit.edu.truyenqq.activities.main.MainActivity
 
 class FCMservies : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage?) {

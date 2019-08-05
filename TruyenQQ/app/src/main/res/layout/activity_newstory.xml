@@ -6,7 +6,7 @@
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.Activity_Rank"
+        tools:context=".activities.rank.Activity_Rank"
         android:fitsSystemWindows="true">
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -38,7 +38,6 @@
             tools:listitem="@layout/item_story_horizontal"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

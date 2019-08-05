@@ -1,27 +1,23 @@
-package huuloc.uit.edu.truyenqq.activities
+package huuloc.uit.edu.truyenqq.activities.main
 
 import android.Manifest
-import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.newstory.Activity_NewStory
+import huuloc.uit.edu.truyenqq.activities.newupdatestory.Activity_NewUpdateStory
+import huuloc.uit.edu.truyenqq.activities.rank.Activity_Rank
+import huuloc.uit.edu.truyenqq.fragments.FragmentCategory
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
-import huuloc.uit.edu.truyenqq.fragments.home.ViewModelHome
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +44,10 @@ class MainActivity : AppCompatActivity() {
                     showFragment(FragmentHome())
                     true
                 }
+                R.id.navCategory -> {
+                    showFragment(FragmentCategory())
+                    true
+                }
                 R.id.navUser -> {
                     showFragment(FragmentUser())
                     true
@@ -58,15 +58,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w("###", "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-                // Get new Instance ID token
-                val token = task.result?.token
-            })
+        //FirebaseInstanceId.getInstance().instanceId
+        //            .addOnCompleteListener(OnCompleteListener { task ->
+        //                if (!task.isSuccessful) {
+        //                    Log.w("###", "getInstanceId failed", task.exception)
+        //                    return@OnCompleteListener
+        //                }
+        //                // Get new Instance ID token
+        //                val token = task.result?.token
+        //            })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val permission = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(permission, 101)
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == 101) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                println("###xin thành công")
+
             }
         }
     }
@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .addToBackStack("4")
             .add(R.id.frmMain, fragment)
             .commit()
     }
@@ -107,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, Activity_NewUpdateStory::class.java)
         startActivity(intent)
     }
-
 
 
     fun showNewStory(view: View) {
