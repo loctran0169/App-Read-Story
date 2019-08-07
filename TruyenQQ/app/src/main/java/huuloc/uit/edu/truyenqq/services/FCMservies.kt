@@ -16,7 +16,6 @@ import huuloc.uit.edu.truyenqq.activities.main.MainActivity
 class FCMservies : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage?) {
         super.onMessageReceived(p0)
-        println("### received ${p0?.data} + ${p0?.notification?.title}+${p0?.notification?.body}")
         sendNotification(p0!!.notification!!)
 
     }
@@ -33,7 +32,7 @@ class FCMservies : FirebaseMessagingService() {
         val defaultRingtone = RingtoneManager
             .getActualDefaultRingtoneUri(
                 this,
-                RingtoneManager.TYPE_NOTIFICATION
+                RingtoneManager.TYPE_RINGTONE
             )
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -54,6 +53,5 @@ class FCMservies : FirebaseMessagingService() {
             System.currentTimeMillis().toInt(),
             notificationBuilder.build()
         )
-        println("### received ${notice.title} + ${notice.title}+${notice.body}")
     }
 }

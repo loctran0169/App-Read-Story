@@ -9,17 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.newstory.ViewModelNewUpdateStory
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
-import huuloc.uit.edu.truyenqq.network.ApiManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_newstory.*
 
-class Activity_NewUpdateStory : AppCompatActivity() {
-
+class ActivityNewUpdateStory : AppCompatActivity() {
+    var name = ""
+    var category = ""
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(this, mutableListOf())
     }
+
     val viewModel: ViewModelNewUpdateStory by lazy {
         ViewModelProviders
             .of(this)
@@ -29,23 +28,27 @@ class Activity_NewUpdateStory : AppCompatActivity() {
     @SuppressLint("SetTextI18n", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.getBundleExtra("kind")
+        name=bundle.getString("name")!!
+        category = bundle.getString("category")!!
         ViewModelProviders
             .of(this)
             .get(ViewModelNewUpdateStory::class.java)
         setContentView(R.layout.activity_newstory)
         setSupportActionBar(toolBarNewStory)
-        toolbarTextNewStory.text = "Truyện mới cập nhật"
+        toolbarTextNewStory.text = name
 
         rcvNew.run {
-            layoutManager = LinearLayoutManager(this@Activity_NewUpdateStory)
+            layoutManager = LinearLayoutManager(this@ActivityNewUpdateStory)
             adapter = adapterHorizontal
             addItemDecoration(SpaceItem(4))
         }
         btnBackNewStory.setOnClickListener {
             onBackPressed()
         }
-        viewModel.story.observe(this@Activity_NewUpdateStory, Observer {
-            adapterHorizontal.updateData(it)
+        viewModel.loadData(category).observe(this@ActivityNewUpdateStory, Observer {
+            adapterHorizontal.updateData(it.list)
         })
     }
+
 }

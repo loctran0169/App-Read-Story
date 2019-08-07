@@ -42,11 +42,11 @@ class ViewModelHome : ViewModel() {
     fun loadNewStory() {
         sLoadingNew.value = false
         compo.add(
-            apiManager.getListNewUpdate(0, 20, "list")
+            apiManager.getListNewUpdate(0,"modified")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    storyNew.value = it
+                    storyNew.value = it.list
                     sLoadingNew.value = true
                 }, {
                     sLoadingNew.value = false

@@ -1,6 +1,8 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.newupdatestory.ActivityNewUpdateStory
 import huuloc.uit.edu.truyenqq.data.Category
 
 class AdapterCategory(
@@ -34,7 +37,15 @@ class AdapterCategory(
     override fun onBindViewHolder(holder: BaseItem, position: Int) {
         val p0 = list[position]
         holder.name.text = p0.name
-        holder.name.setOnLongClickListener {
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ActivityNewUpdateStory::class.java)
+            val bundle = Bundle()
+            bundle.putString("name", p0.title)
+            bundle.putString("category", p0.id)
+            intent.putExtra("kind", bundle)
+            context.startActivity(intent)
+        }
+        holder.itemView.setOnLongClickListener {
             var dialog = androidx.appcompat.app.AlertDialog.Builder(context)
             val view: View = LayoutInflater.from(context).inflate(R.layout.item_category_longclick, null)
             val _info = view.findViewById<TextView>(R.id.tvCategoryInfo)
@@ -44,9 +55,6 @@ class AdapterCategory(
             dislay.setTitle(p0.name)
             dislay.show()
             true
-        }
-        holder.name.setOnClickListener {
-
         }
     }
 

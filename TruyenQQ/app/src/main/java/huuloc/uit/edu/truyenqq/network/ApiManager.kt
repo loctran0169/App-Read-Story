@@ -79,8 +79,8 @@ class ApiManager {
         return buildRequest(_apiRestFull.getListTop(offset=_offset,limit = _limit,col = _col,order = _order,typeList = _typeList))
     }
 
-    fun getListNewUpdate(_offset: Int, _limit: Int, _typeList:String="category"): Single<List<StoryInformation>> {
-        return buildRequest(_apiRestFull.getListNewUpdate(offset=_offset,limit = _limit,typeList = _typeList))
+    fun getListNewUpdate(_offset: Int,_col : String, _arrayCategory:String? =""): Single<ListStory> {
+        return buildRequest(_apiRestFull.getListNewUpdate(offset=_offset,col=_col,arrayCategory = _arrayCategory))
     }
     fun getSchedule(_date : String): Single<ScheduleStoryList> {
         return buildRequest(_apiRestFull.getSchduleStory(date=_date))

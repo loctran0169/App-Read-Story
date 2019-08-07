@@ -8,12 +8,13 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterRankTabLayout
 import kotlinx.android.synthetic.main.activity_rank.*
 
-class Activity_Rank : AppCompatActivity() {
+class ActivityRank : AppCompatActivity() {
     val viewModel: ViewModelRank by lazy {
         ViewModelProviders
             .of(this)
             .get(ViewModelRank::class.java)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rank)

@@ -21,7 +21,7 @@ interface ApiHelper {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Query("col") col: String,
-        @Query("order") order: String ?,
+        @Query("order") order: String?,
         @Query("typeList") typeList: String?
     ): Call<ListStory>
 
@@ -29,9 +29,12 @@ interface ApiHelper {
     fun getListNewUpdate(
         @Header("token") token: String = token_api,
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int,
-        @Query("typeList") typeList: String?
-    ): Call<List<StoryInformation>>
+        @Query("limit") limit: Int = 20,
+        @Query("col") col: String = "modified",
+        @Query("order") order: String = "DESC",
+        @Query("typeList") typeList: String? = "category",
+        @Query("arrayCategory") arrayCategory: String?
+    ): Call<ListStory>
 
     @GET("book/category?type_category=2")
     fun getListCategory(@Header("token") token: String = token_api): Call<CategoryList>
@@ -47,8 +50,8 @@ interface ApiHelper {
 
     @GET("book/schedule")
     fun getSchduleStory(
-        @Header("token" )token : String = token_api,
-        @Query("date") date :String
+        @Header("token") token: String = token_api,
+        @Query("date") date: String
     ): Call<ScheduleStoryList>
 
 }

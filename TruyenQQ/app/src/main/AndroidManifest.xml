@@ -21,9 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.rank.Activity_Rank"/>
-        <activity android:name=".activities.newstory.Activity_NewStory"/>
-        <activity android:name=".activities.newupdatestory.Activity_NewUpdateStory"/>
+        <activity android:name=".activities.rank.ActivityRank"/>
+        <activity android:name=".activities.newstory.ActivityNewStory"/>
+        <activity android:name=".activities.newupdatestory.ActivityNewUpdateStory"/>
 
         <service android:name=".services.FCMservies"
             android:exported="false">
