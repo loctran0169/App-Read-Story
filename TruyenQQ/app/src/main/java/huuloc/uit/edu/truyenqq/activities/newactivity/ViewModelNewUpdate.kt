@@ -12,13 +12,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ViewModelNewUpdateStory : ViewModel() {
+class ViewModelNewUpdate : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
     var story = MutableLiveData<ListStory>().apply { value = ListStory(mutableListOf()) }
     @SuppressLint("CheckResult")
-    fun loadData(category: String?): LiveData<ListStory> {
-        apiManager.getListNewUpdate(_offset = 0, _col = "modified",_arrayCategory = category)
+    fun loadData(category: String?,col : String): LiveData<ListStory> {
+        apiManager.getListNewUpdate(_offset = 0, _col = col,_arrayCategory = category)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

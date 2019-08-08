@@ -22,8 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.rank.ActivityRank"/>
-        <activity android:name=".activities.newstory.ActivityNewStory"/>
-        <activity android:name=".activities.newupdatestory.ActivityNewUpdateStory"/>
+        <activity android:name=".activities.newactivity.ActivityNewUpdate"/>
 
         <service android:name=".services.FCMservies"
             android:exported="false">

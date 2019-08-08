@@ -26,9 +26,16 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
     override fun onBindViewHolder(holder: BaseItem, position: Int) {
         val p0 = items[position]
         holder.itemName.text = p0.name
-        Glide.with(context)
-            .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
-            .into(holder.itemImage)
+        try {
+            Glide.with(context)
+                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
+                .into(holder.itemImage)
+        }
+        finally {
+            Glide.with(context)
+                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
+                .into(holder.itemImage)
+        }
         holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
     }
 

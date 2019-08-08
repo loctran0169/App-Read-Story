@@ -11,7 +11,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.activities.newupdatestory.ActivityNewUpdateStory
+import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.data.Category
 
 class AdapterCategory(
@@ -38,10 +38,11 @@ class AdapterCategory(
         val p0 = list[position]
         holder.name.text = p0.name
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ActivityNewUpdateStory::class.java)
+            val intent = Intent(context, ActivityNewUpdate::class.java)
             val bundle = Bundle()
             bundle.putString("name", p0.title)
             bundle.putString("category", p0.id)
+            bundle.putString("col", "modified")
             intent.putExtra("kind", bundle)
             context.startActivity(intent)
         }

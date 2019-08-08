@@ -13,7 +13,7 @@ class AdapterRankTabLayout(
     FragmentPagerAdapter(fragment) {
 
     override fun getItem(position: Int): Fragment {
-        return FragmentRecycleView(position)
+        return FragmentRecycleView(position,getCol(position))
 
     }
 
@@ -23,5 +23,14 @@ class AdapterRankTabLayout(
 
     override fun getPageTitle(position: Int): CharSequence? {
         return title[position]
+    }
+
+    fun getCol(position: Int): String {
+        return when (position) {
+            0 -> "views_day"
+            1 -> "views_week"
+            2 -> "views_month"
+            else -> "like_book"
+        }
     }
 }

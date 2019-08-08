@@ -5,11 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.github.siyamed.shapeimageview.RoundedImageView
 import com.google.android.flexbox.FlexboxLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.data.BaseItem
@@ -43,7 +40,7 @@ class AdapterHorizontal :
     }
 
     override fun getItemCount(): Int {
-        if(mItems.isNullOrEmpty())
+        if (mItems.isNullOrEmpty())
             return 0
         return mItems.size
     }
@@ -53,7 +50,7 @@ class AdapterHorizontal :
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (mItems[position].id=="")
+        if (mItems[position].id == "")
             return 0
         return 1
     }
@@ -68,21 +65,29 @@ class AdapterHorizontal :
         override fun bind(position: Int) {
             val p0 = mItems[position]
             itemView.tvStoryNameHorizontal.text = p0.name
-            Glide.with(context)
-                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
-                .into(itemView.imgStoryItemHorizontal)
+            println("### ${p0.image}")
+            try {
+                Glide.with(context)
+                    .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
+                    .into(itemView.imgStoryItemHorizontal)
+            } finally {
+                Glide.with(context)
+                    .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
+                    .into(itemView.imgStoryItemHorizontal)
+            }
             itemView.tvChapHorizontal.text = "Chương " + p0.episode
             itemView.rcvCategoryHorizontal.run {
                 layoutManager = FlexboxLayoutManager(context)
                 adapter = AdapterFlexBoxLayout(context, p0.category)
             }
-            itemView.tvStoryTimeHorizontal.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
+            itemView.tvStoryTimeHorizontal.text =
+                timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
         }
     }
 
     inner class LoadingViewholder(view: View) : BaseItem(view) {
         override fun bind(position: Int) {
-            itemView.progressBar.visibility=View.VISIBLE
+            itemView.progressBar.visibility = View.VISIBLE
         }
 
     }

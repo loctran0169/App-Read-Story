@@ -1,4 +1,4 @@
-package huuloc.uit.edu.truyenqq.activities.newstory
+package huuloc.uit.edu.truyenqq.activities.newactivity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.newstory.ViewModelNewUpdate
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 import huuloc.uit.edu.truyenqq.network.ApiManager
@@ -16,8 +17,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_newstory.*
 
-class ActivityNewStory : AppCompatActivity() {
-
+class ActivityNewUpdate : AppCompatActivity() {
+    var name = ""
+    var category = ""
+    var col = ""
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(this, mutableListOf())
     }
@@ -27,30 +30,35 @@ class ActivityNewStory : AppCompatActivity() {
     private val apiManager: ApiManager by lazy {
         ApiManager()
     }
-    val viewModel: ViewModelNewStory by lazy {
+    val viewModel: ViewModelNewUpdate by lazy {
         ViewModelProviders
             .of(this)
-            .get(ViewModelNewStory::class.java)
+            .get(ViewModelNewUpdate::class.java)
     }
 
-    @SuppressLint("CheckResult")
+    @SuppressLint("SetTextI18n", "CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.getBundleExtra("kind")
+        name = bundle!!.getString("name")!!
+        category = bundle.getString("category")!!
+        col = bundle.getString("col")!!
         ViewModelProviders
             .of(this)
-            .get(ViewModelNewStory::class.java)
-        setSupportActionBar(toolBarNewStory)
+            .get(ViewModelNewUpdate::class.java)
         setContentView(R.layout.activity_newstory)
-        toolbarTextNewStory.text = "Truyện Mới Ra Mắt"
+        setSupportActionBar(toolBarNewStory)
+        toolbarTextNewStory.text = name
+
         rcvNew.run {
-            layoutManager = LinearLayoutManager(this@ActivityNewStory)
+            layoutManager = LinearLayoutManager(this@ActivityNewUpdate)
             adapter = adapterHorizontal
             addItemDecoration(SpaceItem(4))
         }
         btnBackNewStory.setOnClickListener {
             onBackPressed()
         }
-        viewModel.story.observe(this@ActivityNewStory, Observer {
+        viewModel.loadData(category, col).observe(this@ActivityNewUpdate, Observer {
             adapterHorizontal.updateData(it.list)
             list = it.list as ArrayList<StoryInformation>
         })
@@ -63,15 +71,15 @@ class ActivityNewStory : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (isLoading == false && manager.findLastVisibleItemPosition() == list.size - 4) {
+                if (!isLoading && manager.findLastVisibleItemPosition() == list.size - 5) {
                     isLoading = true
-                    apiManager.geListTop(offset, 20, "created")
+                    apiManager.getListNewUpdate(offset, _col = col, _arrayCategory = category)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             val position = list.size
                             list.addAll(it.list)
-                            adapterHorizontal.notifyItemRangeInserted(position - 1, it.list.size)
+                            adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
                             isLoading = false
                             offset += 20
                         }, {

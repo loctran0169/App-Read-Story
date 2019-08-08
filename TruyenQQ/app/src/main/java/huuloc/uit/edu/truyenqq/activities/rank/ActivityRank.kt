@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterRankTabLayout
+import huuloc.uit.edu.truyenqq.data.StoryInformation
+import huuloc.uit.edu.truyenqq.network.ApiManager
 import kotlinx.android.synthetic.main.activity_rank.*
 
 class ActivityRank : AppCompatActivity() {

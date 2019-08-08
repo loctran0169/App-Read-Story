@@ -11,8 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.activities.newstory.ActivityNewStory
-import huuloc.uit.edu.truyenqq.activities.newupdatestory.ActivityNewUpdateStory
+import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.fragments.FragmentCategory
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
@@ -103,15 +102,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openActivityNewUpdateStory(view: View) {
-        val intent = Intent(this, ActivityNewUpdateStory::class.java)
+        val intent = Intent(this, ActivityNewUpdate::class.java)
         val bundle = Bundle()
         bundle.putString("name", "Truyện mới cập nhật")
         bundle.putString("category", "")
+        bundle.putString("col", "modified")
         intent.putExtra("kind", bundle)
         startActivity(intent)
     }
 
     fun showNewStory(view: View) {
-        startActivity(Intent(this, ActivityNewStory::class.java))
+        val intent = Intent(this, ActivityNewUpdate::class.java)
+        val bundle = Bundle()
+        bundle.putString("name", "Truyện mới")
+        bundle.putString("category", "")
+        bundle.putString("col", "created")
+        intent.putExtra("kind", bundle)
+        startActivity(intent)
     }
 }
