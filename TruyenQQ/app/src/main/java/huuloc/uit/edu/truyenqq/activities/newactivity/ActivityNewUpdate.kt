@@ -2,6 +2,7 @@ package huuloc.uit.edu.truyenqq.activities.newactivity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -61,6 +62,7 @@ class ActivityNewUpdate : AppCompatActivity() {
         viewModel.loadData(category, col).observe(this@ActivityNewUpdate, Observer {
             adapterHorizontal.updateData(it.list)
             list = it.list as ArrayList<StoryInformation>
+            progressBarNew.visibility= View.INVISIBLE
         })
         initScrollListener()
     }

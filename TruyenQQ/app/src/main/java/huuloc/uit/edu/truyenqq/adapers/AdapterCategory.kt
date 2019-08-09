@@ -40,7 +40,7 @@ class AdapterCategory(
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ActivityNewUpdate::class.java)
             val bundle = Bundle()
-            bundle.putString("name", p0.title)
+            bundle.putString("name", "Truyện ${p0.name}")
             bundle.putString("category", p0.id)
             bundle.putString("col", "modified")
             intent.putExtra("kind", bundle)

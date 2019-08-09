@@ -7,8 +7,7 @@ import huuloc.uit.edu.truyenqq.fragments.home.FragmentRecycleView
 
 class AdapterRankTabLayout(
     private val title: List<String>,
-    fragment: FragmentManager,
-    private val tag: String? = null
+    fragment: FragmentManager
 ) :
     FragmentPagerAdapter(fragment) {
 

@@ -51,9 +51,30 @@ interface ApiHelper {
     @GET("book/schedule")
     fun getSchduleStory(
         @Header("token") token: String = token_api,
-        @Query("date") date: String
+        @Query("date") date: String,
+        @Query("col") col: String="time_post",
+        @Query("order") order: String="DESC"
     ): Call<ScheduleStoryList>
 
+    @GET("book/history-read")
+    fun getHistory(
+        @Header("token") token: String = token_api,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
+        @Query("col") col: String = "modified_date",
+        @Query("order") order: String = "DESC",
+        @Query("user_id") user_id: String
+    ) : Call<ListHistoryRead>
+
+    @GET("book/subscribe")
+    fun getSubscribe(
+        @Header("token") token: String = token_api,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int,
+        @Query("col") col: String = "modified",
+        @Query("order") order: String= "DESC",
+        @Query("user_id") user_id: String
+    ): Call<ListStory>
 }
 
 annotation class Html

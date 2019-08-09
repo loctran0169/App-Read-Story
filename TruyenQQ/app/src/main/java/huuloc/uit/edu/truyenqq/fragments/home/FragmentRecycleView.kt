@@ -20,7 +20,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
-class FragmentRecycleView(private val sort: Int,private var col : String) : Fragment() {
+class FragmentRecycleView(private val sort: Int, private var col: String) : Fragment() {
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(activity!!, mutableListOf())
     }
@@ -47,23 +47,30 @@ class FragmentRecycleView(private val sort: Int,private var col : String) : Frag
             adapter = adapterHorizontal
             addItemDecoration(SpaceItem(4))
         }
-
         when (sort) {
             0 -> viewModel.storyDay.observe(this@FragmentRecycleView, Observer {
                 adapterHorizontal.updateData(it.list)
                 list = it.list as ArrayList<StoryInformation>
+                if (it.list.isNotEmpty())
+                    progressBarRank.visibility = View.INVISIBLE
             })
             1 -> viewModel.storyWeek.observe(this@FragmentRecycleView, Observer {
                 adapterHorizontal.updateData(it.list)
                 list = it.list as ArrayList<StoryInformation>
+                if (it.list.isNotEmpty())
+                    progressBarRank.visibility = View.INVISIBLE
             })
             2 -> viewModel.storyMonth.observe(this@FragmentRecycleView, Observer {
                 adapterHorizontal.updateData(it.list)
                 list = it.list as ArrayList<StoryInformation>
+                if (it.list.isNotEmpty())
+                    progressBarRank.visibility = View.INVISIBLE
             })
             3 -> viewModel.storyLike.observe(this@FragmentRecycleView, Observer {
                 adapterHorizontal.updateData(it.list)
                 list = it.list as ArrayList<StoryInformation>
+                if (it.list.isNotEmpty())
+                    progressBarRank.visibility = View.INVISIBLE
             })
         }
         initScrollListener()

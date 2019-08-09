@@ -14,6 +14,7 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.fragments.FragmentCategory
+import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,16 +40,25 @@ class MainActivity : AppCompatActivity() {
             .commit()
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
+                idSelect -> true
                 R.id.navHome -> {
                     showFragment(FragmentHome())
+                    idSelect = it.itemId
                     true
                 }
                 R.id.navCategory -> {
                     showFragment(FragmentCategory())
+                    idSelect = it.itemId
+                    true
+                }
+                R.id.navBookcase -> {
+                    showFragment(FragmentBook())
+                    idSelect = it.itemId
                     true
                 }
                 R.id.navUser -> {
                     showFragment(FragmentUser())
+                    idSelect = it.itemId
                     true
                 }
                 else -> {
@@ -87,7 +97,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.frmMain, fragment).commit()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frmMain, fragment)
+            .commit()
     }
 
     private fun addFragment(fragment: Fragment) {
@@ -97,7 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openActivityRank(view: View) {
-        val intent = Intent(this,ActivityRank::class.java)
+        val intent = Intent(this, ActivityRank::class.java)
         startActivity(intent)
     }
 

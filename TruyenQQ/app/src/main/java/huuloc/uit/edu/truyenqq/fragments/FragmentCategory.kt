@@ -1,20 +1,15 @@
 package huuloc.uit.edu.truyenqq.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
-import huuloc.uit.edu.truyenqq.activities.rank.ViewModelRank
 import huuloc.uit.edu.truyenqq.adapers.AdapterCategory
 import huuloc.uit.edu.truyenqq.data.Category
 import huuloc.uit.edu.truyenqq.databinding.FragmentCategoryBinding
@@ -41,6 +36,7 @@ class FragmentCategory : Fragment() {
                 adapterCategory!!.filter.filter(query)
                 return false
             }
+
             override fun onQueryTextChange(query: String): Boolean {
                 // filter recycler view when text is changed
                 adapterCategory.updateData(list as MutableList<Category>)
@@ -62,6 +58,8 @@ class FragmentCategory : Fragment() {
         viewModel.sLoadingCategory.observe(this@FragmentCategory, Observer {
             list = it.list
             adapterCategory.updateData(it.list as MutableList<Category>)
+            if (it.list.isNotEmpty())
+                progressBarCategory.visibility = View.INVISIBLE
         })
     }
 }

@@ -65,7 +65,6 @@ class AdapterHorizontal :
         override fun bind(position: Int) {
             val p0 = mItems[position]
             itemView.tvStoryNameHorizontal.text = p0.name
-            println("### ${p0.image}")
             try {
                 Glide.with(context)
                     .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")

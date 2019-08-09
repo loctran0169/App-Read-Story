@@ -85,6 +85,13 @@ class ApiManager {
     fun getSchedule(_date : String): Single<ScheduleStoryList> {
         return buildRequest(_apiRestFull.getSchduleStory(date=_date))
     }
+    fun getHistory(_offset: Int,_limit: Int,_user_id : String): Single<ListHistoryRead> {
+        return buildRequest(_apiRestFull.getHistory(offset = _offset,limit=_limit,user_id = _user_id))
+    }
+
+    fun getSubscribe(_offset: Int,_limit: Int,_user_id : String): Single<ListStory> {
+        return buildRequest(_apiRestFull.getSubscribe(offset = _offset,limit=_limit,user_id = _user_id))
+    }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
         putShare.apply()

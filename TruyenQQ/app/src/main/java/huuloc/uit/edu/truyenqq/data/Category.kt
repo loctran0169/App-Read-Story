@@ -14,9 +14,6 @@ data class Category(
     @SerializedName("name")
     var name : String,
     @Expose
-    @SerializedName("title")
-    var title : String,
-    @Expose
     @SerializedName("info")
     var info : String
 )
