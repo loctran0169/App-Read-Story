@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.siyamed.shapeimageview.RoundedImageView
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.story.ActivityStory
 import huuloc.uit.edu.truyenqq.data.StoryInfo
-import huuloc.uit.edu.truyenqq.data.StoryInformation
 
 class AdapterVerticalHtml(var context: Context, var items: List<StoryInfo>) :
     RecyclerView.Adapter<AdapterVerticalHtml.BaseItem>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :BaseItem {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItem {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_story_vertical, null)
         return BaseItem(view)
     }
@@ -31,6 +32,10 @@ class AdapterVerticalHtml(var context: Context, var items: List<StoryInfo>) :
             .load(p0.image)
             .into(holder.itemImage)
         holder.itemTime.text = p0.time
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ActivityStory::class.java)
+            context.startActivity(intent)
+        }
     }
 
     fun updateData(list: List<StoryInfo>) {

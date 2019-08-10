@@ -75,4 +75,7 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
+
+    //collapsingtoolbarlayout
+    implementation 'net.opacapp:multiline-collapsingtoolbar:27.1.1'
 }

@@ -3,6 +3,7 @@ package huuloc.uit.edu.truyenqq.fragments.home
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -42,7 +43,8 @@ class FragmentHome : Fragment() {
             .of(activity!!)
             .get(ViewModelHome::class.java)
     }
-
+    var firstX =0.0f
+    var secondX = 0.0f
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -129,25 +131,20 @@ class FragmentHome : Fragment() {
         flipperView.flipInterval = 5000
         flipperView.setInAnimation(activity!!, R.anim.slide_in_right)
         flipperView.setOutAnimation(activity!!, R.anim.slide_out_right)
-        /*flipperView.setOnTouchListener { p0, event ->
+        flipperView.setOnTouchListener { p0, event ->
             if (event!!.action == MotionEvent.ACTION_DOWN) {
-
                 firstX = event!!.x
-                println("###x${firstX}")
             } else if (event!!.action == MotionEvent.ACTION_UP) {
-                secondX = event!!.y
+                secondX = event!!.x
                 if (firstX < secondX) {
-                    println("### next")
                     flipperView.showNext()
                 }
                 if (firstX > secondX) {
-                    println("### previous")
                     flipperView.showPrevious()
                 }
-                println("###w${secondX}")
             }
             true
         }
-        */
+
     }
 }

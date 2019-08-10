@@ -5,8 +5,39 @@
         <!-- Customize your theme here.-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--<item name="colorPrimaryDark">#24bd63</item>-->
+        <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
         <item name="colorPrimary">@color/colorMain</item>
         <item name="colorAccent">@color/colorMain</item>
+    </style>
+    <!--style collagesinglayout-->
+    <style name="AppTheme.Story">
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+        <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <item name="colorPrimary">@android:color/transparent</item>
+    </style>
+        <!--style text toolbar vs collagesinglayout-->
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MangatoonWrapWrapSize">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="MangatoonText" parent="@style/MangatoonWrapWrapSize">
+        <item name="android:textSize">14.0dip</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+    <style name="MangatoonSemiBoldText" parent="@style/MangatoonText">
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

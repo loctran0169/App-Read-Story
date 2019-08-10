@@ -2,6 +2,7 @@ package huuloc.uit.edu.truyenqq.adapers
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.story.ActivityStory
 import huuloc.uit.edu.truyenqq.data.BaseItem
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 import kotlinx.android.synthetic.main.item_story_horizontal.view.*
@@ -81,6 +83,10 @@ class AdapterHorizontal :
             }
             itemView.tvStoryTimeHorizontal.text =
                 timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
+            itemView.setOnClickListener {
+                val intent = Intent(context,ActivityStory::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 

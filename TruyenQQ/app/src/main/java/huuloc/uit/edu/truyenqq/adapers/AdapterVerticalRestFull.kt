@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.github.siyamed.shapeimageview.RoundedImageView
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.story.ActivityStory
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 
 class AdapterVerticalRestFull(var context: Context, var items: List<StoryInformation>) :
@@ -37,6 +39,10 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
                 .into(holder.itemImage)
         }
         holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, ActivityStory::class.java)
+            context.startActivity(intent)
+        }
     }
 
     fun updateData(list: List<StoryInformation>) {
