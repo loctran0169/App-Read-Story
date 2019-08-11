@@ -92,6 +92,10 @@ class ApiManager {
     fun getSubscribe(_offset: Int,_limit: Int,_user_id : String): Single<ListStory> {
         return buildRequest(_apiRestFull.getSubscribe(offset = _offset,limit=_limit,user_id = _user_id))
     }
+
+    fun getListChaps(_offset: Int,_limit: Int,_book_id : String) : Single<ListChap>{
+        return buildRequest(_apiRestFull.getListChaps(offset = _offset,limit=_limit,book_id = _book_id))
+    }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
         putShare.apply()

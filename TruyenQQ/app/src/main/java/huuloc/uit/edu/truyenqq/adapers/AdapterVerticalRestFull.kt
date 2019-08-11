@@ -2,6 +2,7 @@ package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +33,7 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
             Glide.with(context)
                 .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
                 .into(holder.itemImage)
-        }
-        finally {
+        } finally {
             Glide.with(context)
                 .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
                 .into(holder.itemImage)
@@ -41,6 +41,9 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
         holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ActivityStory::class.java)
+            val bundle = Bundle()
+            bundle.putString("book_id", p0.id)
+            intent.putExtra("kind", bundle)
             context.startActivity(intent)
         }
     }

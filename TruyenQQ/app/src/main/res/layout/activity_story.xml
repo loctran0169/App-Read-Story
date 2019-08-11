@@ -2,31 +2,37 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="wrap_content">
         <net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
                 android:id="@+id/collapsingStory"
-                app:expandedTitleGravity="bottom"
-                app:title="Cô Vợ Hợp Đồng Bỏ Trốn Của Tổng Giám Đốc Cô Vợ Hợp Đồng Bỏ Trốn Của Tổng Giám "
+                app:title="Vua Hải Tặc,one Piece"
+                app:expandedTitleGravity="top|center"
                 app:maxLines="2"
+                app:expandedTitleMarginTop="10dp"
                 app:expandedTitleTextAppearance="@style/ExpandedAppBar"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_marginTop="?actionBarSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <ImageView
+                <com.github.siyamed.shapeimageview.RoundedImageView
                         android:id="@+id/imgStory"
                         android:src="@drawable/test1"
                         android:scaleType="centerCrop"
+                        app:siRadius="7dp"
+                        app:siBorderColor="@android:color/white"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="15sp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:minWidth="100dp"
                         android:minHeight="130dp"
                         android:layout_width="100dp"
@@ -34,8 +40,7 @@
                 <TextView
                         android:id="@+id/tvAuthor"
                         android:text="Tác giả: Miura Tadahiro"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
+                        android:textSize="15sp"
                         android:textColor="@android:color/black"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
@@ -47,8 +52,7 @@
                 <TextView
                         android:id="@+id/tvStatus"
                         android:text="Trạng thái: Đang cập nhật"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
+                        android:textSize="15sp"
                         android:textColor="@android:color/black"
                         app:layout_constraintTop_toBottomOf="@id/tvAuthor"
                         app:layout_constraintStart_toStartOf="@id/tvAuthor"
@@ -62,13 +66,50 @@
                         tools:itemCount="3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvView"
+                        android:text="135,019,716"
+                        android:gravity="center"
+                        android:drawableStart="@drawable/ic_view"
+                        android:drawablePadding="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        app:layout_constraintTop_toBottomOf="@id/imgStory"
+                        app:layout_constraintStart_toStartOf="@id/imgStory"
+                        app:layout_constraintEnd_toStartOf="@id/tvLike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvLike"
+                        android:text="6602"
+                        android:gravity="center"
+                        android:drawableStart="@drawable/ic_like"
+                        android:drawablePadding="10dp"
+                        app:layout_constraintStart_toEndOf="@id/tvView"
+                        app:layout_constraintTop_toTopOf="@id/tvView"
+                        app:layout_constraintEnd_toStartOf="@id/tvSubscribe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tvSubscribe"
+                        android:text="41011"
+                        android:gravity="center"
+                        android:drawableStart="@drawable/ic_heart"
+                        android:drawablePadding="10dp"
+                        app:layout_constraintTop_toTopOf="@id/tvView"
+                        app:layout_constraintStart_toEndOf="@id/tvLike"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.appcompat.widget.Toolbar
                     app:layout_collapseMode="pin"
+                    android:background="@android:color/white"
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize">
                 <ImageButton
                         android:id="@+id/btnBackRank"
+                        android:visibility="gone"
                         android:background="@drawable/ic_before"
                         android:layout_width="32dp"
                         android:layout_height="32dp"/>
