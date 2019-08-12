@@ -2,11 +2,13 @@ package huuloc.uit.edu.truyenqq.network
 
 import huuloc.uit.edu.truyenqq.data.*
 import io.reactivex.Single
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 
 class ApiManager {
@@ -28,6 +30,10 @@ class ApiManager {
 
         private var sInstance: Retrofit? = null
         private var sRestFull: Retrofit? = null
+        val okHttpClient = OkHttpClient.Builder()
+            .callTimeout(2, TimeUnit.SECONDS)
+            .connectTimeout(2, TimeUnit.SECONDS)
+            .build()
 
         fun getHelperHtml(): Retrofit? {
             if (sInstance == null) {
@@ -35,6 +41,7 @@ class ApiManager {
                     .Builder()
                     .baseUrl("https://truyenqq.com/")
                     .addConverterFactory(HtmlOrJsonConverterFactory())
+                    //.client(okHttpClient)
                     .build()
             }
             return sInstance
@@ -75,26 +82,46 @@ class ApiManager {
         return buildRequest(_apiRestFull.getListCategory())
     }
 
-    fun geListTop(_offset: Int, _limit: Int, _col: String,_order:String="DESC", _typeList:String="category"): Single<ListStory> {
-        return buildRequest(_apiRestFull.getListTop(offset=_offset,limit = _limit,col = _col,order = _order,typeList = _typeList))
+    fun geListTop(
+        _offset: Int,
+        _limit: Int,
+        _col: String,
+        _order: String = "DESC",
+        _typeList: String = "category"
+    ): Single<ListStory> {
+        return buildRequest(
+            _apiRestFull.getListTop(
+                offset = _offset,
+                limit = _limit,
+                col = _col,
+                order = _order,
+                typeList = _typeList
+            )
+        )
     }
 
-    fun getListNewUpdate(_offset: Int,_col : String, _arrayCategory:String? =""): Single<ListStory> {
-        return buildRequest(_apiRestFull.getListNewUpdate(offset=_offset,col=_col,arrayCategory = _arrayCategory))
-    }
-    fun getSchedule(_date : String): Single<ScheduleStoryList> {
-        return buildRequest(_apiRestFull.getSchduleStory(date=_date))
-    }
-    fun getHistory(_offset: Int,_limit: Int,_user_id : String): Single<ListHistoryRead> {
-        return buildRequest(_apiRestFull.getHistory(offset = _offset,limit=_limit,user_id = _user_id))
+    fun getListNewUpdate(_offset: Int, _col: String, _arrayCategory: String? = ""): Single<ListStory> {
+        return buildRequest(_apiRestFull.getListNewUpdate(offset = _offset, col = _col, arrayCategory = _arrayCategory))
     }
 
-    fun getSubscribe(_offset: Int,_limit: Int,_user_id : String): Single<ListStory> {
-        return buildRequest(_apiRestFull.getSubscribe(offset = _offset,limit=_limit,user_id = _user_id))
+    fun getSchedule(_date: String): Single<ScheduleStoryList> {
+        return buildRequest(_apiRestFull.getSchduleStory(date = _date))
     }
 
-    fun getListChaps(_offset: Int,_limit: Int,_book_id : String) : Single<ListChap>{
-        return buildRequest(_apiRestFull.getListChaps(offset = _offset,limit=_limit,book_id = _book_id))
+    fun getHistory(_offset: Int, _limit: Int, _user_id: String): Single<ListHistoryRead> {
+        return buildRequest(_apiRestFull.getHistory(offset = _offset, limit = _limit, user_id = _user_id))
+    }
+
+    fun getSubscribe(_offset: Int, _limit: Int, _user_id: String): Single<ListStory> {
+        return buildRequest(_apiRestFull.getSubscribe(offset = _offset, limit = _limit, user_id = _user_id))
+    }
+
+    fun getListChaps(_offset: Int, _limit: Int, _book_id: String): Single<ListChap> {
+        return buildRequest(_apiRestFull.getListChaps(offset = _offset, limit = _limit, book_id = _book_id))
+    }
+
+    fun getStoryReading(_id: String, _user_id: String?): Single<StoryRead> {
+        return buildRequest(_apiRestFull.getStoryReading(book_id = _id,user_id = _user_id))
     }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)

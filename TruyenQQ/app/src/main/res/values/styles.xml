@@ -14,7 +14,7 @@
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
         <!--<item name="colorPrimaryDark">@android:color/transparent</item>-->
         <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimary">#f5f5f5</item>
     </style>
         <!--style text toolbar vs collagesinglayout-->
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
@@ -24,8 +24,17 @@
     </style>
 
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
     </style>
 </resources>

@@ -21,7 +21,7 @@
     <TextView
             android:id="@+id/tvStoryNameHorizontal"
             android:text="@string/appbar_scrolling_view_behavior"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textColor="@color/colorNameStory_drark"
             android:textStyle="bold"
             android:maxLines="2"
@@ -61,6 +61,38 @@
             android:layout_marginTop="3dp"
             app:layout_constraintTop_toTopOf="@id/imgStoryItemHorizontal"
             app:layout_constraintStart_toStartOf="@id/imgStoryItemHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/tvViewHorizontal"
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_view"
+            android:drawablePadding="7dp"
+            android:layout_marginStart="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgStoryItemHorizontal"
+            app:layout_constraintStart_toEndOf="@id/imgStoryItemHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/tvLikeHorizontal"
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_like"
+            android:drawablePadding="7dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvViewHorizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvViewHorizontal"
+            app:layout_constraintStart_toEndOf="@id/tvViewHorizontal"
+            app:layout_constraintEnd_toStartOf="@id/tvSubscribeHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <TextView
+            android:id="@+id/tvSubscribeHorizontal"
+            android:textSize="12sp"
+            android:drawableStart="@drawable/ic_heart"
+            android:drawablePadding="7dp"
+            android:layout_marginEnd="15sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tvViewHorizontal"
+            app:layout_constraintBottom_toBottomOf="@id/tvLikeHorizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

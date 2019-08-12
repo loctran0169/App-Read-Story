@@ -42,15 +42,6 @@
                         android:layout_height="match_parent"/>
             </ViewFlipper>
             <ImageButton
-                    android:id="@+id/btnSearch"
-                    android:background="@drawable/ic_search"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    app:layout_constraintTop_toTopOf="@id/flipperView"
-                    app:layout_constraintEnd_toEndOf="@id/flipperView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            <ImageButton
                     android:id="@+id/imgRank"
                     android:background="@drawable/ic_rank"
                     app:layout_constraintStart_toStartOf="parent"

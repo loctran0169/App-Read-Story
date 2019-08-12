@@ -85,6 +85,13 @@ interface ApiHelper {
         @Query("order") order: String= "DESC",
         @Query("book_id") book_id: String
     ): Call<ListChap>
+
+    @GET("book/book")
+    fun getStoryReading(
+        @Header("token") token: String = token_api,
+        @Query("id") book_id: String,
+        @Query("user_id") user_id: String?
+    ): Call<StoryRead>
 }
 
 annotation class Html

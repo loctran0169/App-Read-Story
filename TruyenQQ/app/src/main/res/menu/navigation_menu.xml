@@ -9,10 +9,10 @@
           android:contentDescription="@string/lbKind"
           android:icon="@drawable/ic_list"
           android:title="@string/lbKind"/>
-    <item android:id="@+id/navNew"
-          android:contentDescription="@string/lbNew"
-          android:icon="@drawable/ic_new"
-          android:title="@string/lbNew"/>
+    <item android:id="@+id/navSearch"
+          android:contentDescription="@string/lbSearch"
+          android:icon="@drawable/ic_search"
+          android:title="@string/lbSearch"/>
     <item android:id="@+id/navBookcase"
           android:contentDescription="@string/lbStory"
           android:icon="@drawable/ic_shelf"

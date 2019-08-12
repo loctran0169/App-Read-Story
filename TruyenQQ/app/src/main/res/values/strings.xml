@@ -3,7 +3,7 @@
     <string name="lbHome">Trang Chủ</string>
     <string name="lbKind">Thể Loại</string>
     <string name="lbStory">Tủ Sách</string>
-    <string name="lbNew">Khám Phá</string>
+    <string name="lbSearch">Tìm Kiếm</string>
     <string name="lbUser">Cá Nhân</string>
     <string name="lbRank">Xếp hạng</string>
     <string name="lbCalendar">Lịch</string>
@@ -20,4 +20,8 @@
     <string name="lbInfoCategory">Đối tượng hướng tới của thể loại này là phái nam. Nội dung của những bộ manga này
         thường liên quan đến đánh nhau và/hoặc bạo lực (ở mức bình thường, không thái quá)
     </string>
+    <string name="lbRule">Truyện được lấy từ TruyenQQ.com. Phần mềm chỉ lưu hành nội bộ và không chịu trách nhiệm bàn
+        quyền sàn phẩm.
+    </string>
+    <string name="lbReadNow">Đọc Ngay</string>
 </resources>

@@ -1,44 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@android:color/white"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <TextView
-            android:text="Cập nhật: 11/08/2019"
+            android:id="@+id/tvStoryDate"
             android:textColor="#ff2853"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     <TextView
-            android:text="Tên khác: Vua Hải Tặc,one Piece"
+            android:id="@+id/tvStoryOriginal"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15sp"
             android:layout_marginBottom="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     <androidx.core.widget.NestedScrollView
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <com.ms.square.android.expandabletextview.ExpandableTextView
-                android:id="@+id/expandableTextView"
-                app:maxCollapsedLines="4"
+            android:layout_height="0dp">
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <TextView
-                    android:id="@+id/expandable_text"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+            <com.ms.square.android.expandabletextview.ExpandableTextView
+                    android:id="@+id/expandableTextView"
+                    app:maxCollapsedLines="4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            <ImageButton
-                    android:id="@+id/expand_collapse"
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center|bottom"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:id="@+id/expandable_text"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                <ImageButton
+                        android:id="@+id/expand_collapse"
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center|bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
+            <TextView
+                    android:text="@string/lbRule"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-        </com.ms.square.android.expandabletextview.ExpandableTextView>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

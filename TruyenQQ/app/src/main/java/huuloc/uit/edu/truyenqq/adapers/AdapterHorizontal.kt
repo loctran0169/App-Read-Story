@@ -3,6 +3,7 @@ package huuloc.uit.edu.truyenqq.adapers
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,9 +85,15 @@ class AdapterHorizontal :
             itemView.tvStoryTimeHorizontal.text =
                 timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
             itemView.setOnClickListener {
-                val intent = Intent(context,ActivityStory::class.java)
+                val intent = Intent(context, ActivityStory::class.java)
+                val bundle = Bundle()
+                bundle.putString("book_id", p0.id)
+                intent.putExtra("kind", bundle)
                 context.startActivity(intent)
             }
+            itemView.tvLikeHorizontal.text = p0.like_book
+            itemView.tvViewHorizontal.text = p0.total_view
+            itemView.tvSubscribeHorizontal.text = p0.total_subscribe
         }
     }
 

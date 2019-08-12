@@ -82,7 +82,7 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (!isLoading && manager.findLastVisibleItemPosition() == list.size - 5) {
+                if (!isLoading && manager.findLastVisibleItemPosition() >= list.size - 5) {
                     isLoading = true
                     apiManager.getListNewUpdate(offset, _col = col, _arrayCategory = "")
                         .subscribeOn(Schedulers.io())

@@ -6,5 +6,6 @@
     <color name="colorMain">#f18121</color>
     <color name="colorNameStory_drark">#F5774E</color>
     <color name="colorNameStory_light">#ffff7043</color>
+    <color name="colorIcon">#747373</color>
 
 </resources>
