@@ -52,8 +52,8 @@ interface ApiHelper {
     fun getSchduleStory(
         @Header("token") token: String = token_api,
         @Query("date") date: String,
-        @Query("col") col: String="time_post",
-        @Query("order") order: String="DESC"
+        @Query("col") col: String = "time_post",
+        @Query("order") order: String = "DESC"
     ): Call<ScheduleStoryList>
 
     @GET("book/history-read")
@@ -64,7 +64,7 @@ interface ApiHelper {
         @Query("col") col: String = "modified_date",
         @Query("order") order: String = "DESC",
         @Query("user_id") user_id: String
-    ) : Call<ListHistoryRead>
+    ): Call<ListHistoryRead>
 
     @POST("book/subscribe")
     fun setSubscribe(
@@ -79,7 +79,7 @@ interface ApiHelper {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Query("col") col: String = "modified",
-        @Query("order") order: String= "DESC",
+        @Query("order") order: String = "DESC",
         @Query("user_id") user_id: String
     ): Call<ListStory>
 
@@ -89,7 +89,7 @@ interface ApiHelper {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int,
         @Query("col") col: String = "order",
-        @Query("order") order: String= "DESC",
+        @Query("order") order: String = "DESC",
         @Query("book_id") book_id: String
     ): Call<ListChap>
 
@@ -99,6 +99,14 @@ interface ApiHelper {
         @Query("id") book_id: String,
         @Query("user_id") user_id: String?
     ): Call<StoryRead>
+
+    @GET("book/manga")
+    fun getListImage(
+        @Header("token") token: String = token_api,
+        @Query("id") book_id: String,
+        @Query("typeDetail") typeDetail: String? = "detail",
+        @Query("order") chap: String?
+    ): Call<StoryImage>
 }
 
 annotation class Html

@@ -127,6 +127,10 @@ class ApiManager {
     fun getStoryReading(_id: String, _user_id: String?): Single<StoryRead> {
         return buildRequest(_apiRestFull.getStoryReading(book_id = _id, user_id = _user_id))
     }
+
+    fun getListImage(_book_id: String, _chap: String): Single<StoryImage> {
+        return buildRequest(_apiRestFull.getListImage(book_id = _book_id, chap = _chap))
+    }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
         putShare.apply()

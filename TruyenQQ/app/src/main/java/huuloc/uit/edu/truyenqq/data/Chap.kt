@@ -17,6 +17,9 @@ data class Chap(
     @SerializedName("book_id")
     var book_id : String,
     @Expose
+    @SerializedName("order")
+    var order : String,
+    @Expose
     @SerializedName("created")
     var created : String
 )

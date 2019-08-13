@@ -2,12 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="@android:color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activities.rank.ActivityRank"
-        android:fitsSystemWindows="true">
+        android:layout_width="match_parent" android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -19,7 +14,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize">
             <ImageButton
-                    android:id="@+id/btnBackRank"
+                    android:id="@+id/btnBackReading"
                     android:background="@drawable/ic_before"
                     android:layout_width="32dp"
                     android:layout_height="32dp"/>
@@ -29,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:id="@+id/toolbarTextRank"
+                    android:id="@+id/toolbarTextReading"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
         </androidx.appcompat.widget.Toolbar>
         <com.google.android.material.tabs.TabLayout
@@ -39,10 +34,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvImage"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    </androidx.viewpager.widget.ViewPager>
+            android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="labeled"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <Button
+                    android:background="@color/colorMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

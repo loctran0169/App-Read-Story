@@ -25,6 +25,7 @@
         <activity android:name=".activities.newactivity.ActivityNewUpdate"/>
         <activity android:name=".activities.story.ActivityStory"
                   android:theme="@style/AppTheme.Story"/>
+        <activity android:name=".activities.reading.ActivityReading"/>
 
         <service android:name=".services.FCMservies"
                  android:exported="false">
