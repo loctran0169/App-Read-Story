@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterImage
+import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_reading.*
 
 class ActivityReading : AppCompatActivity() {
@@ -34,7 +35,12 @@ class ActivityReading : AppCompatActivity() {
         rcvImage.run {
             adapter = adapterImage
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(SpaceItem(4))
         }
+        btnBackReading.setOnClickListener {
+            onBackPressed()
+        }
+        toolbarTextReading.text = "Chap ${intent.getBundleExtra("manga")!!.getString("chap")!!}"
         viewModel.loadImage().observe(this@ActivityReading, Observer {
             adapterImage.updateData(it.list)
         })

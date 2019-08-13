@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,11 @@ class AdapterImage(val context : Context, var list : List<String> )  : RecyclerV
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try {
+            val width = Resources.getSystem().displayMetrics.widthPixels
+            val height = Resources.getSystem().displayMetrics.heightPixels
             Glide.with(context)
                 .load(list[position])
+                .override(width,height)
                 .into(holder.image)
         }
         catch (ex : Exception){

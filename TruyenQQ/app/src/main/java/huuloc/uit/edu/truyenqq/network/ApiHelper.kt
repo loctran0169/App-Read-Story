@@ -107,6 +107,16 @@ interface ApiHelper {
         @Query("typeDetail") typeDetail: String? = "detail",
         @Query("order") chap: String?
     ): Call<StoryImage>
+
+    @FormUrlEncoded
+    @PUT("book/history-read")
+    fun setHistory(
+        @Header("token") token: String = token_api,
+        @Query("id") book_id1: String,
+        @Field("book_id") book_id2: String,
+        @Field("user_id") user_id: String,
+        @Field("chap_order") chap_order: String
+    ) :Call<StatusLogin>
 }
 
 annotation class Html

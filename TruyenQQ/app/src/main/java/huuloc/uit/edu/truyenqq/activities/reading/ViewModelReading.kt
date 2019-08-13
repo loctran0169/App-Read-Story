@@ -21,6 +21,9 @@ class ViewModelReading(val bookId: String, val chap: String) : ViewModel() {
     val apiManager: ApiManager by lazy { ApiManager() }
     var story = MutableLiveData<StoryImage>().apply { value = StoryImage("", "", "", mutableListOf()) }
 
+    init {
+        setHistory()
+    }
     fun loadImage(): LiveData<StoryImage> {
         compo.add(
             apiManager.getListImage(bookId, chap)
@@ -33,5 +36,18 @@ class ViewModelReading(val bookId: String, val chap: String) : ViewModel() {
                 })
         )
         return story
+    }
+
+    fun setHistory() {
+        compo.add(
+            apiManager.setHistory(bookId, "24901", chap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                }, {
+
+                })
+        )
     }
 }

@@ -27,12 +27,6 @@
                     android:id="@+id/toolbarTextReading"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
         </androidx.appcompat.widget.Toolbar>
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:background="@android:color/white"
-                app:tabTextColor="@android:color/black"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvImage"
@@ -45,16 +39,29 @@
             android:layout_gravity="bottom"
             app:labelVisibilityMode="labeled"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            android:minHeight="?actionBarSize"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
-        <LinearLayout
-                android:orientation="horizontal"
+            android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <Button
-                    android:background="@color/colorMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
+            <ImageButton
+                    android:background="@drawable/ic_prev"
+                    android:layout_marginStart="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"/>
+            <ImageButton
+                    android:background="@drawable/ic_next"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

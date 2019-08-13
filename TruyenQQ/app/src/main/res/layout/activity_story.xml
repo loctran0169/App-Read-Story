@@ -198,7 +198,6 @@
                 android:layout_height="wrap_content"/>
         <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerStory"
-                android:layout_marginBottom="?actionBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
     </LinearLayout>

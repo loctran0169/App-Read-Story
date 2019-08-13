@@ -108,6 +108,10 @@ class ApiManager {
         return buildRequest(_apiRestFull.getSchduleStory(date = _date))
     }
 
+    fun setHistory(_book_id: String,_user_id: String, _chap: String): Single<StatusLogin>{
+        return buildRequest(_apiRestFull.setHistory(book_id1=_book_id,book_id2=_book_id,user_id = _user_id,chap_order = _chap))
+    }
+
     fun getHistory(_offset: Int, _limit: Int, _user_id: String): Single<ListHistoryRead> {
         return buildRequest(_apiRestFull.getHistory(offset = _offset, limit = _limit, user_id = _user_id))
     }
@@ -131,6 +135,7 @@ class ApiManager {
     fun getListImage(_book_id: String, _chap: String): Single<StoryImage> {
         return buildRequest(_apiRestFull.getListImage(book_id = _book_id, chap = _chap))
     }
+
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
         putShare.apply()
