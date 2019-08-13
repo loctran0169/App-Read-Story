@@ -32,6 +32,9 @@ data class StoryRead(
     @SerializedName("pending")
     var pending: String?,
     @Expose
+    @SerializedName("subscribe")
+    var subscribe: String?,
+    @Expose
     @SerializedName("current_episode")
     var newChap: String?,
     @Expose

@@ -112,6 +112,10 @@ class ApiManager {
         return buildRequest(_apiRestFull.getHistory(offset = _offset, limit = _limit, user_id = _user_id))
     }
 
+    fun setSubscribe(_book_id: String, _user_id: String): Single<Subscribe> {
+        return buildRequest(_apiRestFull.setSubscribe(book_id = _book_id, user_id = _user_id))
+    }
+
     fun getSubscribe(_offset: Int, _limit: Int, _user_id: String): Single<ListStory> {
         return buildRequest(_apiRestFull.getSubscribe(offset = _offset, limit = _limit, user_id = _user_id))
     }
@@ -121,7 +125,7 @@ class ApiManager {
     }
 
     fun getStoryReading(_id: String, _user_id: String?): Single<StoryRead> {
-        return buildRequest(_apiRestFull.getStoryReading(book_id = _id,user_id = _user_id))
+        return buildRequest(_apiRestFull.getStoryReading(book_id = _id, user_id = _user_id))
     }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)

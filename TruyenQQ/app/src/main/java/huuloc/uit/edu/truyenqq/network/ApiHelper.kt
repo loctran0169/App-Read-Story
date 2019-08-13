@@ -66,6 +66,13 @@ interface ApiHelper {
         @Query("user_id") user_id: String
     ) : Call<ListHistoryRead>
 
+    @POST("book/subscribe")
+    fun setSubscribe(
+        @Header("token") token: String = token_api,
+        @Query("book_id") book_id: String,
+        @Query("user_id") user_id: String
+    ): Call<Subscribe>
+
     @GET("book/subscribe")
     fun getSubscribe(
         @Header("token") token: String = token_api,

@@ -31,18 +31,31 @@ class ActivityStory : AppCompatActivity() {
         viewPagerStory.adapter = AdapterStoryTabLayout(fragment = supportFragmentManager)
         tabLayoutStory.tabMode = TabLayout.MODE_FIXED
         tabLayoutStory.setupWithViewPager(viewPagerStory)
+
         viewModel.Story.observe(this, Observer {
             bindingData(it)
         })
-
+        btnSubscribe.setOnClickListener {
+            viewModel.loadSubscribe().observe(this, Observer {
+                if(it.success==0){
+                    btnSubscribe.isSelected = true
+                    btnSubscribe.text = "Theo dõi"
+                }
+                else
+                {
+                    btnSubscribe.isSelected = true
+                    btnSubscribe.text = "Hủy theo dõi"
+                }
+            })
+        }
     }
 
 
     fun bindingData(story: StoryRead) {
         collapsingStory.title = story.name
-        tvNameStory.text=story.name
+        tvNameStory.text = story.name
         tvAuthor.text = "Tác giả: " + story.author
-        if(story.pending=="0")
+        if (story.pending == "0")
             tvStatus.text = "Trạng trái : Đang cập nhật"
         else
             tvStatus.text = "Trạng trái : Hoàn thành"
@@ -61,6 +74,15 @@ class ActivityStory : AppCompatActivity() {
             Glide.with(this)
                 .load("http://i.mangaqq.com/ebook/190x247/" + story.image + "?thang=t515")
                 .into(imgStory)
+        }
+        if (story.subscribe == "1") {
+            btnSubscribe.isSelected = true
+            btnSubscribe.text = "Hủy theo dõi"
+        }
+        else
+        {
+            btnSubscribe.isSelected = true
+            btnSubscribe.text = "Theo dõi"
         }
     }
 }
