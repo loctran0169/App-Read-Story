@@ -45,5 +45,15 @@ data class StoryRead(
     val category: List<Category>,
     @Expose
     @SerializedName("name_author")
-    var author: String
+    var author: String,
+    @Expose
+    @SerializedName("first_chap")
+    var first_chap: FirstChap
+)
+
+data class FirstChap(
+    @SerializedName("name")
+    var name: String,
+    @SerializedName("order")
+    var order: String
 )

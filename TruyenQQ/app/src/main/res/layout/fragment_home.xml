@@ -14,30 +14,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <ViewFlipper
-                    android:id="@+id/flipperView"
+                    android:id="@+id/viewPagerSlider"
                     app:layout_constraintTop_toTopOf="parent"
                     android:autoStart="true"
+
                     android:layout_width="match_parent"
                     android:layout_height="220dp">
-
                 <ImageView
-                        android:id="@+id/myImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="1dp"
-                        android:scaleType="centerCrop"
-                        android:cropToPadding="true"
-                        android:src="@drawable/test1"/>
-                <ImageView
-                        android:background="@drawable/test2"
+                        android:src="@drawable/test1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 <ImageView
-                        android:background="@drawable/test3"
+                        android:src="@drawable/test2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                <ImageView
+                        android:src="@drawable/test3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
             </ViewFlipper>
@@ -45,7 +40,7 @@
                     android:id="@+id/imgRank"
                     android:background="@drawable/ic_rank"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/flipperView"
+                    app:layout_constraintTop_toBottomOf="@id/viewPagerSlider"
                     app:layout_constraintEnd_toStartOf="@id/imgCalendar"
                     android:onClick="openActivityRank"
                     android:layout_marginTop="25dp"

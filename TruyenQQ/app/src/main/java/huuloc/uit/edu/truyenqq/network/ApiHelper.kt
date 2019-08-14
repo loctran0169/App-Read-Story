@@ -116,7 +116,25 @@ interface ApiHelper {
         @Field("book_id") book_id2: String,
         @Field("user_id") user_id: String,
         @Field("chap_order") chap_order: String
-    ) :Call<StatusLogin>
+    ): Call<StatusLogin>
+
+    @GET("book/history-read")
+    fun getHistoryReading(
+        @Header("token") token: String = token_api,
+        @Query("id") book_id1: String,
+        @Query("book_id") book_id2: String,
+        @Query("user_id") user_id: String
+    ): Call<StatusRead>
+
+    @GET("book/search")
+    fun getListSearch(
+        @Header("token") token: String = token_api,
+        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int = 10,
+        @Query("typeList") col: String = "book",
+        @Query("typeSearch") order: String = "search",
+        @Query("search") search: String
+    ): Call<ListStory>
 }
 
 annotation class Html

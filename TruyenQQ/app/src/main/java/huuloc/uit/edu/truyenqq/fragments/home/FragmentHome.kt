@@ -18,14 +18,14 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
 import huuloc.uit.edu.truyenqq.adapers.AdapterSchedule
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalHtml
-import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalRestFull
+import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 class FragmentHome : Fragment() {
-    val cal=Calendar.getInstance()
+    val cal = Calendar.getInstance()
     private val adapterNewRestFull: AdapterVerticalRestFull by lazy {
         AdapterVerticalRestFull(activity!!, mutableListOf())
     }
@@ -43,7 +43,7 @@ class FragmentHome : Fragment() {
             .of(activity!!)
             .get(ViewModelHome::class.java)
     }
-    var firstX =0.0f
+    var firstX = 0.0f
     var secondX = 0.0f
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,14 +106,14 @@ class FragmentHome : Fragment() {
             adapterStoryFemaleHtml.updateData(it)
         })
         //Schedule
-
         imgCalendar.setOnClickListener {
             viewModel.sLoadingSchedulers.observe(this@FragmentHome, Observer {
                 var dialog = AlertDialog.Builder(activity!!)
                 val view: View = LayoutInflater.from(activity!!).inflate(R.layout.fragment_schedule, null)
                 val schedule = view.findViewById<RecyclerView>(R.id.rcvSchedule)
                 val date = view.findViewById<TextView>(R.id.tvScheduleDate)
-                date.text="Ngày cập nhật : ${cal.get(Calendar.DAY_OF_MONTH)}-${cal.get(Calendar.MONTH)+1}-${cal.get(Calendar.YEAR)}"
+                date.text =
+                    "Ngày cập nhật : ${cal.get(Calendar.DAY_OF_MONTH)}-${cal.get(Calendar.MONTH) + 1}-${cal.get(Calendar.YEAR)}"
                 schedule.run {
                     adapter = adapterSchedule
                     layoutManager = LinearLayoutManager(activity)
@@ -127,20 +127,27 @@ class FragmentHome : Fragment() {
             })
 
         }
-        flipperView.isAutoStart = true
-        flipperView.flipInterval = 5000
-        flipperView.setInAnimation(activity!!, R.anim.slide_in_right)
-        flipperView.setOutAnimation(activity!!, R.anim.slide_out_right)
-        flipperView.setOnTouchListener { p0, event ->
+        //viewPagerSlider.isAutoStart = true
+        //viewPagerSlider.flipInterval = 2000
+
+        viewPagerSlider.setOnTouchListener { p0, event ->
             if (event!!.action == MotionEvent.ACTION_DOWN) {
-                firstX = event!!.x
-            } else if (event!!.action == MotionEvent.ACTION_UP) {
-                secondX = event!!.x
+                firstX = event.x
+            } else if (event.action == MotionEvent.ACTION_UP) {
+                secondX = event.x
                 if (firstX < secondX) {
-                    flipperView.showNext()
+                    if (viewPagerSlider.displayedChild != 1) {
+                        viewPagerSlider.setInAnimation(activity!!, R.anim.in_from_left)
+                        viewPagerSlider.setOutAnimation(activity!!, R.anim.out_from_left)
+                        viewPagerSlider.showNext()
+                    }
                 }
                 if (firstX > secondX) {
-                    flipperView.showPrevious()
+                    if (viewPagerSlider.displayedChild != 0) {
+                        viewPagerSlider.setInAnimation(activity!!, R.anim.in_from_right)
+                        viewPagerSlider.setOutAnimation(activity!!, R.anim.out_from_right)
+                        viewPagerSlider.showPrevious()
+                    }
                 }
             }
             true

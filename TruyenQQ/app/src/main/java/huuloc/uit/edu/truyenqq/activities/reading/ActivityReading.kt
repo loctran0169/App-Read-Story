@@ -46,7 +46,6 @@ class ActivityReading : AppCompatActivity() {
             adapterImage.updateData(it.list)
         })
         viewModel.getListChap().observe(this@ActivityReading, Observer {
-            println("### chaps ${it.list.size}")
             spinnerListChap.adapter = AdapterListChapSpinner(this,it.list)
             spinnerListChap.setSelection(intent.getBundleExtra("manga")!!.getInt("position"))
         })

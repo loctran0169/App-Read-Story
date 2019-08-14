@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.SearchView
             android:id="@+id/svBook"
             app:queryHint="Nhập gì đó"
+            app:iconifiedByDefault="false"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -27,8 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/lbHistory"
             app:layout_constraintBottom_toBottomOf="@id/lbHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvHistory"
             android:layout_marginTop="10dp"
