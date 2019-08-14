@@ -24,4 +24,6 @@
         quyền sàn phẩm.
     </string>
     <string name="lbReadNow">Đọc Ngay</string>
+    <string name="lbWriteAny">Viết gì đó</string>
+    <string name="lbHistory">Lịch sử tìm kiếm</string>
 </resources>

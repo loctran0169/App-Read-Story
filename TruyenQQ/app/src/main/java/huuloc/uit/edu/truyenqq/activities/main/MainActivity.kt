@@ -14,6 +14,7 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.fragments.FragmentCategory
+import huuloc.uit.edu.truyenqq.fragments.FragmentSearch
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
@@ -51,6 +52,11 @@ class MainActivity : AppCompatActivity() {
                     idSelect = it.itemId
                     true
                 }
+                R.id.navSearch -> {
+                    showFragment(FragmentSearch())
+                    idSelect = it.itemId
+                    true
+                }
                 R.id.navBookcase -> {
                     showFragment(FragmentBook())
                     idSelect = it.itemId
@@ -61,10 +67,8 @@ class MainActivity : AppCompatActivity() {
                     idSelect = it.itemId
                     true
                 }
-                else -> {
-                    println("### nothing")
-                    true
-                }
+
+                else -> true
             }
         }
         //FirebaseInstanceId.getInstance().instanceId

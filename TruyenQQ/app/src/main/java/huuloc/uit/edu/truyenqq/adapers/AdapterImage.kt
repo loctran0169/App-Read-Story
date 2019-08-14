@@ -27,7 +27,8 @@ class AdapterImage(val context : Context, var list : List<String> )  : RecyclerV
             val height = Resources.getSystem().displayMetrics.heightPixels
             Glide.with(context)
                 .load(list[position])
-                .override(width,height)
+                .override(width,height+height)
+                .error(R.drawable.ic_errorload)
                 .into(holder.image)
         }
         catch (ex : Exception){

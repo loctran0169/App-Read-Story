@@ -7,7 +7,6 @@
         android:layout_height="wrap_content">
     <TextView
             android:id="@+id/tvChapName"
-            android:text="Chương 951"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginStart="20dp"
@@ -20,7 +19,6 @@
             android:layout_height="wrap_content"/>
     <TextView
             android:id="@+id/tvChapDate"
-            android:text="01/08/2019"
             android:textSize="12dp"
             app:layout_constraintBaseline_toBaselineOf="@id/tvChapName"
             android:layout_marginEnd="10dp"

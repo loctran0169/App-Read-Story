@@ -64,7 +64,7 @@ interface ApiHelper {
         @Query("col") col: String = "modified_date",
         @Query("order") order: String = "DESC",
         @Query("user_id") user_id: String
-    ): Call<ListHistoryRead>
+    ): Call<ListStory>
 
     @POST("book/subscribe")
     fun setSubscribe(
@@ -87,7 +87,7 @@ interface ApiHelper {
     fun getListChaps(
         @Header("token") token: String = token_api,
         @Query("offset") offset: Int,
-        @Query("limit") limit: Int,
+        @Query("limit") limit: Int?,
         @Query("col") col: String = "order",
         @Query("order") order: String = "DESC",
         @Query("book_id") book_id: String

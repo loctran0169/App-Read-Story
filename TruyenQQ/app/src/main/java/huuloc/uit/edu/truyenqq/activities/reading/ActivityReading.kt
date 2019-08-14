@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterImage
+import huuloc.uit.edu.truyenqq.adapers.AdapterListChapSpinner
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_reading.*
 
@@ -44,5 +45,11 @@ class ActivityReading : AppCompatActivity() {
         viewModel.loadImage().observe(this@ActivityReading, Observer {
             adapterImage.updateData(it.list)
         })
+        viewModel.getListChap().observe(this@ActivityReading, Observer {
+            println("### chaps ${it.list.size}")
+            spinnerListChap.adapter = AdapterListChapSpinner(this,it.list)
+            spinnerListChap.setSelection(intent.getBundleExtra("manga")!!.getInt("position"))
+        })
+
     }
 }

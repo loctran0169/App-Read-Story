@@ -52,15 +52,15 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
                 viewModel.subcribe.observe(this@FragmentBookPage, Observer {
                     adapterHorizontal.updateData(it.list)
                     list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility=View.INVISIBLE
+                    progressBarRank.visibility = View.INVISIBLE
                 })
             }
             1 -> {
                 rcvHorizontal.adapter = adapterHorizontal
-                viewModel.subcribe.observe(this@FragmentBookPage, Observer {
+                viewModel.history.observe(this@FragmentBookPage, Observer {
                     adapterHorizontal.updateData(it.list)
                     list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility=View.INVISIBLE
+                    progressBarRank.visibility = View.INVISIBLE
                 })
             }
             2 -> {
@@ -68,7 +68,7 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
                 viewModel.subcribe.observe(this@FragmentBookPage, Observer {
                     adapterHorizontal.updateData(it.list)
                     list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility=View.INVISIBLE
+                    progressBarRank.visibility = View.INVISIBLE
                 })
             }
         }
@@ -86,6 +86,20 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
                     when (_tag) {
                         0 -> {
                             apiManager.getSubscribe(offset, 20, "24901")
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe({
+                                    val position = list.size
+                                    list.addAll(it.list)
+                                    adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
+                                    isLoading = false
+                                    offset += 20
+                                }, {
+
+                                })
+                        }
+                        1 ->{
+                            apiManager.getHistory(offset, 20, "24901")
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({

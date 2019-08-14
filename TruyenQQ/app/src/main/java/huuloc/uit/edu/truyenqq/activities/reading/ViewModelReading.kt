@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import huuloc.uit.edu.truyenqq.data.ListChap
 import huuloc.uit.edu.truyenqq.data.StoryImage
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,10 +21,12 @@ class ViewModelReading(val bookId: String, val chap: String) : ViewModel() {
     val compo: CompositeDisposable by lazy { CompositeDisposable() }
     val apiManager: ApiManager by lazy { ApiManager() }
     var story = MutableLiveData<StoryImage>().apply { value = StoryImage("", "", "", mutableListOf()) }
+    var listChap = MutableLiveData<ListChap>().apply { value = ListChap(mutableListOf()) }
 
     init {
         setHistory()
     }
+
     fun loadImage(): LiveData<StoryImage> {
         compo.add(
             apiManager.getListImage(bookId, chap)
@@ -49,5 +52,19 @@ class ViewModelReading(val bookId: String, val chap: String) : ViewModel() {
 
                 })
         )
+    }
+
+    fun getListChap() : LiveData<ListChap> {
+        compo.add(
+            apiManager.getListChaps(0, null, bookId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    listChap.value = it
+                }, {
+
+                })
+        )
+        return listChap
     }
 }

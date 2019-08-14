@@ -46,7 +46,7 @@
             android:id="@+id/tvChapHorizontal"
             android:text="Chương 123"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@id/rcvCategoryHorizontal"
+            app:layout_constraintBottom_toTopOf="@id/tvViewHorizontal"
             app:layout_constraintStart_toStartOf="@id/tvStoryNameHorizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

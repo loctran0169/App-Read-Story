@@ -28,14 +28,16 @@ class AdapterListChap(val context: Context, var list: List<Chap>) : RecyclerView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p0 = list[position]
         val cal = Calendar.getInstance()
-        cal.timeInMillis = p0.created.toLong()*1000
+        cal.timeInMillis = p0.created.toLong() * 1000
         holder.chapName.text = p0.name
-        holder.chapDate.text = "${cal.get(Calendar.DAY_OF_MONTH)}/${cal.get(Calendar.MONTH)+1}/${cal.get(Calendar.YEAR)}"
+        holder.chapDate.text =
+            "${cal.get(Calendar.DAY_OF_MONTH)}/${cal.get(Calendar.MONTH) + 1}/${cal.get(Calendar.YEAR)}"
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ActivityReading::class.java)
             val bundle = Bundle()
             bundle.putString("book_id", p0.book_id)
             bundle.putString("chap", p0.order)
+            bundle.putInt("position", position)
             intent.putExtra("manga", bundle)
             context.startActivity(intent)
         }
@@ -45,8 +47,9 @@ class AdapterListChap(val context: Context, var list: List<Chap>) : RecyclerView
         var chapName = view.findViewById<TextView>(R.id.tvChapName)
         var chapDate = view.findViewById<TextView>(R.id.tvChapDate)
     }
-    fun updateData(items : List<Chap>){
-        list= items
+
+    fun updateData(items: List<Chap>) {
+        list = items
         notifyDataSetChanged()
     }
 }

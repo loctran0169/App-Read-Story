@@ -27,6 +27,8 @@ class ViewModelHome : ViewModel() {
 
     val subcribe = MutableLiveData<ListStory>().apply { value = ListStory(mutableListOf()) }
 
+    val history = MutableLiveData<ListStory>().apply { value = ListStory(mutableListOf()) }
+
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
 
@@ -37,23 +39,39 @@ class ViewModelHome : ViewModel() {
         loadSchedule()
         loadCategory()
         loadSubsribe()
+        loadHistory()
     }
+
     fun loadSubsribe() {
         compo.add(
             apiManager.getSubscribe(0, 20, "24901")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    subcribe.value=it
+                    subcribe.value = it
                 }, {
 
                 })
         )
     }
+
+    fun loadHistory() {
+        compo.add(
+            apiManager.getHistory(0, 20, "24901")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    history.value = it
+                }, {
+
+                })
+        )
+    }
+
     fun loadNewStory() {
         sLoadingNew.value = false
         compo.add(
-            apiManager.getListNewUpdate(0,"modified")
+            apiManager.getListNewUpdate(0, "modified")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

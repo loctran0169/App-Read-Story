@@ -77,7 +77,10 @@ class AdapterHorizontal :
                     .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
                     .into(itemView.imgStoryItemHorizontal)
             }
-            itemView.tvChapHorizontal.text = "Chương " + p0.episode
+            var chapter = "Chương " + p0.episode
+            if (!p0.chap_order.isNullOrEmpty())
+                chapter += " - Đọc tới chap ${p0.chap_order}"
+            itemView.tvChapHorizontal.text = chapter
             itemView.rcvCategoryHorizontal.run {
                 layoutManager = FlexboxLayoutManager(context)
                 adapter = AdapterFlexBoxLayout(context, p0.category)

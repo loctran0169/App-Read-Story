@@ -36,7 +36,7 @@ class ViewModelStory(val bookId: String, val user_id: String?) : ViewModel() {
 
     fun loadListChap(_bookId: String) {
         compo.add(
-            apiManager.getListChaps(0, 100, _bookId)
+            apiManager.getListChaps(0, null, _bookId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

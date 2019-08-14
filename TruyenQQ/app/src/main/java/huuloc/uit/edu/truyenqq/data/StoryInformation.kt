@@ -28,6 +28,9 @@ data class StoryInformation(
     @SerializedName("current_episode")
     val episode: String,
     @Expose
+    @SerializedName("chap_order")
+    val chap_order: String,
+    @Expose
     @SerializedName("modified")
     var modified: String,
     @Expose
