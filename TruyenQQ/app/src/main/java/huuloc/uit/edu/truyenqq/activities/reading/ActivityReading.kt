@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +13,7 @@ import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_reading.*
 
 class ActivityReading : AppCompatActivity() {
+
     private val adapterImage: AdapterImage by lazy {
         AdapterImage(this, mutableListOf())
     }
@@ -20,7 +22,7 @@ class ActivityReading : AppCompatActivity() {
             .of(this)
             .get(ViewModelReading::class.java)
     }
-
+    var xx = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reading)
@@ -38,17 +40,39 @@ class ActivityReading : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(SpaceItem(4))
         }
+        refreshReading.setOnRefreshListener {
+            viewModel.loadImage()
+        }
         btnBackReading.setOnClickListener {
             onBackPressed()
         }
-        toolbarTextReading.text = "Chap ${intent.getBundleExtra("manga")!!.getString("chap")!!}"
-        viewModel.loadImage().observe(this@ActivityReading, Observer {
-            adapterImage.updateData(it.list)
-        })
-        viewModel.getListChap().observe(this@ActivityReading, Observer {
-            spinnerListChap.adapter = AdapterListChapSpinner(this,it.list)
-            spinnerListChap.setSelection(intent.getBundleExtra("manga")!!.getInt("position"))
-        })
+        btnNext.setOnClickListener {
+            viewModel.loadImageNextOrPrev(viewModel.story.value!!.next)
 
+        }
+        btnPrev.setOnClickListener {
+            viewModel.loadImageNextOrPrev(viewModel.story.value!!.prev)
+        }
+        viewModel.story.observe(this@ActivityReading, Observer {
+            toolbarTextReading.text = "Chap ${viewModel.story.value?.order}"
+            adapterImage.updateData(it.list)
+            refreshReading.isRefreshing = false
+            if (it.order.toFloat() > it.next.toFloat()) {
+                btnNext.visibility = View.INVISIBLE
+            } else {
+                btnNext.visibility = View.VISIBLE
+            }
+            if (intent.getBundleExtra("manga")!!.getString("first")!!.toFloat() == it.order.toFloat()) {
+                btnPrev.visibility = View.INVISIBLE
+            } else {
+                btnPrev.visibility = View.VISIBLE
+            }
+        })
+        viewModel.listChap.observe(this@ActivityReading, Observer {
+            spinnerListChap.adapter = AdapterListChapSpinner(this, it.list)
+        })
+        viewModel.position.observe(this@ActivityReading, Observer {
+            spinnerListChap.setSelection(it)
+        })
     }
 }

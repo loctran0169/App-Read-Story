@@ -9,6 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 
@@ -19,12 +20,6 @@ class ApiManager {
     }
     private val _apiRestFull: ApiHelper by lazy {
         getHelperRestFull()!!.create(ApiHelper::class.java)
-    }
-    private val putShare by lazy {
-        //context.getSharedPreferences("statusLogin", Context.MODE_PRIVATE).edit()
-    }
-    private val getShare by lazy {
-        //context.getSharedPreferences("statusLogin", Context.MODE_PRIVATE)
     }
 
     companion object {
@@ -64,7 +59,12 @@ class ApiManager {
         return Single.create {
             call.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
-                    it.onSuccess(response.body()!!)
+                    try {
+                        it.onSuccess(response.body()!!)
+                    }
+                    catch (ex :Exception){
+
+                    }
                 }
 
                 override fun onFailure(p0: Call<T>, response: Throwable) {
@@ -156,15 +156,19 @@ class ApiManager {
         return buildRequest(_apiRestFull.sendForgotPassword(email = _email))
     }
 
-    fun sendRegister(_email: String,_password : String): Single<DataLogin> {
-        return buildRequest(_apiRestFull.sendRegister(email = _email,username = _email.split("@")[0],password = _password,password_confirm = _password))
+    fun sendRegister(_email: String, _password: String): Single<DataLogin> {
+        return buildRequest(
+            _apiRestFull.sendRegister(
+                email = _email,
+                username = _email.split("@")[0],
+                password = _password,
+                password_confirm = _password
+            )
+        )
     }
 
-    fun sendLogin(_email: String,_password : String): Single<DataLogin> {
-        return buildRequest(_apiRestFull.sendLogin(email = _email,password = _password))
+    fun sendLogin(_email: String, _password: String): Single<DataLogin> {
+        return buildRequest(_apiRestFull.sendLogin(email = _email, password = _password))
     }
-    /*fun saveCookie(id: String) {
-        putShare.putString("id", id)
-        putShare.apply()
-    }*/
+
 }

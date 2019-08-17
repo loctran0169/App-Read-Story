@@ -9,11 +9,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import huuloc.uit.edu.truyenqq.R
-import java.lang.Exception
 
-class AdapterImage(val context : Context, var list : List<String> )  : RecyclerView.Adapter<AdapterImage.ViewHolder>(){
+class AdapterImage(val context: Context, var list: List<String>) : RecyclerView.Adapter<AdapterImage.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view : View= LayoutInflater.from(context).inflate(R.layout.item_image,parent,false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)
     }
 
@@ -27,19 +26,20 @@ class AdapterImage(val context : Context, var list : List<String> )  : RecyclerV
             val height = Resources.getSystem().displayMetrics.heightPixels
             Glide.with(context)
                 .load(list[position])
-                .override(width,height+height)
+                .override(width, height + height)
                 .error(R.drawable.ic_errorload)
                 .into(holder.image)
-        }
-        catch (ex : Exception){
+        } catch (ex: Exception) {
 
         }
     }
-    fun updateData(items : List<String>){
-        list=items
+
+    fun updateData(items: List<String>) {
+        list = items
         notifyDataSetChanged()
     }
-    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var image = view.findViewById<ImageView>(R.id.imgImage)
     }
 }

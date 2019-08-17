@@ -20,8 +20,9 @@ class ViewModelStory(val bookId: String, val user_id: String?) : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
     var Story = MutableLiveData<StoryRead>().apply {
-        value = StoryRead("", "", "", "", "", 0L, "", "", "", "", "", "", mutableListOf(), "",FirstChap("",""))
+        value = StoryRead("", "", "", "", "", 0L, "", "", "", "", "", "", mutableListOf(), "", FirstChap("", ""))
     }
+    var isLoading = MutableLiveData<Boolean>().apply { value = false }
     var book_id = ""
     var listChap = MutableLiveData<ListChap>().apply { value = ListChap(mutableListOf()) }
     var Subscribe = MutableLiveData<Subscribe>().apply { value = Subscribe(0, 0) }
@@ -54,6 +55,7 @@ class ViewModelStory(val bookId: String, val user_id: String?) : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Story.value = it
+                    isLoading.value = true
                 }, {
 
                 })

@@ -14,7 +14,7 @@ import huuloc.uit.edu.truyenqq.activities.reading.ActivityReading
 import huuloc.uit.edu.truyenqq.data.Chap
 import java.util.*
 
-class AdapterListChap(val context: Context, var list: List<Chap>) : RecyclerView.Adapter<AdapterListChap.ViewHolder>() {
+class AdapterListChap(val context: Context, var list: List<Chap>, val first : String?) : RecyclerView.Adapter<AdapterListChap.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_chaps, parent, false)
         return ViewHolder(view)
@@ -37,6 +37,7 @@ class AdapterListChap(val context: Context, var list: List<Chap>) : RecyclerView
             val bundle = Bundle()
             bundle.putString("book_id", p0.book_id)
             bundle.putString("chap", p0.order)
+            bundle.putString("first", first)
             bundle.putInt("position", position)
             intent.putExtra("manga", bundle)
             context.startActivity(intent)

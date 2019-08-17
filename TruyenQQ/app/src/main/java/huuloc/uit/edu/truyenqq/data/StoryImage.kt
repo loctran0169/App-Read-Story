@@ -9,6 +9,8 @@ data class StoryImage(
     var next: String,
     @SerializedName("prev")
     var prev: String,
+    @SerializedName("current_episode")
+    var current_episode: String,
     @SerializedName("listPhoto")
     var list: List<String>
 )

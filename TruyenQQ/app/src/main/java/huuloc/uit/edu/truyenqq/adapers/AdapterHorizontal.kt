@@ -82,7 +82,6 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
             itemView.setOnClickListener {
                 val intent1 = Intent(context, ActivityStory::class.java)
                 val bundle = Bundle()
-                println("### ${p0.id} ${p0.chap_order}")
                 bundle.putString("book_id", if (p0.book_id != null) p0.book_id else p0.id)
                 intent1.putExtra("kind", bundle)
                 context.startActivity(intent1)

@@ -20,10 +20,11 @@ class FragmentListChaps : Fragment() {
             .of(activity!!)
             .get(ViewModelStory::class.java)
     }
-    private val adapterListChap: AdapterListChap by lazy {
-        AdapterListChap(activity!!, mutableListOf())
-    }
-
+    //    private val adapterListChap: AdapterListChap by lazy {
+//        AdapterListChap(activity!!, mutableListOf())
+//    }
+    var load = false
+    var chap = false
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
@@ -31,12 +32,30 @@ class FragmentListChaps : Fragment() {
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rcvHorizontal.run {
-            adapter = adapterListChap
+            //adapter = adapterListChap
             layoutManager = LinearLayoutManager(activity!!)
         }
         viewModel.listChap.observe(this@FragmentListChaps, Observer {
-            adapterListChap.updateData(it.list)
-            progressBarRank.visibility = View.INVISIBLE
+            chap = true
+            if (load && it.list.isNotEmpty()) {
+                val adapterListChap = AdapterListChap(activity!!, it.list, viewModel.Story.value?.first_chap?.order)
+                rcvHorizontal.adapter = adapterListChap
+                adapterListChap.updateData(it.list)
+                progressBarRank.visibility = View.INVISIBLE
+            }
+        })
+        viewModel.isLoading.observe(this@FragmentListChaps, Observer {
+            load = true
+            if (chap) {
+                val adapterListChap = AdapterListChap(
+                    activity!!,
+                    viewModel.listChap.value!!.list,
+                    viewModel.Story.value?.first_chap?.order
+                )
+                rcvHorizontal.adapter = adapterListChap
+                adapterListChap.updateData(viewModel.listChap.value!!.list)
+                progressBarRank.visibility = View.INVISIBLE
+            }
         })
     }
 }
