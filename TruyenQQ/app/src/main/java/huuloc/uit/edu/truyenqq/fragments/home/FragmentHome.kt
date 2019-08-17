@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
 import huuloc.uit.edu.truyenqq.adapers.AdapterSchedule
-import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalHtml
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalRestFull
 import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
@@ -29,11 +28,11 @@ class FragmentHome : Fragment() {
     private val adapterNewRestFull: AdapterVerticalRestFull by lazy {
         AdapterVerticalRestFull(activity!!, mutableListOf())
     }
-    private val adapterStoryMaleHtml: AdapterVerticalHtml by lazy {
-        AdapterVerticalHtml(activity!!, mutableListOf())
+    private val adapterStoryMale: AdapterVerticalRestFull by lazy {
+        AdapterVerticalRestFull(activity!!, mutableListOf())
     }
-    private val adapterStoryFemaleHtml: AdapterVerticalHtml by lazy {
-        AdapterVerticalHtml(activity!!, mutableListOf())
+    private val adapterStoryFemale: AdapterVerticalRestFull by lazy {
+        AdapterVerticalRestFull(activity!!, mutableListOf())
     }
     private val adapterSchedule: AdapterSchedule by lazy {
         AdapterSchedule(activity!!, mutableListOf())
@@ -45,12 +44,15 @@ class FragmentHome : Fragment() {
     }
     var firstX = 0.0f
     var secondX = 0.0f
+    var _new = false
+    var _male = false
+    var _female = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this@FragmentHome
         return binding.root
@@ -66,44 +68,38 @@ class FragmentHome : Fragment() {
         }
         rcvStoryMale.run {
             layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
-            adapter = adapterStoryMaleHtml
+            adapter = adapterStoryMale
             addItemDecoration(SpaceItem(4))
 
         }
         rcvStoryFemale.run {
             layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
-            adapter = adapterStoryFemaleHtml
+            adapter = adapterStoryFemale
             addItemDecoration(SpaceItem(4))
         }
         //New
-        viewModel.sLoadingNew.observe(this@FragmentHome, Observer {
-            if (it)
-                progressNewStory.visibility = View.INVISIBLE
-            else
-                progressNewStory.visibility = View.VISIBLE
-        })
         viewModel.storyNew.observe(this@FragmentHome, Observer {
             adapterNewRestFull.updateData(it)
+            progressNewStory.visibility = View.INVISIBLE
+            _new = true
+            if (_male && _female)
+                refresh.isRefreshing = false
         })
         //Male
-        viewModel.sLoadingStoryMale.observe(this@FragmentHome, Observer {
-            if (it)
-                progressStoryMale.visibility = View.INVISIBLE
-            else
-                progressStoryMale.visibility = View.VISIBLE
-        })
         viewModel.storyStoryMale.observe(this@FragmentHome, Observer {
-            adapterStoryMaleHtml.updateData(it)
+            adapterStoryMale.updateData(it)
+            progressStoryMale.visibility = View.INVISIBLE
+            _male = true
+            if (_new && _female)
+                refresh.isRefreshing = false
         })
         //Female
-        viewModel.sLoadingStoryFemale.observe(this@FragmentHome, Observer {
-            if (it)
-                progressStoryFeMale.visibility = View.INVISIBLE
-            else
-                progressStoryFeMale.visibility = View.VISIBLE
-        })
         viewModel.storyStoryFemale.observe(this@FragmentHome, Observer {
-            adapterStoryFemaleHtml.updateData(it)
+            adapterStoryFemale.updateData(it)
+            progressStoryFeMale.visibility = View.INVISIBLE
+            _female = true
+            if (_male && _new)
+                refresh.isRefreshing = false
         })
         //Schedule
         imgCalendar.setOnClickListener {
@@ -125,11 +121,13 @@ class FragmentHome : Fragment() {
                 dislay.setTitle("Lịch ra truyện")
                 dislay.show()
             })
-
         }
-        //viewPagerSlider.isAutoStart = true
-        //viewPagerSlider.flipInterval = 2000
-
+        refresh.setOnRefreshListener {
+            progressNewStory.visibility = View.VISIBLE
+            progressStoryMale.visibility = View.VISIBLE
+            progressStoryFeMale.visibility = View.VISIBLE
+            viewModel.refresh()
+        }
         viewPagerSlider.setOnTouchListener { p0, event ->
             if (event!!.action == MotionEvent.ACTION_DOWN) {
                 firstX = event.x
@@ -152,6 +150,5 @@ class FragmentHome : Fragment() {
             }
             true
         }
-
     }
 }

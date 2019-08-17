@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBookPage
 
 class AdapterBookTabLayout(fragment: FragmentManager) : FragmentPagerAdapter(fragment) {
+
     val title = listOf("Theo Dõi", "Lịch Sử", "Tải Xuống")
     override fun getItem(position: Int): Fragment {
         return FragmentBookPage(position)

@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.network
 
 import huuloc.uit.edu.truyenqq.data.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -38,15 +39,6 @@ interface ApiHelper {
 
     @GET("book/category?type_category=2")
     fun getListCategory(@Header("token") token: String = token_api): Call<CategoryList>
-
-    @FormUrlEncoded
-    @POST("frontend/public/login")
-    @Json
-    fun loginTruyenQQ(
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("Expire") expire: Int = 1
-    ): Call<StatusLogin>
 
     @GET("book/schedule")
     fun getSchduleStory(
@@ -116,7 +108,7 @@ interface ApiHelper {
         @Field("book_id") book_id2: String,
         @Field("user_id") user_id: String,
         @Field("chap_order") chap_order: String
-    ): Call<StatusLogin>
+    ): Call<ResponseBody>
 
     @GET("book/history-read")
     fun getHistoryReading(
@@ -135,6 +127,37 @@ interface ApiHelper {
         @Query("typeSearch") order: String = "search",
         @Query("search") search: String
     ): Call<ListStory>
+
+    @FormUrlEncoded
+    @PUT("user/register")
+    fun sendForgotPassword(
+        @Header("token") token: String = token_api,
+        @Query("id") id1: Int = 0,
+        @Field("email") email: String,
+        @Field("captcha") captcha: String = "123456",
+        @Field("word") word: String = "123456",
+        @Field("id") id2: Int = 0
+    ): Call<ForgotPassword>
+
+    @FormUrlEncoded
+    @POST("user/register")
+    fun sendRegister(
+        @Header("token") token: String = token_api,
+        @Field("email") email: String,
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("password_confirm") password_confirm: String,
+        @Field("captcha") captcha: String = "123456",
+        @Field("word") word: String = "123456"
+    ): Call<DataLogin>
+
+    @FormUrlEncoded
+    @POST("user/login")
+    fun sendLogin(
+        @Header("token") token: String = token_api,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<DataLogin>
 }
 
 annotation class Html

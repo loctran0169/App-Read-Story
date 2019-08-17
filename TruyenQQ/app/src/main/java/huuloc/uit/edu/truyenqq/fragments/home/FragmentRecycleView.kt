@@ -16,8 +16,6 @@ import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
 class FragmentRecycleView(private val sort: Int, private var col: String) : Fragment() {
@@ -48,30 +46,66 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
             addItemDecoration(SpaceItem(4))
         }
         when (sort) {
-            0 -> viewModel.storyDay.observe(this@FragmentRecycleView, Observer {
-                adapterHorizontal.updateData(it.list)
-                list = it.list as ArrayList<StoryInformation>
-                if (it.list.isNotEmpty())
-                    progressBarRank.visibility = View.INVISIBLE
-            })
-            1 -> viewModel.storyWeek.observe(this@FragmentRecycleView, Observer {
-                adapterHorizontal.updateData(it.list)
-                list = it.list as ArrayList<StoryInformation>
-                if (it.list.isNotEmpty())
-                    progressBarRank.visibility = View.INVISIBLE
-            })
-            2 -> viewModel.storyMonth.observe(this@FragmentRecycleView, Observer {
-                adapterHorizontal.updateData(it.list)
-                list = it.list as ArrayList<StoryInformation>
-                if (it.list.isNotEmpty())
-                    progressBarRank.visibility = View.INVISIBLE
-            })
-            3 -> viewModel.storyLike.observe(this@FragmentRecycleView, Observer {
-                adapterHorizontal.updateData(it.list)
-                list = it.list as ArrayList<StoryInformation>
-                if (it.list.isNotEmpty())
-                    progressBarRank.visibility = View.INVISIBLE
-            })
+            0 -> {
+                viewModel.loadDay(col)
+                viewModel.storyDay.observe(this@FragmentRecycleView, Observer {
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreDay.observe(this@FragmentRecycleView, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
+                })
+            }
+            1 -> {
+                viewModel.loadWeek(col)
+                viewModel.storyWeek.observe(this@FragmentRecycleView, Observer {
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreWeek.observe(this@FragmentRecycleView, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
+                })
+            }
+            2 -> {
+                viewModel.loadMonth(col)
+                viewModel.storyMonth.observe(this@FragmentRecycleView, Observer {
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreMonth.observe(this@FragmentRecycleView, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
+                })
+            }
+            3 -> {
+                viewModel.loadLike(col)
+                viewModel.storyLike.observe(this@FragmentRecycleView, Observer {
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreLike.observe(this@FragmentRecycleView, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
+                })
+            }
         }
         initScrollListener()
     }
@@ -82,21 +116,33 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (!isLoading && manager.findLastVisibleItemPosition() >= list.size - 5) {
-                    isLoading = true
-                    apiManager.getListNewUpdate(offset, _col = col, _arrayCategory = "")
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            val position = list.size
-                            list.addAll(it.list)
-                            adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
-                            isLoading = false
-                            offset += 20
-                        }, {
-
-                        })
+                when (sort) {
+                    0 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyDay.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadDay(col)
+                        }
+                    }
+                    1 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyWeek.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadWeek(col)
+                        }
+                    }
+                    2 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyMonth.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadMonth(col)
+                        }
+                    }
+                    3 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyLike.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadLike(col)
+                        }
+                    }
                 }
+
             }
         })
     }

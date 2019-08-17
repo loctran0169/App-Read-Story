@@ -17,17 +17,9 @@ import huuloc.uit.edu.truyenqq.data.StoryInformation
 import kotlinx.android.synthetic.main.item_story_horizontal.view.*
 import kotlinx.android.synthetic.main.progressbar_loading.view.*
 
-class AdapterHorizontal :
+class AdapterHorizontal(var context: Context, var items: List<StoryInformation>) :
 
-    RecyclerView.Adapter<BaseItem> {
-
-    var context: Context
-    var mItems: List<StoryInformation>
-
-    constructor(context: Context, items: List<StoryInformation>) : super() {
-        this.context = context
-        this.mItems = items
-    }
+    RecyclerView.Adapter<BaseItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItem {
         return when (viewType) {
@@ -43,9 +35,9 @@ class AdapterHorizontal :
     }
 
     override fun getItemCount(): Int {
-        if (mItems.isNullOrEmpty())
+        if (items.isNullOrEmpty())
             return 0
-        return mItems.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: BaseItem, position: Int) {
@@ -53,20 +45,20 @@ class AdapterHorizontal :
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (mItems[position].id == "")
+        if (items[position].id == "")
             return 0
         return 1
     }
 
     fun updateData(list: List<StoryInformation>) {
-        mItems = list
+        items = list
         notifyDataSetChanged()
     }
 
     inner class ItemViewHolder(view: View) : BaseItem(view) {
         @SuppressLint("SetTextI18n")
         override fun bind(position: Int) {
-            val p0 = mItems[position]
+            val p0 = items[position]
             itemView.tvStoryNameHorizontal.text = p0.name
             try {
                 Glide.with(context)
@@ -88,11 +80,12 @@ class AdapterHorizontal :
             itemView.tvStoryTimeHorizontal.text =
                 timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
             itemView.setOnClickListener {
-                val intent = Intent(context, ActivityStory::class.java)
+                val intent1 = Intent(context, ActivityStory::class.java)
                 val bundle = Bundle()
-                bundle.putString("book_id", p0.id)
-                intent.putExtra("kind", bundle)
-                context.startActivity(intent)
+                println("### ${p0.id} ${p0.chap_order}")
+                bundle.putString("book_id", if (p0.book_id != null) p0.book_id else p0.id)
+                intent1.putExtra("kind", bundle)
+                context.startActivity(intent1)
             }
             itemView.tvLikeHorizontal.text = p0.like_book
             itemView.tvViewHorizontal.text = p0.total_view
@@ -104,6 +97,10 @@ class AdapterHorizontal :
         override fun bind(position: Int) {
             itemView.progressBar.visibility = View.VISIBLE
         }
+    }
 
+    fun loadMore(pos: Int, add: Int): Boolean {
+        notifyItemRangeInserted(pos, add)
+        return true
     }
 }

@@ -1,4 +1,4 @@
-package huuloc.uit.edu.truyenqq.fragments
+package huuloc.uit.edu.truyenqq.fragments.category
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -33,14 +33,14 @@ class FragmentCategory : Fragment() {
         binding.svCategory.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 adapterCategory.updateData(list as MutableList<Category>)
-                adapterCategory!!.filter.filter(query)
+                adapterCategory.filter.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 // filter recycler view when text is changed
                 adapterCategory.updateData(list as MutableList<Category>)
-                adapterCategory!!.filter.filter(query)
+                adapterCategory.filter.filter(query)
                 return false
             }
         })

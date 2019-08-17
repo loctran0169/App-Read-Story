@@ -52,8 +52,10 @@ data class StoryRead(
 )
 
 data class FirstChap(
+    @Expose
     @SerializedName("name")
     var name: String,
+    @Expose
     @SerializedName("order")
     var order: String
 )

@@ -16,6 +16,9 @@ data class StoryInformation(
     @SerializedName("id")
     var id: String,
     @Expose
+    @SerializedName("book_id")
+    var book_id: String?,
+    @Expose
     @SerializedName("image")
     val image: String,
     @Expose
@@ -29,7 +32,7 @@ data class StoryInformation(
     val episode: String,
     @Expose
     @SerializedName("chap_order")
-    val chap_order: String,
+    val chap_order: String?,
     @Expose
     @SerializedName("modified")
     var modified: String,

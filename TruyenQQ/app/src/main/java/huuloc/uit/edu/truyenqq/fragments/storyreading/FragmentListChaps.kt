@@ -23,6 +23,7 @@ class FragmentListChaps : Fragment() {
     private val adapterListChap: AdapterListChap by lazy {
         AdapterListChap(activity!!, mutableListOf())
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }

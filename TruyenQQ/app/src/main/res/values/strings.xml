@@ -26,4 +26,12 @@
     <string name="lbReadNow">Đọc Ngay</string>
     <string name="lbWriteAny">Viết gì đó</string>
     <string name="lbHistory">Lịch sử tìm kiếm</string>
+    <string name="lbLoginText">Vui lòng đăng nhập vào tài khoản của bạn để tiếp tục sử dụng dịch vụ,</string>
+    <string name="lbEmail">Nhập email</string>
+    <string name="lbPassword">Nhập mật khẩu</string>
+    <string name="lbRegister">Đăng ký tài khoản mới</string>
+    <string name="lbLogin">Đăng Nhập</string>
+    <string name="lbForgotPassword">Quên mật khẩu?</string>
+    <string name="lbForgotText">Vui lòng nhập email của bạn để tiếp tục.</string>
+    <string name="lbRegisterSend">Đăng Ký</string>
 </resources>

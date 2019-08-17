@@ -11,13 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.ActivityUser
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
-import huuloc.uit.edu.truyenqq.fragments.FragmentCategory
-import huuloc.uit.edu.truyenqq.fragments.FragmentSearch
+import huuloc.uit.edu.truyenqq.fragments.category.FragmentCategory
+import huuloc.uit.edu.truyenqq.fragments.search.FragmentSearch
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
-import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -63,8 +63,10 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navUser -> {
-                    showFragment(FragmentUser())
-                    idSelect = it.itemId
+                    val intend1 = Intent(this, ActivityUser::class.java)
+                    startActivity(intend1)
+//                    showFragment(FragmentUser())
+//                    idSelect = it.itemId
                     true
                 }
 
@@ -97,7 +99,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        println("###")
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -121,6 +122,16 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityNewUpdate::class.java)
         val bundle = Bundle()
         bundle.putString("name", "Truyện mới cập nhật")
+        bundle.putString("category", "")
+        bundle.putString("col", "modified")
+        intent.putExtra("kind", bundle)
+        startActivity(intent)
+    }
+
+    fun openActivityMale(view: View) {
+        val intent = Intent(this, ActivityNewUpdate::class.java)
+        val bundle = Bundle()
+        bundle.putString("name", "Truyện con gái")
         bundle.putString("category", "")
         bundle.putString("col", "modified")
         intent.putExtra("kind", bundle)

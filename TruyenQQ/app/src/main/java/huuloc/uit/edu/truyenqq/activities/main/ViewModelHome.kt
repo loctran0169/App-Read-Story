@@ -1,5 +1,6 @@
 package huuloc.uit.edu.truyenqq.activities.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import huuloc.uit.edu.truyenqq.data.*
@@ -12,103 +13,63 @@ import java.util.*
 class ViewModelHome : ViewModel() {
     val cal = Calendar.getInstance()
 
-    val sLoadingNew = MutableLiveData<Boolean>().apply { value = false }
     val storyNew = MutableLiveData<List<StoryInformation>>().apply { value = mutableListOf() }
 
-    val sLoadingStoryMale = MutableLiveData<Boolean>().apply { value = false }
-    val storyStoryMale = MutableLiveData<List<StoryInfo>>().apply { value = mutableListOf() }
+    val storyStoryMale = MutableLiveData<List<StoryInformation>>().apply { value = mutableListOf() }
 
-    val sLoadingStoryFemale = MutableLiveData<Boolean>().apply { value = false }
-    val storyStoryFemale = MutableLiveData<List<StoryInfo>>().apply { value = mutableListOf() }
+    val storyStoryFemale = MutableLiveData<List<StoryInformation>>().apply { value = mutableListOf() }
 
     val sLoadingSchedulers = MutableLiveData<ScheduleStoryList>().apply { value = ScheduleStoryList(mutableListOf()) }
 
     val sLoadingCategory = MutableLiveData<CategoryList>().apply { value = CategoryList(mutableListOf()) }
 
-    val subcribe = MutableLiveData<ListStory>().apply { value = ListStory(mutableListOf()) }
-
-    val history = MutableLiveData<ListStory>().apply { value = ListStory(mutableListOf()) }
-
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
 
     init {
+        refresh()
+    }
+
+    fun refresh(){
         loadNewStory()
         loadStoryMale()
         loadStoryFemale()
         loadSchedule()
         loadCategory()
-        loadSubsribe()
-        loadHistory()
-    }
-
-    fun loadSubsribe() {
-        compo.add(
-            apiManager.getSubscribe(0, 20, "24901")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    subcribe.value = it
-                }, {
-
-                })
-        )
-    }
-
-    fun loadHistory() {
-        compo.add(
-            apiManager.getHistory(0, 20, "24901")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    history.value = it
-                }, {
-
-                })
-        )
     }
 
     fun loadNewStory() {
-        sLoadingNew.value = false
         compo.add(
             apiManager.getListNewUpdate(0, "modified")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     storyNew.value = it.list
-                    sLoadingNew.value = true
                 }, {
-                    sLoadingNew.value = false
                 })
         )
     }
 
     fun loadStoryMale() {
-        sLoadingStoryMale.value = false
         compo.add(
-            apiManager.getListStory("truyen-con-trai.html")
+            apiManager.getListNewUpdate(0,"modified","28,29,36,37,38,39,42,46,51,52,54,75,90,93")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    storyStoryMale.value = it
-                    sLoadingStoryMale.value = true
+                    storyStoryMale.value = it.list
                 }, {
-                    sLoadingStoryMale.value = false
                 })
         )
     }
 
     fun loadStoryFemale() {
-        sLoadingStoryFemale.value = false
         compo.add(
-            apiManager.getListStory("truyen-con-gai.html")
+            apiManager.getListNewUpdate(0,"modified","26,27,30,31,32,41,43,47,48,50,57,85,97")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    storyStoryFemale.value = it
-                    sLoadingStoryFemale.value = true
+                    storyStoryFemale.value = it.list
                 }, {
-                    sLoadingStoryFemale.value = false
                 })
         )
     }

@@ -1,4 +1,4 @@
-package huuloc.uit.edu.truyenqq.fragments
+package huuloc.uit.edu.truyenqq.fragments.search
 
 import android.annotation.SuppressLint
 import android.os.Bundle

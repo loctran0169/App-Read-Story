@@ -12,10 +12,7 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.newstory.ViewModelNewUpdate
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.data.StoryInformation
-import huuloc.uit.edu.truyenqq.network.ApiManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_newstory.*
 
 class ActivityNewUpdate : AppCompatActivity() {
@@ -26,11 +23,7 @@ class ActivityNewUpdate : AppCompatActivity() {
         AdapterHorizontal(this, mutableListOf())
     }
     private var isLoading = false
-    private var offset = 20
     private var list = ArrayList<StoryInformation>()
-    private val apiManager: ApiManager by lazy {
-        ApiManager()
-    }
     val viewModel: ViewModelNewUpdate by lazy {
         ViewModelProviders
             .of(this)
@@ -59,10 +52,18 @@ class ActivityNewUpdate : AppCompatActivity() {
         btnBackNewStory.setOnClickListener {
             onBackPressed()
         }
-        viewModel.loadData(category, col).observe(this@ActivityNewUpdate, Observer {
-            adapterHorizontal.updateData(it.list)
-            list = it.list as ArrayList<StoryInformation>
-            progressBarNew.visibility= View.INVISIBLE
+        viewModel.loadSubsribe(category, col)
+        viewModel._New.observe(this@ActivityNewUpdate, Observer {
+            if (it != null) {
+                adapterHorizontal.updateData(it)
+                progressBarNew.visibility = View.INVISIBLE
+            }
+        })
+        viewModel.loadMore.observe(this@ActivityNewUpdate, Observer {
+            if (it.end - it.start > 0) {
+                adapterHorizontal.loadMore(it.start + 1, it.end)
+                isLoading = false
+            }
         })
         initScrollListener()
     }
@@ -73,20 +74,9 @@ class ActivityNewUpdate : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (!isLoading && manager.findLastVisibleItemPosition() >= list.size - 5) {
+                if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel._New.value!!.size - 5) {
                     isLoading = true
-                    apiManager.getListNewUpdate(offset, _col = col, _arrayCategory = category)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            val position = list.size
-                            list.addAll(it.list)
-                            adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
-                            isLoading = false
-                            offset += 20
-                        }, {
-
-                        })
+                    viewModel.loadSubsribe(category, col)
                 }
             }
         })

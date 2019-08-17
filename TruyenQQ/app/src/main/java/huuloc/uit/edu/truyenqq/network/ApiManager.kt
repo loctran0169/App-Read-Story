@@ -3,6 +3,7 @@ package huuloc.uit.edu.truyenqq.network
 import huuloc.uit.edu.truyenqq.data.*
 import io.reactivex.Single
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -67,7 +68,7 @@ class ApiManager {
                 }
 
                 override fun onFailure(p0: Call<T>, response: Throwable) {
-                    println("### 2$response")
+                    println("### $response")
                     it.onError(response)
                 }
             })
@@ -108,7 +109,7 @@ class ApiManager {
         return buildRequest(_apiRestFull.getSchduleStory(date = _date))
     }
 
-    fun setHistory(_book_id: String, _user_id: String, _chap: String): Single<StatusLogin> {
+    fun setHistory(_book_id: String, _user_id: String, _chap: String): Single<ResponseBody> {
         return buildRequest(
             _apiRestFull.setHistory(
                 book_id1 = _book_id,
@@ -151,6 +152,17 @@ class ApiManager {
         return buildRequest(_apiRestFull.getHistoryReading(book_id1 = bookId, book_id2 = bookId, user_id = userId))
     }
 
+    fun sendForgotPassword(_email: String): Single<ForgotPassword> {
+        return buildRequest(_apiRestFull.sendForgotPassword(email = _email))
+    }
+
+    fun sendRegister(_email: String,_password : String): Single<DataLogin> {
+        return buildRequest(_apiRestFull.sendRegister(email = _email,username = _email.split("@")[0],password = _password,password_confirm = _password))
+    }
+
+    fun sendLogin(_email: String,_password : String): Single<DataLogin> {
+        return buildRequest(_apiRestFull.sendLogin(email = _email,password = _password))
+    }
     /*fun saveCookie(id: String) {
         putShare.putString("id", id)
         putShare.apply()

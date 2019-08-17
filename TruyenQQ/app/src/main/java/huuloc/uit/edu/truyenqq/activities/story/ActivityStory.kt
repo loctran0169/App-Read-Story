@@ -32,7 +32,6 @@ class ActivityStory : AppCompatActivity() {
         ViewModelProviders
             .of(this, ViewModelStoryFactory(intent.getBundleExtra("kind")!!.getString("book_id")!!, "24901"))
             .get(ViewModelStory::class.java)
-
         collapsingStory.setExpandedTitleTextAppearance(R.style.ExpandedAppBar)
         viewPagerStory.adapter = AdapterStoryTabLayout(fragment = supportFragmentManager)
         tabLayoutStory.tabMode = TabLayout.MODE_FIXED
@@ -59,7 +58,7 @@ class ActivityStory : AppCompatActivity() {
                         this.startActivity(intent1)
                     }
                 val dislay = dialog.create()
-                dislay.setTitle("Remove")
+                dislay.setTitle("Thông báo")
                 dislay.show()
             } else {
                 val intent1 = Intent(this, ActivityReading::class.java)
@@ -77,6 +76,7 @@ class ActivityStory : AppCompatActivity() {
             orderReaded = it.first_chap.order
         })
         btnSubscribe.setOnClickListener {
+            println("### read new")
             viewModel.loadSubscribe().observe(this, Observer {
                 if (it.success == 0) {
                     btnSubscribe.isSelected = true

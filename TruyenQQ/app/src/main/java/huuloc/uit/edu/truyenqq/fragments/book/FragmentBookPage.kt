@@ -11,26 +11,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
-import huuloc.uit.edu.truyenqq.data.StoryInformation
-import huuloc.uit.edu.truyenqq.network.ApiManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
 class FragmentBookPage(val _tag: Int = 0) : Fragment() {
     private var isLoading = false
-    private var offset = 20
-    private var list = ArrayList<StoryInformation>()
-    private val apiManager: ApiManager by lazy {
-        ApiManager()
-    }
-    val viewModel: ViewModelHome by lazy {
+    val viewModel: ViewModelBook by lazy {
         ViewModelProviders
             .of(activity!!)
-            .get(ViewModelHome::class.java)
+            .get(ViewModelBook::class.java)
     }
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(activity!!, mutableListOf())
@@ -40,6 +30,7 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rcvHorizontal.run {
@@ -50,26 +41,35 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
             0 -> {
                 rcvHorizontal.adapter = adapterHorizontal
                 viewModel.subcribe.observe(this@FragmentBookPage, Observer {
-                    adapterHorizontal.updateData(it.list)
-                    list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility = View.INVISIBLE
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreSub.observe(this@FragmentBookPage, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
                 })
             }
             1 -> {
                 rcvHorizontal.adapter = adapterHorizontal
                 viewModel.history.observe(this@FragmentBookPage, Observer {
-                    adapterHorizontal.updateData(it.list)
-                    list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility = View.INVISIBLE
+                    if (it != null) {
+                        adapterHorizontal.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                    }
+                })
+                viewModel.loadMoreHis.observe(this@FragmentBookPage, Observer {
+                    if (it.end - it.start > 0) {
+                        adapterHorizontal.loadMore(it.start + 1, it.end)
+                        isLoading = false
+                    }
                 })
             }
             2 -> {
-                rcvHorizontal.adapter = adapterHorizontal
-                viewModel.subcribe.observe(this@FragmentBookPage, Observer {
-                    adapterHorizontal.updateData(it.list)
-                    list = it.list as ArrayList<StoryInformation>
-                    progressBarRank.visibility = View.INVISIBLE
-                })
+
             }
         }
         initScrollListener()
@@ -81,39 +81,21 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (!isLoading && manager.findLastVisibleItemPosition() >= list.size - 5) {
-                    isLoading = true
-                    when (_tag) {
-                        0 -> {
-                            apiManager.getSubscribe(offset, 20, "24901")
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({
-                                    val position = list.size
-                                    list.addAll(it.list)
-                                    adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
-                                    isLoading = false
-                                    offset += 20
-                                }, {
-
-                                })
+                when (_tag) {
+                    0 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.subcribe.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadSubsribe()
                         }
-                        1 ->{
-                            apiManager.getHistory(offset, 20, "24901")
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({
-                                    val position = list.size
-                                    list.addAll(it.list)
-                                    adapterHorizontal.notifyItemRangeInserted(position, it.list.size - 1)
-                                    isLoading = false
-                                    offset += 20
-                                }, {
-
-                                })
+                    }
+                    1 -> {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.history.value!!.size - 5) {
+                            isLoading = true
+                            viewModel.loadHistory()
                         }
                     }
                 }
+
             }
         })
     }
