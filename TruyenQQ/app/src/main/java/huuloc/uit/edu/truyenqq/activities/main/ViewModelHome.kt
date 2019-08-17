@@ -52,7 +52,7 @@ class ViewModelHome : ViewModel() {
 
     fun loadStoryMale() {
         compo.add(
-            apiManager.getListNewUpdate(0,"modified","28,29,36,37,38,39,42,46,51,52,54,75,90,93")
+            apiManager.getListNewUpdate(0,"modified","26,27,30,31,32,41,43,47,48,50,57,85,97")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -64,7 +64,7 @@ class ViewModelHome : ViewModel() {
 
     fun loadStoryFemale() {
         compo.add(
-            apiManager.getListNewUpdate(0,"modified","26,27,30,31,32,41,43,47,48,50,57,85,97")
+            apiManager.getListNewUpdate(0,"modified","28,29,36,37,38,39,42,46,51,52,54,75,90,93")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

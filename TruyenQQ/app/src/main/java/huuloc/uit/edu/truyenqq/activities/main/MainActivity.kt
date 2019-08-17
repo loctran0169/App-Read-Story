@@ -14,10 +14,10 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
-import huuloc.uit.edu.truyenqq.fragments.category.FragmentCategory
-import huuloc.uit.edu.truyenqq.fragments.search.FragmentSearch
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
+import huuloc.uit.edu.truyenqq.fragments.category.FragmentCategory
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
+import huuloc.uit.edu.truyenqq.fragments.search.FragmentSearch
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -131,8 +131,18 @@ class MainActivity : AppCompatActivity() {
     fun openActivityMale(view: View) {
         val intent = Intent(this, ActivityNewUpdate::class.java)
         val bundle = Bundle()
+        bundle.putString("name", "Truyện con trai")
+        bundle.putString("category", "26,27,30,31,32,41,43,47,48,50,57,85,97")
+        bundle.putString("col", "modified")
+        intent.putExtra("kind", bundle)
+        startActivity(intent)
+    }
+
+    fun openActivityFemale(view: View) {
+        val intent = Intent(this, ActivityNewUpdate::class.java)
+        val bundle = Bundle()
         bundle.putString("name", "Truyện con gái")
-        bundle.putString("category", "")
+        bundle.putString("category", "28,29,36,37,38,39,42,46,51,52,54,75,90,93")
         bundle.putString("col", "modified")
         intent.putExtra("kind", bundle)
         startActivity(intent)
