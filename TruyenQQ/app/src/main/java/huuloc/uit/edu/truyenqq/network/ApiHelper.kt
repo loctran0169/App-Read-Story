@@ -55,7 +55,7 @@ interface ApiHelper {
         @Query("limit") limit: Int,
         @Query("col") col: String = "modified_date",
         @Query("order") order: String = "DESC",
-        @Query("user_id") user_id: String
+        @Query("user_id") user_id: String?
     ): Call<ListStory>
 
     @POST("book/subscribe")
@@ -72,7 +72,7 @@ interface ApiHelper {
         @Query("limit") limit: Int,
         @Query("col") col: String = "modified",
         @Query("order") order: String = "DESC",
-        @Query("user_id") user_id: String
+        @Query("user_id") user_id: String?
     ): Call<ListStory>
 
     @GET("book/manga")

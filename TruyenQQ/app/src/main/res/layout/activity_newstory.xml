@@ -33,12 +33,18 @@
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvNew"
-            tools:listitem="@layout/item_story_horizontal"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshNew"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvNew"
+                tools:listitem="@layout/item_story_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <ProgressBar
             android:id="@+id/progressBarNew"
             android:layout_gravity="center"

@@ -1,15 +1,26 @@
 package huuloc.uit.edu.truyenqq.fragments.book
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import huuloc.uit.edu.truyenqq.data.LoadMoreObject
+import huuloc.uit.edu.truyenqq.data.MysharedPreferences
 import huuloc.uit.edu.truyenqq.data.StoryInformation
+import huuloc.uit.edu.truyenqq.data.USER_ID
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ViewModelBook : ViewModel() {
+class ViewModelBookFactory(val conText: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return ViewModelBook(conText) as T
+    }
+}
+
+class ViewModelBook(conText: Context) : ViewModel() {
+    val share = MysharedPreferences(conText).gẹtShare
     var load = MutableLiveData<Boolean>().apply { value = false }
     var offsetSub = 0
     var offsetHis = 0
@@ -32,7 +43,7 @@ class ViewModelBook : ViewModel() {
     fun loadSubsribe() {
         val loadMore = itemsSub.isNotEmpty()
         compo.add(
-            apiManager.getSubscribe(offsetSub, 20, "24901")
+            apiManager.getSubscribe(offsetSub, 20, share.getString(USER_ID,null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -57,7 +68,7 @@ class ViewModelBook : ViewModel() {
     fun loadHistory() {
         val loadMore = itemsHis.isNotEmpty()
         compo.add(
-            apiManager.getHistory(offsetHis, 20, "24901")
+            apiManager.getHistory(offsetHis, 20, share.getString(USER_ID,null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

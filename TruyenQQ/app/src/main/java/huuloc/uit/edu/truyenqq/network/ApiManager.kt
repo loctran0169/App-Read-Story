@@ -120,7 +120,7 @@ class ApiManager {
         )
     }
 
-    fun getHistory(_offset: Int, _limit: Int, _user_id: String): Single<ListStory> {
+    fun getHistory(_offset: Int, _limit: Int, _user_id: String?): Single<ListStory> {
         return buildRequest(_apiRestFull.getHistory(offset = _offset, limit = _limit, user_id = _user_id))
     }
 
@@ -128,7 +128,7 @@ class ApiManager {
         return buildRequest(_apiRestFull.setSubscribe(book_id = _book_id, user_id = _user_id))
     }
 
-    fun getSubscribe(_offset: Int, _limit: Int, _user_id: String): Single<ListStory> {
+    fun getSubscribe(_offset: Int, _limit: Int, _user_id: String?): Single<ListStory> {
         return buildRequest(_apiRestFull.getSubscribe(offset = _offset, limit = _limit, user_id = _user_id))
     }
 

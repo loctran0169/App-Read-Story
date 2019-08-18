@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
@@ -17,21 +16,18 @@ class FragmentBook : Fragment() {
 
     val viewModel: ViewModelBook by lazy {
         ViewModelProviders
-            .of(activity!!)
+            .of(activity!!, ViewModelBookFactory(activity!!))
             .get(ViewModelBook::class.java)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, null)
-        viewPagerBook.adapter = AdapterBookTabLayout(childFragmentManager)
+        viewPagerBook.adapter = AdapterBookTabLayout(childFragmentManager,activity!!)
         tabLayoutBook.tabMode = TabLayout.MODE_FIXED
         tabLayoutBook.setupWithViewPager(viewPagerBook)
-
-        refreshBook.setOnRefreshListener {
-
-        }
     }
 }

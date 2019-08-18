@@ -57,14 +57,24 @@ class ActivityNewUpdate : AppCompatActivity() {
             if (it != null) {
                 adapterHorizontal.updateData(it)
                 progressBarNew.visibility = View.INVISIBLE
+                isLoading = false
+                refreshNew.isRefreshing = false
             }
         })
         viewModel.loadMore.observe(this@ActivityNewUpdate, Observer {
             if (it.end - it.start > 0) {
                 adapterHorizontal.loadMore(it.start + 1, it.end)
                 isLoading = false
+                refreshNew.isRefreshing = false
             }
         })
+        refreshNew.setOnRefreshListener {
+            isLoading = true
+            viewModel.itemsNew.clear()
+            viewModel.offsetNew = 0
+            adapterHorizontal.notifyDataSetChanged()
+            viewModel.loadSubsribe(category, col)
+        }
         initScrollListener()
     }
 

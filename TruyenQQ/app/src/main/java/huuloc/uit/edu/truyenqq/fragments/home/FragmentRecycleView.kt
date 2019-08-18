@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.rank.ViewModelRank
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
-import huuloc.uit.edu.truyenqq.data.StoryInformation
-import huuloc.uit.edu.truyenqq.network.ApiManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
@@ -28,11 +26,6 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
             .get(ViewModelRank::class.java)
     }
     private var isLoading = false
-    private var offset = 20
-    private var list = ArrayList<StoryInformation>()
-    private val apiManager: ApiManager by lazy {
-        ApiManager()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
@@ -52,12 +45,15 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                     if (it != null) {
                         adapterHorizontal.updateData(it)
                         progressBarRank.visibility = View.INVISIBLE
+                        isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
                 viewModel.loadMoreDay.observe(this@FragmentRecycleView, Observer {
                     if (it.end - it.start > 0) {
                         adapterHorizontal.loadMore(it.start + 1, it.end)
                         isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
             }
@@ -67,12 +63,15 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                     if (it != null) {
                         adapterHorizontal.updateData(it)
                         progressBarRank.visibility = View.INVISIBLE
+                        isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
                 viewModel.loadMoreWeek.observe(this@FragmentRecycleView, Observer {
                     if (it.end - it.start > 0) {
                         adapterHorizontal.loadMore(it.start + 1, it.end)
                         isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
             }
@@ -82,12 +81,15 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                     if (it != null) {
                         adapterHorizontal.updateData(it)
                         progressBarRank.visibility = View.INVISIBLE
+                        isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
                 viewModel.loadMoreMonth.observe(this@FragmentRecycleView, Observer {
                     if (it.end - it.start > 0) {
                         adapterHorizontal.loadMore(it.start + 1, it.end)
                         isLoading = false
+                        refreshRank.isRefreshing = false
                     }
                 })
             }
@@ -105,6 +107,35 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                         isLoading = false
                     }
                 })
+            }
+        }
+        refreshRank.setOnRefreshListener {
+            isLoading = true
+            when (sort) {
+                0 -> {
+                    viewModel.itemsDay.clear()
+                    viewModel.offsetDay = 0
+                    adapterHorizontal.notifyDataSetChanged()
+                    viewModel.loadDay(col)
+                }
+                1 -> {
+                    viewModel.itemsWeek.clear()
+                    viewModel.offsetWeek = 0
+                    adapterHorizontal.notifyDataSetChanged()
+                    viewModel.loadWeek(col)
+                }
+                2 -> {
+                    viewModel.itemsMonth.clear()
+                    viewModel.offsetMonth = 0
+                    adapterHorizontal.notifyDataSetChanged()
+                    viewModel.loadMonth(col)
+                }
+                3 -> {
+                    viewModel.itemsLike.clear()
+                    viewModel.offsetLike = 0
+                    adapterHorizontal.notifyDataSetChanged()
+                    viewModel.loadLike(col)
+                }
             }
         }
         initScrollListener()
@@ -145,5 +176,6 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
 
             }
         })
+
     }
 }

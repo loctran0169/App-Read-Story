@@ -15,11 +15,11 @@ import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
-class FragmentBookPage(val _tag: Int = 0) : Fragment() {
+class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
     private var isLoading = false
     val viewModel: ViewModelBook by lazy {
         ViewModelProviders
-            .of(activity!!)
+            .of(activity!!, ViewModelBookFactory(activity!!))
             .get(ViewModelBook::class.java)
     }
     private val adapterHorizontal: AdapterHorizontal by lazy {
@@ -27,52 +27,56 @@ class FragmentBookPage(val _tag: Int = 0) : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
+        if (isLogin)
+            return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
+        return inflater.inflate(R.layout.fragment_require, container, false)
     }
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rcvHorizontal.run {
-            layoutManager = LinearLayoutManager(activity)
-            addItemDecoration(SpaceItem(4))
-        }
-        when (_tag) {
-            0 -> {
-                rcvHorizontal.adapter = adapterHorizontal
-                viewModel.subcribe.observe(this@FragmentBookPage, Observer {
-                    if (it != null) {
-                        adapterHorizontal.updateData(it)
-                        progressBarRank.visibility = View.INVISIBLE
-                    }
-                })
-                viewModel.loadMoreSub.observe(this@FragmentBookPage, Observer {
-                    if (it.end - it.start > 0) {
-                        adapterHorizontal.loadMore(it.start + 1, it.end)
-                        isLoading = false
-                    }
-                })
+        if (isLogin) {
+            rcvHorizontal.run {
+                layoutManager = LinearLayoutManager(activity)
+                addItemDecoration(SpaceItem(4))
             }
-            1 -> {
-                rcvHorizontal.adapter = adapterHorizontal
-                viewModel.history.observe(this@FragmentBookPage, Observer {
-                    if (it != null) {
-                        adapterHorizontal.updateData(it)
-                        progressBarRank.visibility = View.INVISIBLE
-                    }
-                })
-                viewModel.loadMoreHis.observe(this@FragmentBookPage, Observer {
-                    if (it.end - it.start > 0) {
-                        adapterHorizontal.loadMore(it.start + 1, it.end)
-                        isLoading = false
-                    }
-                })
-            }
-            2 -> {
+            when (_tag) {
+                0 -> {
+                    rcvHorizontal.adapter = adapterHorizontal
+                    viewModel.subcribe.observe(this@FragmentBookPage, Observer {
+                        if (it != null) {
+                            adapterHorizontal.updateData(it)
+                            progressBarRank.visibility = View.INVISIBLE
+                        }
+                    })
+                    viewModel.loadMoreSub.observe(this@FragmentBookPage, Observer {
+                        if (it.end - it.start > 0) {
+                            adapterHorizontal.loadMore(it.start + 1, it.end)
+                            isLoading = false
+                        }
+                    })
+                }
+                1 -> {
+                    rcvHorizontal.adapter = adapterHorizontal
+                    viewModel.history.observe(this@FragmentBookPage, Observer {
+                        if (it != null) {
+                            adapterHorizontal.updateData(it)
+                            progressBarRank.visibility = View.INVISIBLE
+                        }
+                    })
+                    viewModel.loadMoreHis.observe(this@FragmentBookPage, Observer {
+                        if (it.end - it.start > 0) {
+                            adapterHorizontal.loadMore(it.start + 1, it.end)
+                            isLoading = false
+                        }
+                    })
+                }
+                2 -> {
 
+                }
             }
+            initScrollListener()
         }
-        initScrollListener()
     }
 
     private fun initScrollListener() {

@@ -12,7 +12,7 @@ const val PHONE = "phone"
 
 class MysharedPreferences(context: Context) {
     private val APP_NAME = "truyenqq"
-    private val gẹtShare = context.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
+    val gẹtShare = context.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE)
 
     fun save(KEY_NAME: String, text: String) {
         val editor = gẹtShare.edit()

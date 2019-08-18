@@ -18,6 +18,7 @@ class ViewModelUser : ViewModel() {
     val register = MutableLiveData<DataLogin>().apply { value = null }
     val login = MutableLiveData<DataLogin>().apply { value = null }
     var email = MutableLiveData<String>().apply { value = "" }
+    var isLogin = MutableLiveData<Boolean>().apply { value = false }
     fun setEmail(tx: Editable) {
         email.value = tx.toString()
     }
@@ -50,9 +51,9 @@ class ViewModelUser : ViewModel() {
         return register
     }
 
-    fun sendLogin(_email: String, _password: String): LiveData<DataLogin> {
+    fun sendLogin(_email: String, _password: String) {
         compo.add(
-            apiManager.sendRegister(_email, _password)
+            apiManager.sendLogin(_email, _password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -61,6 +62,5 @@ class ViewModelUser : ViewModel() {
 
                 })
         )
-        return login
     }
 }

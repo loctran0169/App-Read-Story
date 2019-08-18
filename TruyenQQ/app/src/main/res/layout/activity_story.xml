@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
             android:fitsSystemWindows="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -179,7 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?actionBarSize">
                 <Button
-                        android:id="@+id/btnBackRank"
+                        android:id="@+id/btnBackStory"
                         android:visibility="gone"
                         android:background="@drawable/ic_before"
                         android:layout_width="32dp"

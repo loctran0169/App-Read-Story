@@ -3,12 +3,14 @@ package huuloc.uit.edu.truyenqq.activities.story
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.reading.ActivityReading
@@ -18,6 +20,7 @@ import huuloc.uit.edu.truyenqq.data.StatusRead
 import huuloc.uit.edu.truyenqq.data.StatusReadInfor
 import huuloc.uit.edu.truyenqq.data.StoryRead
 import kotlinx.android.synthetic.main.activity_story.*
+import kotlin.math.abs
 
 class ActivityStory : AppCompatActivity() {
     val viewModel: ViewModelStory by lazy {
@@ -41,6 +44,16 @@ class ActivityStory : AppCompatActivity() {
         viewModel.isReaded.observe(this@ActivityStory, Observer {
             status = it
         })
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
+            if (abs(p1) - appBar.totalScrollRange == 0) {
+                btnBackStory.visibility = View.VISIBLE
+            } else {
+                btnBackStory.visibility = View.INVISIBLE
+            }
+        })
+        btnBackStory.setOnClickListener {
+            onBackPressed()
+        }
         btnReadNow.setOnClickListener {
             if (status.status == "1") {
                 val dialog = AlertDialog.Builder(this)
