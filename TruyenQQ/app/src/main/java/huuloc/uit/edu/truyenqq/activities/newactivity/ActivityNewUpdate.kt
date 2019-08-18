@@ -84,7 +84,7 @@ class ActivityNewUpdate : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = recyclerView.layoutManager as LinearLayoutManager
-                if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel._New.value!!.size - 5) {
+                if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel._New.value!!.size - 5 && viewModel.itemsNew.size >= 20) {
                     isLoading = true
                     viewModel.loadSubsribe(category, col)
                 }

@@ -22,8 +22,7 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
     val user_id = share.gẹtShare.getString(USER_ID, null)
     val compo: CompositeDisposable by lazy { CompositeDisposable() }
     val apiManager: ApiManager by lazy { ApiManager() }
-    var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", itemsImage) }
-    var itemsImage = mutableListOf<String>()
+    var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", mutableListOf()) }
     var listChap = MutableLiveData<ListChap>().apply { value = ListChap(mutableListOf()) }
     var position = MutableLiveData<Int>().apply { value = pos }
     var pos = 1
@@ -41,10 +40,7 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    itemsImage.clear()
-                    itemsImage.addAll(it.list!!.toMutableList())
                     story.value = it
-                    story.value!!.list = itemsImage
                 }, {
 
                 })

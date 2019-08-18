@@ -113,19 +113,18 @@ class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
                 val manager = recyclerView.layoutManager as LinearLayoutManager
                 when (_tag) {
                     0 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.subcribe.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.subcribe.value!!.size - 5 && viewModel.itemsSub.size >= 20) {
                             isLoading = true
                             viewModel.loadSubsribe()
                         }
                     }
                     1 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.history.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.history.value!!.size - 5 && viewModel.itemsHis.size >= 20) {
                             isLoading = true
                             viewModel.loadHistory()
                         }
                     }
                 }
-
             }
         })
     }

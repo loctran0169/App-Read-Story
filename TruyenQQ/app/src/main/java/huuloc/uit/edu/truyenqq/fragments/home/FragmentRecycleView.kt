@@ -149,25 +149,25 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                 val manager = recyclerView.layoutManager as LinearLayoutManager
                 when (sort) {
                     0 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyDay.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyDay.value!!.size - 5&&viewModel.itemsDay.size>=20) {
                             isLoading = true
                             viewModel.loadDay(col)
                         }
                     }
                     1 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyWeek.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyWeek.value!!.size - 5&&viewModel.itemsWeek.size>=20) {
                             isLoading = true
                             viewModel.loadWeek(col)
                         }
                     }
                     2 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyMonth.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyMonth.value!!.size - 5&&viewModel.itemsMonth.size>=20) {
                             isLoading = true
                             viewModel.loadMonth(col)
                         }
                     }
                     3 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyLike.value!!.size - 5) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyLike.value!!.size - 5&&viewModel.itemsLike.size>=20) {
                             isLoading = true
                             viewModel.loadLike(col)
                         }

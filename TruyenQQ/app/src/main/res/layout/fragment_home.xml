@@ -120,9 +120,12 @@
                         android:text="@string/lbMoreItem"
                         android:textSize="12sp"
                         android:onClick="openActivityNewUpdateStory"
+                        android:paddingTop="13dp"
+                        android:paddingStart="10dp"
+                        android:paddingBottom="13dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/lbNewUpdateStory"
+                        app:layout_constraintBottom_toTopOf="@id/rcvNewUpdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView
@@ -160,9 +163,12 @@
                         android:text="@string/lbMoreItem"
                         android:textSize="12sp"
                         android:onClick="openActivityMale"
+                        android:paddingTop="13dp"
+                        android:paddingStart="10dp"
+                        android:paddingBottom="13dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/lbStoryMale"
+                        app:layout_constraintBottom_toTopOf="@id/rcvStoryMale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView
@@ -200,9 +206,12 @@
                         android:text="@string/lbMoreItem"
                         android:textSize="12sp"
                         android:onClick="openActivityFemale"
+                        android:paddingTop="13dp"
+                        android:paddingStart="10dp"
+                        android:paddingBottom="13dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/lbStoryFemale"
+                        app:layout_constraintBottom_toTopOf="@id/rcvStoryFemale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 <androidx.recyclerview.widget.RecyclerView

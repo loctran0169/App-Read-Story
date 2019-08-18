@@ -29,8 +29,9 @@ class ActivityUser : AppCompatActivity() {
             .add(R.id.frmUser, FragmentLogin(), "aa")
             .commit()
         viewModel.isLogin.observe(this@ActivityUser, Observer {
-            if (it == true)
+            if (it == true){
                 onBackPressed()
+            }
         })
     }
 

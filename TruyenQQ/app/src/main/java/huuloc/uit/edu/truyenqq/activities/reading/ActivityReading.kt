@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -38,6 +39,7 @@ class ActivityReading : AppCompatActivity() {
             )
             .get(ViewModelReading::class.java)
         first = intent.getBundleExtra("manga")!!.getString("first")!!
+        val handle = Handler()
         rcvImage.run {
             adapter = adapterImage
             layoutManager = LinearLayoutManager(context)
@@ -50,14 +52,12 @@ class ActivityReading : AppCompatActivity() {
             onBackPressed()
         }
         btnNext.setOnClickListener {
-            viewModel.itemsImage.clear()
-            adapterImage.notifyDataSetChanged()
+            adapterImage.updateData(null)
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.next)
 
         }
         btnPrev.setOnClickListener {
-            viewModel.itemsImage.clear()
-            adapterImage.notifyDataSetChanged()
+            handle.removeCallbacksAndMessages(null)
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.prev)
         }
         viewModel.story.observe(this@ActivityReading, Observer {

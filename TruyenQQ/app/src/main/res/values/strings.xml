@@ -35,4 +35,8 @@
     <string name="lbForgotText">Vui lòng nhập email của bạn để tiếp tục.</string>
     <string name="lbRegisterSend">Đăng Ký</string>
     <string name="lbLoginRequire">Vui lòng đăng nhập để sử dụng chức năng này</string>
+    <string name="lbInformation">Thông tin cá nhân</string>
+    <string name="lbNotification">Thông Báo</string>
+    <string name="lbChangePassword">Đổi mật khẩu</string>
+    <string name="lbLogout">Đăng xuất</string>
 </resources>

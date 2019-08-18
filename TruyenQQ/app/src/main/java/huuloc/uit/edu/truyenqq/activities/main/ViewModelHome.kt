@@ -1,12 +1,11 @@
 package huuloc.uit.edu.truyenqq.activities.main
 
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.data.CategoryList
 import huuloc.uit.edu.truyenqq.data.ScheduleStoryList
 import huuloc.uit.edu.truyenqq.data.StoryInformation
-import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,7 +14,7 @@ import java.util.*
 
 class ViewModelHome : ViewModel() {
 
-    var isShow = MutableLiveData<Fragment>().apply { value = FragmentHome() }
+    var isShow = MutableLiveData<Int>().apply { value = R.id.navHome }
 
     val cal = Calendar.getInstance()
 

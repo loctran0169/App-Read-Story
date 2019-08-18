@@ -9,20 +9,23 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
+import huuloc.uit.edu.truyenqq.data.MysharedPreferences
+import huuloc.uit.edu.truyenqq.data.USER_ID
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
 import huuloc.uit.edu.truyenqq.fragments.category.FragmentCategory
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.fragments.search.FragmentSearch
+import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var idSelect = R.id.navHome
     val viewModel: ViewModelHome by lazy {
         ViewModelProviders
             .of(this)
@@ -35,38 +38,47 @@ class MainActivity : AppCompatActivity() {
         ViewModelProviders
             .of(this)
             .get(ViewModelHome::class.java)
-
         supportFragmentManager.beginTransaction()
             .add(R.id.frmMain, FragmentHome())
             .commit()
+        viewModel.isShow.observe(this@MainActivity, Observer {
+
+        })
+        val share = MysharedPreferences(this).gẹtShare
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                idSelect -> true
+                viewModel.isShow.value -> true
                 R.id.navHome -> {
                     showFragment(FragmentHome())
-                    idSelect = it.itemId
+                    viewModel.isShow.value = it.itemId
                     true
                 }
                 R.id.navCategory -> {
                     showFragment(FragmentCategory())
-                    idSelect = it.itemId
+                    viewModel.isShow.value = it.itemId
                     true
                 }
                 R.id.navSearch -> {
                     showFragment(FragmentSearch())
-                    idSelect = it.itemId
+                    viewModel.isShow.value = it.itemId
                     true
                 }
                 R.id.navBookcase -> {
                     showFragment(FragmentBook())
-                    idSelect = it.itemId
+                    viewModel.isShow.value = it.itemId
                     true
                 }
                 R.id.navUser -> {
-                    val intend1 = Intent(this, ActivityUser::class.java)
-                    startActivity(intend1)
-//                    showFragment(FragmentUser())
-//                    idSelect = it.itemId
+                    if (share.getString(USER_ID, null) == null) {
+                        val intend1 = Intent(this, ActivityUser::class.java)
+                        startActivity(intend1)
+                    } else {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.frmMain, FragmentUser())
+                            .addToBackStack("user")
+                            .commit()
+                    }
+                    viewModel.isShow.value = it.itemId
                     true
                 }
 
@@ -156,5 +168,13 @@ class MainActivity : AppCompatActivity() {
         bundle.putString("col", "created")
         intent.putExtra("kind", bundle)
         startActivity(intent)
+    }
+
+    fun logOut(view: View) {
+        val share = MysharedPreferences(this)
+        share.removeAll()
+        showFragment(FragmentHome())
+        viewModel.isShow.value = R.id.navHome
+        onBackPressed()
     }
 }

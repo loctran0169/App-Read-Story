@@ -26,7 +26,7 @@ class FragmentBook : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, null)
-        viewPagerBook.adapter = AdapterBookTabLayout(childFragmentManager,activity!!)
+        viewPagerBook.adapter = AdapterBookTabLayout(childFragmentManager,context!!)
         tabLayoutBook.tabMode = TabLayout.MODE_FIXED
         tabLayoutBook.setupWithViewPager(viewPagerBook)
     }
