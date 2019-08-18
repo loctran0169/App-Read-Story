@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.frmMain, FragmentHome())
             .commit()
         viewModel.isShow.observe(this@MainActivity, Observer {
-
+            botNavigation.selectedItemId = it
         })
         val share = MysharedPreferences(this).gẹtShare
         botNavigation.setOnNavigationItemSelectedListener {
@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity() {
                             .add(R.id.frmMain, FragmentUser())
                             .addToBackStack("user")
                             .commit()
+                        viewModel.isShow.value = it.itemId
                     }
-                    viewModel.isShow.value = it.itemId
                     true
                 }
 
@@ -109,8 +109,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onRestart() {
+        super.onRestart()
+        val share = MysharedPreferences(this).gẹtShare
+        if (share.getString(USER_ID, null) == null)
+            botNavigation.selectedItemId = viewModel.isShow.value!!
+        else {
+            showFragment(FragmentHome())
+            viewModel.isShow.value=R.id.navHome
+        }
     }
 
     private fun showFragment(fragment: Fragment) {

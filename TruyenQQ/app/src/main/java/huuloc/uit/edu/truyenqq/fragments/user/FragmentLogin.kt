@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -35,8 +37,14 @@ class FragmentLogin : Fragment() {
             if (it != null) {
                 if (it.error == null && sharedPreferences.gẹtShare.getString(USER_ID, null) == null) {
                     sharedPreferences.saveData(it)
+                    Toast.makeText(activity!!, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                    viewModel.isLogin.value = true
+                } else {
+                    val dialog = AlertDialog.Builder(context!!)
+                    dialog.setMessage("Tài khoản hoặc mật khẩu không chính xác")
+                    val dislay = dialog.create()
+                    dislay.show()
                 }
-                viewModel.isLogin.value = true
             }
         })
         btnLogin.setOnClickListener {
