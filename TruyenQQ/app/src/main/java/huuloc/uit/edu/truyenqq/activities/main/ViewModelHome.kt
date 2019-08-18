@@ -1,9 +1,12 @@
 package huuloc.uit.edu.truyenqq.activities.main
 
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import huuloc.uit.edu.truyenqq.data.*
+import huuloc.uit.edu.truyenqq.data.CategoryList
+import huuloc.uit.edu.truyenqq.data.ScheduleStoryList
+import huuloc.uit.edu.truyenqq.data.StoryInformation
+import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -11,6 +14,9 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class ViewModelHome : ViewModel() {
+
+    var isShow = MutableLiveData<Fragment>().apply { value = FragmentHome() }
+
     val cal = Calendar.getInstance()
 
     val storyNew = MutableLiveData<List<StoryInformation>>().apply { value = mutableListOf() }
@@ -30,7 +36,7 @@ class ViewModelHome : ViewModel() {
         refresh()
     }
 
-    fun refresh(){
+    fun refresh() {
         loadNewStory()
         loadStoryMale()
         loadStoryFemale()
@@ -52,7 +58,7 @@ class ViewModelHome : ViewModel() {
 
     fun loadStoryMale() {
         compo.add(
-            apiManager.getListNewUpdate(0,"modified","26,27,30,31,32,41,43,47,48,50,57,85,97")
+            apiManager.getListNewUpdate(0, "modified", "26,27,30,31,32,41,43,47,48,50,57,85,97")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -64,7 +70,7 @@ class ViewModelHome : ViewModel() {
 
     fun loadStoryFemale() {
         compo.add(
-            apiManager.getListNewUpdate(0,"modified","28,29,36,37,38,39,42,46,51,52,54,75,90,93")
+            apiManager.getListNewUpdate(0, "modified", "28,29,36,37,38,39,42,46,51,52,54,75,90,93")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

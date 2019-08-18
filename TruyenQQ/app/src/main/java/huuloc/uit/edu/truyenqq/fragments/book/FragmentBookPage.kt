@@ -47,12 +47,15 @@ class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
                         if (it != null) {
                             adapterHorizontal.updateData(it)
                             progressBarRank.visibility = View.INVISIBLE
+                            isLoading = false
+                            refreshRank.isRefreshing = false
                         }
                     })
                     viewModel.loadMoreSub.observe(this@FragmentBookPage, Observer {
                         if (it.end - it.start > 0) {
                             adapterHorizontal.loadMore(it.start + 1, it.end)
                             isLoading = false
+                            refreshRank.isRefreshing = false
                         }
                     })
                 }
@@ -62,17 +65,40 @@ class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
                         if (it != null) {
                             adapterHorizontal.updateData(it)
                             progressBarRank.visibility = View.INVISIBLE
+                            isLoading = false
+                            refreshRank.isRefreshing = false
                         }
                     })
                     viewModel.loadMoreHis.observe(this@FragmentBookPage, Observer {
                         if (it.end - it.start > 0) {
                             adapterHorizontal.loadMore(it.start + 1, it.end)
                             isLoading = false
+                            refreshRank.isRefreshing = false
                         }
                     })
                 }
                 2 -> {
 
+                }
+            }
+            refreshRank.setOnRefreshListener {
+                isLoading = true
+                when (_tag) {
+                    0 -> {
+                        viewModel.itemsSub.clear()
+                        viewModel.offsetSub = 0
+                        adapterHorizontal.notifyDataSetChanged()
+                        viewModel.loadSubsribe()
+                    }
+                    1 -> {
+                        viewModel.itemsHis.clear()
+                        viewModel.offsetHis = 0
+                        adapterHorizontal.notifyDataSetChanged()
+                        viewModel.loadHistory()
+                    }
+                    2 -> {
+
+                    }
                 }
             }
             initScrollListener()

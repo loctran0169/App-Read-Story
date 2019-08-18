@@ -39,7 +39,7 @@ class FragmentCategory : Fragment() {
 
             override fun onQueryTextChange(query: String): Boolean {
                 // filter recycler view when text is changed
-                adapterCategory.updateData(list as MutableList<Category>)
+                adapterCategory.updateData(list.toMutableList())
                 adapterCategory.filter.filter(query)
                 return false
             }
@@ -56,10 +56,11 @@ class FragmentCategory : Fragment() {
             addItemDecoration(SpaceItem(4))
         }
         viewModel.sLoadingCategory.observe(this@FragmentCategory, Observer {
-            list = it.list
-            adapterCategory.updateData(it.list as MutableList<Category>)
-            if (it.list.isNotEmpty())
+            if (it.list.isNotEmpty()) {
+                list = it.list
+                adapterCategory.updateData(it.list as MutableList<Category>)
                 progressBarCategory.visibility = View.INVISIBLE
+            }
         })
     }
 }

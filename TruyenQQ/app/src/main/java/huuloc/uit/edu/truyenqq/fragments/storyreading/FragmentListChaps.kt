@@ -20,11 +20,9 @@ class FragmentListChaps : Fragment() {
             .of(activity!!)
             .get(ViewModelStory::class.java)
     }
-    //    private val adapterListChap: AdapterListChap by lazy {
-//        AdapterListChap(activity!!, mutableListOf())
-//    }
     var load = false
     var chap = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
@@ -35,25 +33,33 @@ class FragmentListChaps : Fragment() {
             //adapter = adapterListChap
             layoutManager = LinearLayoutManager(activity!!)
         }
+        refreshRank.isEnabled = false
         viewModel.listChap.observe(this@FragmentListChaps, Observer {
             chap = true
-            if (load && it.list.isNotEmpty()) {
-                val adapterListChap = AdapterListChap(activity!!, it.list, viewModel.Story.value?.first_chap?.order)
+            if (load && !it.isNullOrEmpty()) {
+                val adapterListChap = AdapterListChap(activity!!, it, viewModel.Story.value?.first_chap?.order)
                 rcvHorizontal.adapter = adapterListChap
-                adapterListChap.updateData(it.list)
+                adapterListChap.updateData(it)
                 progressBarRank.visibility = View.INVISIBLE
+            }
+        })
+        viewModel.refresh.observe(this@FragmentListChaps, Observer {
+            if (viewModel.refresh.value!!) {
+                viewModel.itemChap.clear()
+                rcvHorizontal.adapter?.notifyDataSetChanged()
+                viewModel.loadListChap(viewModel.bookId)
             }
         })
         viewModel.isLoading.observe(this@FragmentListChaps, Observer {
             load = true
-            if (chap) {
+            if (load && !viewModel.itemChap.isNullOrEmpty()) {
                 val adapterListChap = AdapterListChap(
                     activity!!,
-                    viewModel.listChap.value!!.list,
+                    viewModel.itemChap,
                     viewModel.Story.value?.first_chap?.order
                 )
                 rcvHorizontal.adapter = adapterListChap
-                adapterListChap.updateData(viewModel.listChap.value!!.list)
+                adapterListChap.updateData(viewModel.listChap.value!!)
                 progressBarRank.visibility = View.INVISIBLE
             }
         })

@@ -12,5 +12,5 @@ data class StoryImage(
     @SerializedName("current_episode")
     var current_episode: String,
     @SerializedName("listPhoto")
-    var list: List<String>
+    var list: List<String>?
 )

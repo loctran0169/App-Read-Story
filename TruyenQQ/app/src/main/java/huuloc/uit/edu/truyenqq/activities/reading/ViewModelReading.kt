@@ -1,28 +1,29 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
+import android.content.Context
 import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import huuloc.uit.edu.truyenqq.data.Chap
-import huuloc.uit.edu.truyenqq.data.ListChap
-import huuloc.uit.edu.truyenqq.data.LoadMoreObject
-import huuloc.uit.edu.truyenqq.data.StoryImage
+import huuloc.uit.edu.truyenqq.data.*
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ViewModelReadingFactory(val bookId: String, val chap: String) : ViewModelProvider.Factory {
+class ViewModelReadingFactory(val bookId: String, val chap: String, val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ViewModelReading(bookId, chap) as T
+        return ViewModelReading(bookId, chap, context) as T
     }
 }
 
-class ViewModelReading(val bookId: String, var chap: String) : ViewModel() {
+class ViewModelReading(val bookId: String, var chap: String, val context: Context) : ViewModel() {
+    val share = MysharedPreferences(context)
+    val user_id = share.gẹtShare.getString(USER_ID, null)
     val compo: CompositeDisposable by lazy { CompositeDisposable() }
     val apiManager: ApiManager by lazy { ApiManager() }
-    var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", mutableListOf()) }
+    var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", itemsImage) }
+    var itemsImage = mutableListOf<String>()
     var listChap = MutableLiveData<ListChap>().apply { value = ListChap(mutableListOf()) }
     var position = MutableLiveData<Int>().apply { value = pos }
     var pos = 1
@@ -30,7 +31,8 @@ class ViewModelReading(val bookId: String, var chap: String) : ViewModel() {
     init {
         getListChap()
         loadImage()
-        setHistory()
+        if (user_id != null)
+            setHistory()
     }
 
     fun loadImage() {
@@ -39,7 +41,10 @@ class ViewModelReading(val bookId: String, var chap: String) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    itemsImage.clear()
+                    itemsImage.addAll(it.list!!.toMutableList())
                     story.value = it
+                    story.value!!.list = itemsImage
                 }, {
 
                 })
@@ -73,7 +78,7 @@ class ViewModelReading(val bookId: String, var chap: String) : ViewModel() {
 
     fun setHistory() {
         compo.add(
-            apiManager.setHistory(bookId, "24901", chap)
+            apiManager.setHistory(bookId, user_id!!, chap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

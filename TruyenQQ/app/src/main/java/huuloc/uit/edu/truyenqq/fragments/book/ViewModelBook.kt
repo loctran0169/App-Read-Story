@@ -43,7 +43,7 @@ class ViewModelBook(conText: Context) : ViewModel() {
     fun loadSubsribe() {
         val loadMore = itemsSub.isNotEmpty()
         compo.add(
-            apiManager.getSubscribe(offsetSub, 20, share.getString(USER_ID,null))
+            apiManager.getSubscribe(offsetSub, 20, share.getString(USER_ID, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -68,7 +68,7 @@ class ViewModelBook(conText: Context) : ViewModel() {
     fun loadHistory() {
         val loadMore = itemsHis.isNotEmpty()
         compo.add(
-            apiManager.getHistory(offsetHis, 20, share.getString(USER_ID,null))
+            apiManager.getHistory(offsetHis, 20, share.getString(USER_ID, null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

@@ -22,7 +22,8 @@ class ActivityReading : AppCompatActivity() {
             .of(this)
             .get(ViewModelReading::class.java)
     }
-    var xx = true
+
+    var first = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reading)
@@ -31,10 +32,12 @@ class ActivityReading : AppCompatActivity() {
                 this,
                 ViewModelReadingFactory(
                     intent.getBundleExtra("manga")!!.getString("book_id")!!,
-                    intent.getBundleExtra("manga")!!.getString("chap")!!
+                    intent.getBundleExtra("manga")!!.getString("chap")!!,
+                    this
                 )
             )
             .get(ViewModelReading::class.java)
+        first = intent.getBundleExtra("manga")!!.getString("first")!!
         rcvImage.run {
             adapter = adapterImage
             layoutManager = LinearLayoutManager(context)
@@ -47,25 +50,31 @@ class ActivityReading : AppCompatActivity() {
             onBackPressed()
         }
         btnNext.setOnClickListener {
+            viewModel.itemsImage.clear()
+            adapterImage.notifyDataSetChanged()
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.next)
 
         }
         btnPrev.setOnClickListener {
+            viewModel.itemsImage.clear()
+            adapterImage.notifyDataSetChanged()
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.prev)
         }
         viewModel.story.observe(this@ActivityReading, Observer {
-            toolbarTextReading.text = "Chap ${viewModel.story.value?.order}"
-            adapterImage.updateData(it.list)
-            refreshReading.isRefreshing = false
-            if (it.order.toFloat() > it.next.toFloat()) {
-                btnNext.visibility = View.INVISIBLE
-            } else {
-                btnNext.visibility = View.VISIBLE
-            }
-            if (intent.getBundleExtra("manga")!!.getString("first")!!.toFloat() == it.order.toFloat()) {
-                btnPrev.visibility = View.INVISIBLE
-            } else {
-                btnPrev.visibility = View.VISIBLE
+            if (!it.list.isNullOrEmpty()) {
+                toolbarTextReading.text = "Chap ${viewModel.story.value?.order}"
+                adapterImage.updateData(it.list!!)
+                refreshReading.isRefreshing = false
+                if (it.order.toFloat() > it.next.toFloat()) {
+                    btnNext.visibility = View.INVISIBLE
+                } else {
+                    btnNext.visibility = View.VISIBLE
+                }
+                if (first.toFloat() == it.order.toFloat()) {
+                    btnPrev.visibility = View.INVISIBLE
+                } else {
+                    btnPrev.visibility = View.VISIBLE
+                }
             }
         })
         viewModel.listChap.observe(this@ActivityReading, Observer {
