@@ -29,6 +29,7 @@
         <activity android:name=".activities.reading.ActivityReading"
                   android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.ActivityUser"/>
+        <activity android:name=".activities.changepassword.ActivityChangePassWord"/>
 
         <service android:name=".services.FCMservies"
                  android:exported="false">

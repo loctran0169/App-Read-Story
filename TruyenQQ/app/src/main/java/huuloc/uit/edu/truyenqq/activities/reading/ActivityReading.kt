@@ -1,12 +1,14 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.os.Bundle
-import android.os.Handler
+import android.view.MotionEvent
 import android.view.View
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterImage
 import huuloc.uit.edu.truyenqq.adapers.AdapterListChapSpinner
@@ -39,7 +41,7 @@ class ActivityReading : AppCompatActivity() {
             )
             .get(ViewModelReading::class.java)
         first = intent.getBundleExtra("manga")!!.getString("first")!!
-        val handle = Handler()
+        first = intent.getBundleExtra("manga")!!.getString("first")!!
         rcvImage.run {
             adapter = adapterImage
             layoutManager = LinearLayoutManager(context)
@@ -52,12 +54,10 @@ class ActivityReading : AppCompatActivity() {
             onBackPressed()
         }
         btnNext.setOnClickListener {
-            adapterImage.updateData(null)
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.next)
 
         }
         btnPrev.setOnClickListener {
-            handle.removeCallbacksAndMessages(null)
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.prev)
         }
         viewModel.story.observe(this@ActivityReading, Observer {
@@ -83,5 +83,15 @@ class ActivityReading : AppCompatActivity() {
         viewModel.position.observe(this@ActivityReading, Observer {
             spinnerListChap.setSelection(it)
         })
+        spinnerListChap.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                viewModel.loadImageNextOrPrev(viewModel.listChap.value!!.list[p2].order)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
     }
 }

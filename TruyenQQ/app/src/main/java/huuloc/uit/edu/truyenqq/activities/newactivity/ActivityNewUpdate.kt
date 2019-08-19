@@ -37,6 +37,7 @@ class ActivityNewUpdate : AppCompatActivity() {
         name = bundle!!.getString("name")!!
         category = bundle.getString("category")!!
         col = bundle.getString("col")!!
+        println("### catete ${category}")
         ViewModelProviders
             .of(this)
             .get(ViewModelNewUpdate::class.java)

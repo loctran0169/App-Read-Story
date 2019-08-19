@@ -1,5 +1,6 @@
 package huuloc.uit.edu.truyenqq.adapers
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -12,7 +13,12 @@ class AdapterRankTabLayout(
     FragmentPagerAdapter(fragment) {
 
     override fun getItem(position: Int): Fragment {
-        return FragmentRecycleView(position,getCol(position))
+        val fragment = FragmentRecycleView()
+        val bundle = Bundle()
+        bundle.putInt("sort",position)
+        bundle.putString("col",getCol(position))
+        fragment.arguments=bundle
+        return fragment
 
     }
 

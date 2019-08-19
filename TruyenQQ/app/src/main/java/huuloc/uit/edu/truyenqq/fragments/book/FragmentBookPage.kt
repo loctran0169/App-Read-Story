@@ -15,7 +15,7 @@ import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
-class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
+class FragmentBookPage : Fragment() {
     private var isLoading = false
     val viewModel: ViewModelBook by lazy {
         ViewModelProviders
@@ -25,11 +25,17 @@ class FragmentBookPage(val _tag: Int = 0, val isLogin: Boolean) : Fragment() {
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(activity!!, mutableListOf())
     }
-
+    var _tag: Int = 0
+    var isLogin: Boolean = true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (isLogin)
-            return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
-        return inflater.inflate(R.layout.fragment_require, container, false)
+        val bundle = arguments
+        if (bundle != null) {
+            _tag = bundle.getInt("tag")
+            isLogin = bundle.getBoolean("login")
+        }
+        if (!isLogin)
+            return inflater.inflate(R.layout.fragment_require, container, false)
+        return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
 
     @SuppressLint("CheckResult")

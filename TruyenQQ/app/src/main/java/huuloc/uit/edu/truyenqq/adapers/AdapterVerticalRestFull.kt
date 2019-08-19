@@ -38,7 +38,7 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
                 .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
                 .into(holder.itemImage)
         }
-        holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
+        holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified!!.toInt())
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ActivityStory::class.java)
             val bundle = Bundle()

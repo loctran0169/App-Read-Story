@@ -75,10 +75,10 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
             itemView.tvChapHorizontal.text = chapter
             itemView.rcvCategoryHorizontal.run {
                 layoutManager = FlexboxLayoutManager(context)
-                adapter = AdapterFlexBoxLayout(context, p0.category)
+                adapter = AdapterFlexBoxLayout(context, p0.category!!)
             }
             itemView.tvStoryTimeHorizontal.text =
-                timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified.toInt())
+                timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified!!.toInt())
             itemView.setOnClickListener {
                 val intent1 = Intent(context, ActivityStory::class.java)
                 val bundle = Bundle()

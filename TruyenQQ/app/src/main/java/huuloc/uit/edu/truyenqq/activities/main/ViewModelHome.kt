@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.data.CategoryList
+import huuloc.uit.edu.truyenqq.data.DataLogin
 import huuloc.uit.edu.truyenqq.data.ScheduleStoryList
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 import huuloc.uit.edu.truyenqq.network.ApiManager
@@ -28,11 +29,22 @@ class ViewModelHome : ViewModel() {
 
     val sLoadingCategory = MutableLiveData<CategoryList>().apply { value = CategoryList(mutableListOf()) }
 
+    val dataLogin = MutableLiveData<DataLogin>().apply { value = null }
+
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
 
     init {
-        refresh()
+        if (storyNew.value.isNullOrEmpty())
+            loadNewStory()
+        if (storyStoryMale.value.isNullOrEmpty())
+            loadStoryMale()
+        if (storyStoryFemale.value.isNullOrEmpty())
+            loadStoryFemale()
+        if (sLoadingSchedulers.value == null)
+            loadSchedule()
+        if (storyNew.value.isNullOrEmpty())
+            loadCategory()
     }
 
     fun refresh() {

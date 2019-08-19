@@ -1,10 +1,10 @@
 package huuloc.uit.edu.truyenqq.fragments.user
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -34,12 +34,7 @@ class FragmentRegister : Fragment() {
                     Observer {
                         if (it == null)
                         else if (it.error == null) {
-                            val dialog = AlertDialog.Builder(context!!)
-                            dialog.setMessage("Đăng ký thành công.")
-                                .setPositiveButton("ok") { dialogInterface: DialogInterface, i: Int ->
-                                    this@FragmentRegister.activity!!.onBackPressed()
-                                }
-                            val dislay = dialog.create()
+                            Toast.makeText(activity!!, "Đăng ký thành công", Toast.LENGTH_SHORT).show()
                             this@FragmentRegister.activity!!.onBackPressed()
                         } else if (it.error != null) {
                             val dialog = AlertDialog.Builder(context!!)

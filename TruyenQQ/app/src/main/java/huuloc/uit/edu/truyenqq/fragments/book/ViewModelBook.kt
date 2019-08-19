@@ -20,7 +20,7 @@ class ViewModelBookFactory(val conText: Context) : ViewModelProvider.Factory {
 }
 
 class ViewModelBook(conText: Context) : ViewModel() {
-    val share = MysharedPreferences(conText).gẹtShare
+    val share = MysharedPreferences(conText).getShare
     var load = MutableLiveData<Boolean>().apply { value = false }
     var offsetSub = 0
     var offsetHis = 0

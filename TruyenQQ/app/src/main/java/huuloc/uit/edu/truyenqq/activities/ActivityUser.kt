@@ -49,4 +49,7 @@ class ActivityUser : AppCompatActivity() {
     fun registerUser(view: View) {
         showFragment(FragmentRegister())
     }
+    fun onBack(view : View){
+        onBackPressed()
+    }
 }

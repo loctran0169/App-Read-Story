@@ -8,6 +8,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.appbar.AppBarLayout
@@ -40,7 +44,7 @@ class ActivityStory : AppCompatActivity() {
         viewPagerStory.adapter = AdapterStoryTabLayout(fragment = supportFragmentManager)
         tabLayoutStory.tabMode = TabLayout.MODE_FIXED
         tabLayoutStory.setupWithViewPager(viewPagerStory)
-        val share = MysharedPreferences(this).gẹtShare
+        val share = MysharedPreferences(this).getShare
         var orderReaded = "0"
         var status: StatusRead? = null
         viewModel.isReaded.observe(this@ActivityStory, Observer {
@@ -61,12 +65,25 @@ class ActivityStory : AppCompatActivity() {
             onBackPressed()
         }
         btnReadNow.setOnClickListener {
-            if (status == null)
-            else if (status!!.status == "1") {
+            if (viewModel.isReaded.value == null || viewModel.isReaded.value?.status == "0") {
+                val intent1 = Intent(this, ActivityReading::class.java)
+                val bundle = Bundle()
+                bundle.putString("book_id", intent.getBundleExtra("kind")!!.getString("book_id"))
+                bundle.putString("chap", orderReaded)
+                bundle.putString("first", viewModel.Story.value!!.first_chap.order)
+                intent1.putExtra("manga", bundle)
+                startActivity(intent1)
+            } else {
                 val dialog = AlertDialog.Builder(this)
                 dialog.setMessage("Đọc tiếp tục chap ${status!!.data.chap_order}")
                     .setNegativeButton("Không") { _: DialogInterface, i: Int ->
-
+                        val intent1 = Intent(this, ActivityReading::class.java)
+                        val bundle = Bundle()
+                        bundle.putString("book_id", intent.getBundleExtra("kind")!!.getString("book_id"))
+                        bundle.putString("chap", orderReaded)
+                        bundle.putString("first", viewModel.Story.value!!.first_chap.order)
+                        intent1.putExtra("manga", bundle)
+                        startActivity(intent1)
                     }
                     .setPositiveButton("Đọc tiếp") { _: DialogInterface, i: Int ->
                         val intent1 = Intent(this, ActivityReading::class.java)
@@ -80,15 +97,6 @@ class ActivityStory : AppCompatActivity() {
                 val dislay = dialog.create()
                 dislay.setTitle("Thông báo")
                 dislay.show()
-            } else {
-                val intent1 = Intent(this, ActivityReading::class.java)
-                val bundle = Bundle()
-                println()
-                bundle.putString("book_id", intent.getBundleExtra("kind")!!.getString("book_id"))
-                bundle.putString("chap", orderReaded)
-                bundle.putString("first", viewModel.Story.value!!.first_chap.order)
-                intent1.putExtra("manga", bundle)
-                startActivity(intent1)
             }
         }
         viewModel.Story.observe(this, Observer {
@@ -97,7 +105,7 @@ class ActivityStory : AppCompatActivity() {
         })
         btnSubscribe.setOnClickListener {
             if (share.getString(USER_ID, null) != null)
-                viewModel.loadSubscribe().observe(this, Observer {
+                viewModel.setSubscribe().observe(this, Observer {
                     if (it.success == 0) {
                         btnSubscribe.isSelected = true
                         btnSubscribe.text = "Theo dõi"

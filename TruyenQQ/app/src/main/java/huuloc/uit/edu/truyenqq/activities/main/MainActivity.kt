@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
+import huuloc.uit.edu.truyenqq.activities.changepassword.ActivityChangePassWord
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.data.MysharedPreferences
@@ -38,13 +39,17 @@ class MainActivity : AppCompatActivity() {
         ViewModelProviders
             .of(this)
             .get(ViewModelHome::class.java)
-        supportFragmentManager.beginTransaction()
-            .add(R.id.frmMain, FragmentHome())
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.frmMain, FragmentHome())
+                .commit()
+        }
         viewModel.isShow.observe(this@MainActivity, Observer {
             botNavigation.selectedItemId = it
         })
-        val share = MysharedPreferences(this).gẹtShare
+        val share = MysharedPreferences(this)
+
+        viewModel.dataLogin.value = share.loadData()
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 viewModel.isShow.value -> true
@@ -69,14 +74,15 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navUser -> {
-                    if (share.getString(USER_ID, null) == null) {
+                    if (share.getShare.getString(USER_ID, null) == null) {
                         val intend1 = Intent(this, ActivityUser::class.java)
                         startActivity(intend1)
                     } else {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.frmMain, FragmentUser())
-                            .addToBackStack("user")
-                            .commit()
+                        showFragment(FragmentUser())
+//                        supportFragmentManager.beginTransaction()
+//                            .add(R.id.frmMain, FragmentUser())
+//                            .addToBackStack("user")
+//                            .commit()
                         viewModel.isShow.value = it.itemId
                     }
                     true
@@ -111,13 +117,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
-        val share = MysharedPreferences(this).gẹtShare
-        if (share.getString(USER_ID, null) == null)
+        val share = MysharedPreferences(this)
+        if (share.getShare.getString(USER_ID, null) == null) {
+            viewModel.dataLogin.value = share.loadData()
             botNavigation.selectedItemId = viewModel.isShow.value!!
-        else {
-            showFragment(FragmentHome())
-            viewModel.isShow.value=R.id.navHome
+        } else {
+            viewModel.dataLogin.value = share.loadData()
+            if (viewModel.dataLogin.value == null) {
+                showFragment(FragmentHome())
+                viewModel.isShow.value = R.id.navHome
+            }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("SelectedItemId", viewModel.isShow.value!!)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        botNavigation.selectedItemId = savedInstanceState.getInt("SelectedItemId")
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -182,6 +202,10 @@ class MainActivity : AppCompatActivity() {
         share.removeAll()
         showFragment(FragmentHome())
         viewModel.isShow.value = R.id.navHome
-        onBackPressed()
+    }
+
+    fun changePassWord(view: View) {
+        val intent = Intent(this, ActivityChangePassWord::class.java)
+        startActivity(intent)
     }
 }

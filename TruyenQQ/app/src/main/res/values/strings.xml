@@ -37,6 +37,12 @@
     <string name="lbLoginRequire">Vui lòng đăng nhập để sử dụng chức năng này</string>
     <string name="lbInformation">Thông tin cá nhân</string>
     <string name="lbNotification">Thông Báo</string>
-    <string name="lbChangePassword">Đổi mật khẩu</string>
+    <string name="lbChangePassword">Thay đổi mật khẩu</string>
     <string name="lbLogout">Đăng xuất</string>
+    <string name="lbRegisterRequire">Vui lòng điền thông tin điền thông tin đăng ký tài khoản.</string>
+    <string name="lbOldPassWord">Mật khẩu hiện tại</string>
+    <string name="lbNewPassWord">Mật khẩu mới</string>
+    <string name="lbNewPassWordConfirm">Nhập lại mật khẩu mới</string>
+    <string name="lbButtonForgotPassWord">Lấy lại mật khẩu</string>
+    <string name="lbSaveChange">Lưu Thay đổi</string>
 </resources>

@@ -16,7 +16,7 @@ import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
-class FragmentRecycleView(private val sort: Int, private var col: String) : Fragment() {
+class FragmentRecycleView : Fragment() {
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(activity!!, mutableListOf())
     }
@@ -25,9 +25,16 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
             .of(activity!!)
             .get(ViewModelRank::class.java)
     }
+    var sort = 0
+    var col = "views_day"
     private var isLoading = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val bundle = arguments
+        if (bundle != null) {
+            sort = bundle.getInt("sort")
+            col = bundle.getString("col")!!
+        }
         return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
 
@@ -149,25 +156,25 @@ class FragmentRecycleView(private val sort: Int, private var col: String) : Frag
                 val manager = recyclerView.layoutManager as LinearLayoutManager
                 when (sort) {
                     0 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyDay.value!!.size - 5&&viewModel.itemsDay.size>=20) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyDay.value!!.size - 5 && viewModel.itemsDay.size >= 20) {
                             isLoading = true
                             viewModel.loadDay(col)
                         }
                     }
                     1 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyWeek.value!!.size - 5&&viewModel.itemsWeek.size>=20) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyWeek.value!!.size - 5 && viewModel.itemsWeek.size >= 20) {
                             isLoading = true
                             viewModel.loadWeek(col)
                         }
                     }
                     2 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyMonth.value!!.size - 5&&viewModel.itemsMonth.size>=20) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyMonth.value!!.size - 5 && viewModel.itemsMonth.size >= 20) {
                             isLoading = true
                             viewModel.loadMonth(col)
                         }
                     }
                     3 -> {
-                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyLike.value!!.size - 5&&viewModel.itemsLike.size>=20) {
+                        if (!isLoading && manager.findLastVisibleItemPosition() >= viewModel.storyLike.value!!.size - 5 && viewModel.itemsLike.size >= 20) {
                             isLoading = true
                             viewModel.loadLike(col)
                         }

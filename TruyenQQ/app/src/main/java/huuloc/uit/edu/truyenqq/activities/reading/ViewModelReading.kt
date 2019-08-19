@@ -1,7 +1,6 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.content.Context
-import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +18,7 @@ class ViewModelReadingFactory(val bookId: String, val chap: String, val context:
 
 class ViewModelReading(val bookId: String, var chap: String, val context: Context) : ViewModel() {
     val share = MysharedPreferences(context)
-    val user_id = share.gẹtShare.getString(USER_ID, null)
+    val user_id = share.getShare.getString(USER_ID, null)
     val compo: CompositeDisposable by lazy { CompositeDisposable() }
     val apiManager: ApiManager by lazy { ApiManager() }
     var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", mutableListOf()) }
@@ -48,28 +47,23 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
     }
 
     fun loadImageNextOrPrev(_chap: String) {
-        val handler = Handler()
         this.chap = _chap
-        handler.removeCallbacksAndMessages(null)
-        handler.post {
-            try {
-                apiManager.getListImage(bookId, _chap)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        if (story.value!!.order.toFloat() > it.order.toFloat())
-                            pos++
-                        else if (story.value!!.order.toFloat() < it.order.toFloat())
-                            pos--
-                        position.value = pos
-                        story.value = it
-                    }, {
+        compo.clear()
+        compo.add(
+            apiManager.getListImage(bookId, _chap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (story.value!!.order.toFloat() > it.order.toFloat())
+                        pos++
+                    else if (story.value!!.order.toFloat() < it.order.toFloat())
+                        pos--
+                    position.value = pos
+                    story.value = it
+                }, {
 
-                    })
-            } catch (ex: Exception) {
-
-            }
-        }
+                })
+        )
     }
 
     fun setHistory() {
@@ -101,7 +95,7 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
 
     fun findIndex(list: List<Chap>) {
         for ((x, i) in list.withIndex()) {
-            if (i.order == chap) {
+            if (i.order.toFloat() == chap.toFloat()) {
                 position.value = x
                 pos = x
             }

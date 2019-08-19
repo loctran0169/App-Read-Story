@@ -2,46 +2,24 @@ package huuloc.uit.edu.truyenqq.network
 
 import huuloc.uit.edu.truyenqq.data.*
 import io.reactivex.Single
-import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
-import java.util.concurrent.TimeUnit
 
 
 class ApiManager {
 
-    private val _apiServices: ApiHelper by lazy {
-        getHelperHtml()!!.create(ApiHelper::class.java)
-    }
     private val _apiRestFull: ApiHelper by lazy {
         getHelperRestFull()!!.create(ApiHelper::class.java)
     }
 
     companion object {
 
-        private var sInstance: Retrofit? = null
         private var sRestFull: Retrofit? = null
-        val okHttpClient = OkHttpClient.Builder()
-            .callTimeout(2, TimeUnit.SECONDS)
-            .connectTimeout(2, TimeUnit.SECONDS)
-            .build()
 
-        fun getHelperHtml(): Retrofit? {
-            if (sInstance == null) {
-                sInstance = Retrofit
-                    .Builder()
-                    .baseUrl("https://truyenqq.com/")
-                    .addConverterFactory(HtmlOrJsonConverterFactory())
-                    //.client(okHttpClient)
-                    .build()
-            }
-            return sInstance
-        }
 
         fun getHelperRestFull(): Retrofit? {
             if (sRestFull == null) {
@@ -61,22 +39,16 @@ class ApiManager {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
                     try {
                         it.onSuccess(response.body()!!)
-                    }
-                    catch (ex :Exception){
+                    } catch (ex: Exception) {
 
                     }
                 }
 
                 override fun onFailure(p0: Call<T>, response: Throwable) {
-                    println("### $response")
                     it.onError(response)
                 }
             })
         }
-    }
-
-    fun getListStory(url: String, country: Int? = 1): Single<List<StoryInfo>> {
-        return buildRequest(_apiServices.getListTruyen("_qlg=90298_1f62cfd35d2745c4769db10b4ac0b508", url, country))
     }
 
     fun getListCategory(): Single<CategoryList> {
@@ -169,6 +141,24 @@ class ApiManager {
 
     fun sendLogin(_email: String, _password: String): Single<DataLogin> {
         return buildRequest(_apiRestFull.sendLogin(email = _email, password = _password))
+    }
+
+    fun sendChangePassWord(
+        userId: String,
+        old: String,
+        new1: String,
+        new2: String,
+        _avatar: String?
+    ): Single<ChangePassWord> {
+        return buildRequest(
+            _apiRestFull.sendChangePassWord(
+                user_id = userId,
+                password_old = old,
+                password_new = new1,
+                confirm_password_new = new2,
+                avatar = _avatar
+            )
+        )
     }
 
 }

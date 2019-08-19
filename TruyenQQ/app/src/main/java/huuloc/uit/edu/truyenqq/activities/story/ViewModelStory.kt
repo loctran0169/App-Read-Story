@@ -18,7 +18,7 @@ class ViewModelStoryFactory(val bookId: String, val context: Context) : ViewMode
 }
 
 class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
-    val share = MysharedPreferences(context).gẹtShare
+    val share = MysharedPreferences(context).getShare
     val user_id = share.getString(USER_ID, null)
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     var loadChap = false
@@ -91,7 +91,7 @@ class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
         )
     }
 
-    fun loadSubscribe(): LiveData<Subscribe> {
+    fun setSubscribe(): LiveData<Subscribe> {
         compo.add(
             apiManager.setSubscribe(bookId, user_id!!)
                 .subscribeOn(Schedulers.io())

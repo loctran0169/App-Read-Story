@@ -35,7 +35,7 @@ class FragmentLogin : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.login.observe(this@FragmentLogin, Observer {
             if (it != null) {
-                if (it.error == null && sharedPreferences.gẹtShare.getString(USER_ID, null) == null) {
+                if (it.error == null && sharedPreferences.getShare.getString(USER_ID, null) == null) {
                     sharedPreferences.saveData(it)
                     Toast.makeText(activity!!, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
                     viewModel.isLogin.value = true

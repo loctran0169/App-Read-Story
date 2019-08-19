@@ -2,6 +2,7 @@ package huuloc.uit.edu.truyenqq.fragments.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -127,6 +128,11 @@ class FragmentHome : Fragment() {
             progressStoryMale.visibility = View.VISIBLE
             progressStoryFeMale.visibility = View.VISIBLE
             viewModel.refresh()
+            val handle = Handler()
+            handle.postDelayed({
+                refresh.isRefreshing = false
+            }, 200
+            )
         }
         viewPagerSlider.setOnTouchListener { p0, event ->
             if (event!!.action == MotionEvent.ACTION_DOWN) {

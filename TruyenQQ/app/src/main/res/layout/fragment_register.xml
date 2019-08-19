@@ -13,8 +13,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <TextView
+                android:onClick="onBack"
+                android:drawableTop="@drawable/ic_before"
+                android:paddingTop="15dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+        <TextView
                 android:id="@+id/lbText1"
-                android:text="@string/lbLoginText"
+                android:text="@string/lbRegisterRequire"
                 android:gravity="center"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
@@ -56,6 +66,7 @@
         <Button
                 android:id="@+id/btnRegisterSend"
                 android:text="@string/lbRegisterSend"
+                android:textAllCaps="false"
                 android:background="@drawable/border_color_button_radius"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
