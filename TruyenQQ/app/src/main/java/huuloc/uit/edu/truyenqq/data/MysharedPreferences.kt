@@ -48,7 +48,7 @@ class MysharedPreferences(context: Context) {
     }
 
     fun loadData(): DataLogin? {
-        val data = DataLogin(null, null, null, null, null, null, null, null, null)
+        val data = DataLogin(null, null, null, null, null, null, null, null, null,"")
         data.id = getShare.getString(USER_ID, null)
         if (data.id == null)
             return null

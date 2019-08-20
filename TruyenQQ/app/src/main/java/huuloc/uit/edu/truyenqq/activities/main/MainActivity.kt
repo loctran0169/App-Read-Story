@@ -15,6 +15,7 @@ import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
 import huuloc.uit.edu.truyenqq.activities.changepassword.ActivityChangePassWord
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
+import huuloc.uit.edu.truyenqq.activities.personal.ActivityPersonalInformation
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.data.MysharedPreferences
 import huuloc.uit.edu.truyenqq.data.USER_ID
@@ -206,6 +207,11 @@ class MainActivity : AppCompatActivity() {
 
     fun changePassWord(view: View) {
         val intent = Intent(this, ActivityChangePassWord::class.java)
+        startActivity(intent)
+    }
+
+    fun changeInfor(view: View) {
+        val intent = Intent(this, ActivityPersonalInformation::class.java)
         startActivity(intent)
     }
 }

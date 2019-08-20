@@ -29,6 +29,7 @@
             android:text="@string/lbInformation"
             android:drawableStart="@drawable/ic_infor_person"
             android:drawablePadding="15dp"
+            android:onClick="changeInfor"
             android:textSize="18sp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"

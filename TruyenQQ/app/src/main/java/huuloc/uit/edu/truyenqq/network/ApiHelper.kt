@@ -6,7 +6,9 @@ import retrofit2.Call
 import retrofit2.http.*
 
 const val token_api: String = "1755ddda12372cf6db0b40695b5a3985d65172d6cdfc817156edd0eddf89c4d842073f92511b8b14"
-const val user_agnet: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+const val user_agnet: String =
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36"
+
 interface ApiHelper {
 
     @GET("book/book")
@@ -32,7 +34,7 @@ interface ApiHelper {
         @Query("arrayCategory") arrayCategory: String?
     ): Call<ListStory>
 
-    @GET("book/category?type_category=2")
+    @GET("book/category?col=name&order=ASC")
     fun getListCategory(@Header("token") token: String = token_api): Call<CategoryList>
 
     @GET("book/schedule")
@@ -105,7 +107,6 @@ interface ApiHelper {
     @PUT("book/history-read")
     fun setHistory(
         @Header("token") token: String = token_api,
-        @Header("User-Agent") Accept: String = user_agnet,
         @Query("id") book_id1: String,
         @Field("book_id") book_id2: String,
         @Field("user_id") user_id: String,
@@ -179,5 +180,23 @@ interface ApiHelper {
         @Field("changePassword") changePassword: String = "true",
         @Field("typeAction") typeAction: String = "edit"
     ): Call<ChangePassWord>
+
+    @FormUrlEncoded
+    @PUT("user/user")
+    fun sendChangeInformation(
+        @Header("token") token: String = token_api,
+        @Header("User-Agent") Accept: String = user_agnet,
+        @Query("id") user_id: String,
+        @Field("first_name") first_name: String,
+        @Field("last_name") last_name: String,
+        @Field("gender") sex: String,
+        @Field("avatar") avatar: String?,
+        @Field("phone") phone: String?,
+        @Field("changePassword") changePassword: String = "false",
+        @Field("day") day: String,
+        @Field("month") month: String,
+        @Field("year") year: String,
+        @Field("typeAction") typeAction: String = "edit"
+    ): Call<ChangeInformation>
 }
 

@@ -11,9 +11,6 @@ import io.reactivex.schedulers.Schedulers
 class ViewModelChangePassWord : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
-    var old = ""
-    var new1 = ""
-    var new2 = ""
 
     val changePassword = MutableLiveData<ChangePassWord>().apply { value = null }
 

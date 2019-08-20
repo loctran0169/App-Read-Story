@@ -30,6 +30,8 @@
                   android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.ActivityUser"/>
         <activity android:name=".activities.changepassword.ActivityChangePassWord"/>
+        <activity android:name=".activities.personal.ActivityPersonalInformation"
+                  android:windowSoftInputMode="adjustPan"/>
 
         <service android:name=".services.FCMservies"
                  android:exported="false">

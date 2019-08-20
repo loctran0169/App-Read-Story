@@ -1,17 +1,13 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterImage
-import huuloc.uit.edu.truyenqq.adapers.AdapterListChapSpinner
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_reading.*
 
@@ -41,12 +37,11 @@ class ActivityReading : AppCompatActivity() {
             )
             .get(ViewModelReading::class.java)
         first = intent.getBundleExtra("manga")!!.getString("first")!!
-        first = intent.getBundleExtra("manga")!!.getString("first")!!
-        rcvImage.run {
-            adapter = adapterImage
-            layoutManager = LinearLayoutManager(context)
-            addItemDecoration(SpaceItem(4))
-        }
+                rcvImage.run {
+                    adapter = adapterImage
+                    layoutManager = LinearLayoutManager(context)
+                    addItemDecoration(SpaceItem(4))
+                }
         refreshReading.setOnRefreshListener {
             viewModel.loadImage()
         }
@@ -55,7 +50,6 @@ class ActivityReading : AppCompatActivity() {
         }
         btnNext.setOnClickListener {
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.next)
-
         }
         btnPrev.setOnClickListener {
             viewModel.loadImageNextOrPrev(viewModel.story.value!!.prev)
@@ -63,7 +57,7 @@ class ActivityReading : AppCompatActivity() {
         viewModel.story.observe(this@ActivityReading, Observer {
             if (!it.list.isNullOrEmpty()) {
                 toolbarTextReading.text = "Chap ${viewModel.story.value?.order}"
-                adapterImage.updateData(it.list!!)
+                adapterImage.updateData(it.list)
                 refreshReading.isRefreshing = false
                 if (it.order.toFloat() > it.next.toFloat()) {
                     btnNext.visibility = View.INVISIBLE
@@ -77,21 +71,5 @@ class ActivityReading : AppCompatActivity() {
                 }
             }
         })
-        viewModel.listChap.observe(this@ActivityReading, Observer {
-            spinnerListChap.adapter = AdapterListChapSpinner(this, it.list)
-        })
-        viewModel.position.observe(this@ActivityReading, Observer {
-            spinnerListChap.setSelection(it)
-        })
-        spinnerListChap.onItemSelectedListener = object  : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                viewModel.loadImageNextOrPrev(viewModel.listChap.value!!.list[p2].order)
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-        }
     }
 }

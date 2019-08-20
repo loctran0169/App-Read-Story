@@ -161,4 +161,29 @@ class ApiManager {
         )
     }
 
+    fun sendChangeInformation(
+        user_id: String,
+        first_name: String,
+        last_name: String,
+        sex: String,
+        avatar: String?,
+        phone : String?,
+        day: String,
+        month: String,
+        year: String
+    ): Single<ChangeInformation> {
+        return buildRequest(
+            _apiRestFull.sendChangeInformation(
+                user_id = user_id,
+                first_name = first_name,
+                last_name = last_name,
+                sex = sex,
+                avatar = avatar,
+                phone = phone,
+                day = day,
+                month = month,
+                year = year
+            )
+        )
+    }
 }

@@ -11,6 +11,15 @@ data class ChangePassWord(
     var error: ErrorChangePassWord?
 )
 
+data class ChangeInformation(
+    @SerializedName("data")
+    var data: DataLogin?,
+    @SerializedName("success")
+    var success: String?,
+    @SerializedName("error")
+    var error: String?
+)
+
 data class DataLogin(
     @SerializedName("error")
     var error: Error?,
@@ -22,6 +31,8 @@ data class DataLogin(
     var email: String?,
     @SerializedName("avatar")
     var avatar: String?,
+    @SerializedName("gender")
+    var sex: String?,
     @SerializedName("first_name")
     var first_name: String?,
     @SerializedName("last_name")

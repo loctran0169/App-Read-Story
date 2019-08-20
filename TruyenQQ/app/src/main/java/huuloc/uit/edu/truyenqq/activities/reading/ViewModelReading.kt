@@ -4,13 +4,17 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import huuloc.uit.edu.truyenqq.data.*
+import huuloc.uit.edu.truyenqq.data.ListChap
+import huuloc.uit.edu.truyenqq.data.MysharedPreferences
+import huuloc.uit.edu.truyenqq.data.StoryImage
+import huuloc.uit.edu.truyenqq.data.USER_ID
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ViewModelReadingFactory(val bookId: String, val chap: String, val context: Context) : ViewModelProvider.Factory {
+class ViewModelReadingFactory(val bookId: String, val chap: String, val context: Context) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return ViewModelReading(bookId, chap, context) as T
     }
@@ -23,8 +27,6 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
     val apiManager: ApiManager by lazy { ApiManager() }
     var story = MutableLiveData<StoryImage>().apply { value = StoryImage("0.0", "0.0", "0.0", "0.0", mutableListOf()) }
     var listChap = MutableLiveData<ListChap>().apply { value = ListChap(mutableListOf()) }
-    var position = MutableLiveData<Int>().apply { value = pos }
-    var pos = 1
 
     init {
         getListChap()
@@ -54,11 +56,6 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (story.value!!.order.toFloat() > it.order.toFloat())
-                        pos++
-                    else if (story.value!!.order.toFloat() < it.order.toFloat())
-                        pos--
-                    position.value = pos
                     story.value = it
                 }, {
 
@@ -86,19 +83,9 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listChap.value = it
-                    findIndex(it.list)
                 }, {
 
                 })
         )
-    }
-
-    fun findIndex(list: List<Chap>) {
-        for ((x, i) in list.withIndex()) {
-            if (i.order.toFloat() == chap.toFloat()) {
-                position.value = x
-                pos = x
-            }
-        }
     }
 }

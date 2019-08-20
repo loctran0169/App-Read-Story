@@ -2,15 +2,19 @@ package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import huuloc.uit.edu.truyenqq.R
 
 class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView.Adapter<AdapterImage.ViewHolder>() {
+
+    val handler = Handler()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)
@@ -27,6 +31,7 @@ class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView
             val height = Resources.getSystem().displayMetrics.heightPixels
             Glide.with(context)
                 .load(list!![position])
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .override(width, height + height)
                 .error(R.drawable.ic_errorload)
                 .into(holder.image)

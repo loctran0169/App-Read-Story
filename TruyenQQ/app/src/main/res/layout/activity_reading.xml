@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <com.google.android.material.appbar.AppBarLayout
@@ -56,30 +55,21 @@
             <ImageButton
                     android:id="@+id/btnPrev"
                     android:background="@drawable/ic_prev"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/spinnerListChap"
-                    app:layout_constraintBottom_toBottomOf="@id/spinnerListChap"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="40dp"
                     android:layout_height="40dp"/>
             <ImageButton
                     android:id="@+id/btnNext"
                     android:background="@drawable/ic_next"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/spinnerListChap"
-                    app:layout_constraintBottom_toBottomOf="@id/spinnerListChap"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
-            <Spinner
-                    android:id="@+id/spinnerListChap"
-                    tools:listitem="@layout/item_chaps"
-                    android:dropDownHeight="400dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btnPrev"
-                    app:layout_constraintEnd_toStartOf="@id/btnNext"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
             <EditText
                     android:id="@+id/editTextCommentChap"
                     android:hint="@string/lbWriteAny"
@@ -88,7 +78,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/imgSend"
-                    app:layout_constraintBottom_toTopOf="@id/spinnerListChap"
+                    app:layout_constraintBottom_toTopOf="@id/btnNext"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <ImageButton
@@ -99,7 +89,6 @@
                     app:layout_constraintStart_toEndOf="@id/editTextCommentChap"
                     app:layout_constraintBottom_toBottomOf="@id/editTextCommentChap"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/spinnerListChap"
                     android:layout_width="25dp"
                     android:layout_height="25dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

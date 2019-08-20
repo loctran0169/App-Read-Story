@@ -45,4 +45,12 @@
     <string name="lbNewPassWordConfirm">Nhập lại mật khẩu mới</string>
     <string name="lbButtonForgotPassWord">Lấy lại mật khẩu</string>
     <string name="lbSaveChange">Lưu Thay đổi</string>
+    <string name="sex">Giới Tính:</string>
+    <string name="lbMale">Nam</string>
+    <string name="lbFemale">Nữ</string>
+    <string name="lbFirstName">Họ</string>
+    <string name="lbLastName">Tên</string>
+    <string name="lbPhone">Số điện thoại</string>
+    <string name="lbFormatDate">Định dạng dd-MM-yyyy</string>
+    <string name="lvSaveInfor">Lưu Thông Tin</string>
 </resources>
