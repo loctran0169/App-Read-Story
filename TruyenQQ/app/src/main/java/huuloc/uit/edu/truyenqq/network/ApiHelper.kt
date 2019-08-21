@@ -185,7 +185,6 @@ interface ApiHelper {
     @PUT("user/user")
     fun sendChangeInformation(
         @Header("token") token: String = token_api,
-        @Header("User-Agent") Accept: String = user_agnet,
         @Query("id") user_id: String,
         @Field("first_name") first_name: String,
         @Field("last_name") last_name: String,

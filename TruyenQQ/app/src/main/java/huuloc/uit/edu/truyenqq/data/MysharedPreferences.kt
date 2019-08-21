@@ -6,6 +6,7 @@ const val USER_ID = "id"
 const val USER_NAME = "username"
 const val EMAIL = "email"
 const val AVATAR = "avatar"
+const val SEX = "gender"
 const val FIRST_NAME = "first_name"
 const val LAST_NAME = "last_name"
 const val BIRTHDAY_STRING = "birthday_string"
@@ -40,6 +41,7 @@ class MysharedPreferences(context: Context) {
         put.putString(USER_NAME, data.username)
         put.putString(EMAIL, data.email)
         put.putString(AVATAR, data.avatar)
+        put.putString(SEX, data.sex)
         put.putString(FIRST_NAME, data.first_name)
         put.putString(LAST_NAME, data.last_name)
         put.putString(BIRTHDAY_STRING, data.birthday_string)
@@ -55,6 +57,7 @@ class MysharedPreferences(context: Context) {
         data.username = getShare.getString(USER_NAME, null)
         data.email = getShare.getString(EMAIL, null)
         data.avatar = getShare.getString(AVATAR, null)
+        data.sex = getShare.getString(SEX, null)
         data.first_name = getShare.getString(FIRST_NAME, null)
         data.last_name = getShare.getString(LAST_NAME, null)
         data.birthday_string = getShare.getString(BIRTHDAY_STRING, null)

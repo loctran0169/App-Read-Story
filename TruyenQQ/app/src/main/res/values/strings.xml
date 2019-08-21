@@ -53,4 +53,7 @@
     <string name="lbPhone">Số điện thoại</string>
     <string name="lbFormatDate">Định dạng dd-MM-yyyy</string>
     <string name="lvSaveInfor">Lưu Thông Tin</string>
+    <string name="lbDownloadName">Chọn chương để tải xuống</string>
+    <string name="lbSeteclAll">Chọn tất cả</string>
+    <string name="lbDownload">Tải Xuống</string>
 </resources>

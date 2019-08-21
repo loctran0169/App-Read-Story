@@ -51,6 +51,24 @@ class ApiManager {
         }
     }
 
+    private fun <Bitmap : Any> buildImage(call: Call<Bitmap>): Single<Bitmap> {
+        return Single.create {
+            call.enqueue(object : Callback<Bitmap> {
+                override fun onResponse(call: Call<Bitmap>, response: Response<Bitmap>) {
+                    try {
+                        it.onSuccess(response.body()!!)
+                    } catch (ex: Exception) {
+
+                    }
+                }
+
+                override fun onFailure(p0: Call<Bitmap>, response: Throwable) {
+                    it.onError(response)
+                }
+            })
+        }
+    }
+
     fun getListCategory(): Single<CategoryList> {
         return buildRequest(_apiRestFull.getListCategory())
     }

@@ -15,9 +15,7 @@ data class ChangeInformation(
     @SerializedName("data")
     var data: DataLogin?,
     @SerializedName("success")
-    var success: String?,
-    @SerializedName("error")
-    var error: String?
+    var success: String?
 )
 
 data class DataLogin(

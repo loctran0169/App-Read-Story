@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refreshStory"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/refreshStory"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -206,5 +206,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnDownloadStory"
+                android:layout_gravity="bottom|end"
+                android:src="@drawable/ic_download"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

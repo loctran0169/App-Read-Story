@@ -82,6 +82,16 @@ dependencies {
     implementation 'com.ms-square:expandableTextView:0.1.4'
 
     implementation 'com.ms-square:expandableTextView:0.1.4'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    //room database
+    implementation "androidx.room:room-rxjava2:2.1.0"
+    kapt "androidx.room:room-compiler:2.1.0"
+
+    //debug database
+    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.android.support:design:26.1.0'
 
 }

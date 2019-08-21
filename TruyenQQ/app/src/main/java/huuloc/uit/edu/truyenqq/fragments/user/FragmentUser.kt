@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
-import huuloc.uit.edu.truyenqq.data.MysharedPreferences
+import huuloc.uit.edu.truyenqq.database.ImageStorageManager
 import kotlinx.android.synthetic.main.fragment_user.*
+import java.lang.Exception
 
 class FragmentUser : Fragment() {
     val viewModel: ViewModelHome by lazy {
@@ -30,8 +31,14 @@ class FragmentUser : Fragment() {
 
     private fun loadData() {
         val p0 = viewModel.dataLogin.value!!
-        Glide.with(context!!)
-            .load("http://avatar.mangaqq.com/160x160/"+p0.avatar)
-            .into(imgAvatar)
+//        Glide.with(context!!)
+//            .load("http://avatar.mangaqq.com/160x160/"+p0.avatar)
+//            .into(imgAvatar)
+        try {
+            imgAvatar.setImageBitmap(ImageStorageManager.getImageFromInternalStorage(activity!!, "456+1+0"))
+        }
+        catch (ex :Exception){
+
+        }
     }
 }

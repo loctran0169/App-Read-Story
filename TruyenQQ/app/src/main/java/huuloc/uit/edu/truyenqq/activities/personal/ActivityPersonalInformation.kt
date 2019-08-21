@@ -34,8 +34,9 @@ class ActivityPersonalInformation : AppCompatActivity() {
         bindData(share.loadData()!!)
         viewModel.data.observe(this@ActivityPersonalInformation, androidx.lifecycle.Observer {
             if (it != null) {
-                if (it.error != null) {
+                if (it.success != null) {
                     share.saveData(it.data!!)
+                    Toast.makeText(this, "Cập nhật thành công", Toast.LENGTH_SHORT).show()
                     bindData(it.data!!)
                 } else {
                     val dialog = AlertDialog.Builder(this)
@@ -62,17 +63,19 @@ class ActivityPersonalInformation : AppCompatActivity() {
                     "Tên không được để trống",
                     Toast.LENGTH_SHORT
                 ).show()
-                else -> viewModel.sendChangePassword(
-                    share.getShare.getString(USER_ID, null)!!,
-                    editFirstName.text.toString(),
-                    editLastName.text.toString(),
-                    if (checkboxMale.isChecked) "1" else "0",
-                    share.getShare.getString(AVATAR, null)!!,
-                    editPhone.text.toString(),
-                    editDate.text.toString().split("-")[2],
-                    editDate.text.toString().split("-")[1],
-                    editDate.text.toString().split("-")[0]
-                )
+                else -> {
+                    viewModel.sendChangeInformation(
+                        share.getShare.getString(USER_ID, null)!!,
+                        editFirstName.text.toString(),
+                        editLastName.text.toString(),
+                        if (checkboxMale.isChecked) "1" else "0",
+                        share.getShare.getString(AVATAR, null),
+                        editPhone.text.toString(),
+                        editDate.text.toString().split("-")[0],
+                        editDate.text.toString().split("-")[1],
+                        editDate.text.toString().split("-")[2]
+                    )
+                }
             }
         }
     }
@@ -86,18 +89,22 @@ class ActivityPersonalInformation : AppCompatActivity() {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            editDate.setText("$year-${monthOfYear + 1}-$dayOfMonth")
+            editDate.setText("$dayOfMonth-${monthOfYear + 1}-$year")
         }, year, month, day)
 
         dpd.show()
     }
 
+    @SuppressLint("SetTextI18n")
     fun bindData(data: DataLogin) {
         editFirstName.setText(data.first_name)
         editLastName.setText(data.last_name)
         editPhone.setText(data.phone)
         editEmail.setText(data.email)
-        editDate.setText(data.birthday_string)
+        if(data.birthday_string!!.split("-")[0].toInt()>32)
+            editDate.setText(data.birthday_string!!.split("-")[2] +"-"+ data.birthday_string!!.split("-")[1] +"-"+data.birthday_string!!.split("-")[0])
+        else
+            editDate.setText(data.birthday_string!!.split("-")[0] +"-"+ data.birthday_string!!.split("-")[1] +"-"+data.birthday_string!!.split("-")[2])
         if (data.sex == "1")
             checkboxMale.isChecked = true
         else

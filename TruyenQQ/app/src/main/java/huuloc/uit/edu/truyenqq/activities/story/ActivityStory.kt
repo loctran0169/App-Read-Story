@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import huuloc.uit.edu.truyenqq.R
+import huuloc.uit.edu.truyenqq.activities.activitydownload.ActivityDownload
 import huuloc.uit.edu.truyenqq.activities.reading.ActivityReading
 import huuloc.uit.edu.truyenqq.adapers.AdapterFlexBoxLayout
 import huuloc.uit.edu.truyenqq.adapers.AdapterStoryTabLayout
@@ -126,6 +127,13 @@ class ActivityStory : AppCompatActivity() {
         })
         refreshStory.setOnRefreshListener {
             viewModel.refresh.value = true
+        }
+        btnDownloadStory.setOnClickListener {
+            val intent1 = Intent(this, ActivityDownload::class.java)
+            val bundle = Bundle()
+            bundle.putString("book_id", intent.getBundleExtra("kind")!!.getString("book_id")!!)
+            intent1.putExtra("manga", bundle)
+            this.startActivity(intent1)
         }
     }
 

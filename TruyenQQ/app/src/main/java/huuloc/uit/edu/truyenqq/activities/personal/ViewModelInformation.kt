@@ -25,7 +25,7 @@ class ViewModelInformation(context: Context) : ViewModel() {
     val share = MysharedPreferences(context)
     var data = MutableLiveData<ChangeInformation>().apply { value = null }
 
-    fun sendChangePassword(
+    fun sendChangeInformation(
         user_id: String,
         first_name: String,
         last_name: String,
@@ -43,7 +43,7 @@ class ViewModelInformation(context: Context) : ViewModel() {
                 .subscribe({
                     data.value = it
                 }, {
-
+                    println("### ${it.message}")
                 })
         )
     }
