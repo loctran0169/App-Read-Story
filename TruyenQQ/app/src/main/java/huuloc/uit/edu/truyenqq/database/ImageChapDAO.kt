@@ -8,16 +8,22 @@ import androidx.room.Query
 @Dao
 interface ImageChapDAO {
     @Insert
-    fun insert(vararg imageChap: ImageChap)
+    fun insertImage(vararg imageChap: ImageChap)
 
     @Insert
     fun insert(vararg storyChap: StoryChap)
+
+    @Insert
+    fun insert(vararg queue : QueueDownload)
 
     @Query("select *from ImageChap where bookId = :bookId and chapId=:idChap order by position asc")
     fun getAllImageWithId(bookId: String, idChap: String): LiveData<List<ImageChap>>
 
     @Query("select *from StoryChap")
     fun getAllDataStory(): LiveData<List<StoryChap>>
+
+    @Query("select *from QueueDownload where bookId=:bookId")
+    fun getDataQueueById(bookId: String): List<QueueDownload>
 
     @Query("select *from StoryChap where id = :bookId")
     fun getDataStory(bookId: String): LiveData<StoryChap>
@@ -30,6 +36,9 @@ interface ImageChapDAO {
 
     @Query("delete from ImageChap where bookId = :bookId and chapId = :idChap")
     fun deleteImageWithId(bookId: String, idChap: String)
+
+    @Query("delete from QueueDownload where bookId = :bookId and chapId = :idChap")
+    fun deleteQueue(bookId: String, idChap: String)
 
     @Query("delete from ImageChap")
     fun removeAll()

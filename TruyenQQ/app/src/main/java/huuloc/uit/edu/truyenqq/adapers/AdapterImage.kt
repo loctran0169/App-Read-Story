@@ -14,7 +14,6 @@ import huuloc.uit.edu.truyenqq.R
 
 class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView.Adapter<AdapterImage.ViewHolder>() {
 
-    val handler = Handler()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)

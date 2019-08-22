@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="huuloc.uit.edu.truyenqq">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,30 +16,41 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+        <service
+                android:name=".services.ServiceDownload"
+                android:enabled="true"
+                android:exported="true">
+        </service>
 
-        <activity android:name=".activities.main.MainActivity"
-                  android:windowSoftInputMode="adjustPan">
+        <activity
+                android:name=".activities.main.MainActivity"
+                android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".activities.rank.ActivityRank"/>
         <activity android:name=".activities.newactivity.ActivityNewUpdate"/>
-        <activity android:name=".activities.story.ActivityStory"
-                  android:theme="@style/AppTheme.Story"/>
-        <activity android:name=".activities.reading.ActivityReading"
-                  android:windowSoftInputMode="adjustPan"/>
+        <activity
+                android:name=".activities.story.ActivityStory"
+                android:theme="@style/AppTheme.Story"/>
+        <activity
+                android:name=".activities.reading.ActivityReading"
+                android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.ActivityUser"/>
         <activity android:name=".activities.changepassword.ActivityChangePassWord"/>
-        <activity android:name=".activities.personal.ActivityPersonalInformation"
-                  android:windowSoftInputMode="adjustPan"/>
+        <activity
+                android:name=".activities.personal.ActivityPersonalInformation"
+                android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.activitydownload.ActivityDownload"/>
         <activity android:name=".activities.activitychapdownloaded.ActivityChapDownload"/>
         <activity android:name=".activities.readingdownload.ActivityReadingDownload"/>
 
-        <service android:name=".services.FCMservies"
-                 android:exported="false">
+        <service
+                android:name=".services.FCMservies"
+                android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
@@ -47,8 +59,10 @@
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
                 android:resource="@drawable/ic_search"/>
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
                 android:resource="@color/colorAccent"/>

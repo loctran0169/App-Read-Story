@@ -3,10 +3,12 @@ package huuloc.uit.edu.truyenqq.activities.activitydownload
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
+import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,11 +17,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import huuloc.uit.edu.truyenqq.data.Chap
-import huuloc.uit.edu.truyenqq.database.ImageChap
-import huuloc.uit.edu.truyenqq.database.ImageChapRepository
-import huuloc.uit.edu.truyenqq.database.ImageStorageManager
-import huuloc.uit.edu.truyenqq.database.StoryChap
+import huuloc.uit.edu.truyenqq.database.*
 import huuloc.uit.edu.truyenqq.network.ApiManager
+import huuloc.uit.edu.truyenqq.services.ServiceDownload
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -36,6 +36,8 @@ class ViewModelDownloadFactory(val application: Application, val context: Contex
 class ViewModelDownload(val application: Application, val context: Context, val bookId: String) : ViewModel() {
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
+    private val ImageChapDAO: ImageChapDAO? = AppDataBase.get(application)?.ImageChapDAO()
+
     val repo: ImageChapRepository by lazy {
         ImageChapRepository(application)
     }
@@ -93,6 +95,10 @@ class ViewModelDownload(val application: Application, val context: Context, val 
         repo.insertStory(listOf(Story.value!!))
     }
 
+    fun saveAndRunServiceDownload(list: List<String>) {
+        AsyncTaskProcessInsert(ImageChapDAO,list).execute()
+    }
+
     fun downloadListChap(list: List<String>) {
         list.forEach { i ->
             apiManager.getListImage(bookId, i)
@@ -108,6 +114,24 @@ class ViewModelDownload(val application: Application, val context: Context, val 
         }
     }
 
+    inner class AsyncTaskProcessInsert internal constructor(val dao: ImageChapDAO?, val list: List<String>) :
+        AsyncTask<Void, Void, Void>() {
+        override fun doInBackground(vararg imageChap: Void): Void? {
+            list.forEach {
+                repo.insertQueue(listOf(QueueDownload(bookId = bookId, chapId = it)))
+            }
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            val inten = Intent(application, ServiceDownload::class.java)
+            val bundle = Bundle()
+            bundle.putString("bookId", bookId)
+            inten.putExtras(bundle)
+            context.startService(inten)
+        }
+    }
 
     @SuppressLint("StaticFieldLeak")
     inner class AsyncTaskLoad internal constructor(val context: Context, val chap: String) :

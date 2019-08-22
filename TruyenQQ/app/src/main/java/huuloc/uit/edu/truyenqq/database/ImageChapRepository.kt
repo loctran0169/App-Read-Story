@@ -9,11 +9,16 @@ class ImageChapRepository(application: Application) {
     private val ImageChapDAO: ImageChapDAO? = AppDataBase.get(application)?.ImageChapDAO()
 
     fun insert(imageChap: List<ImageChap>) {
-        AsyncTaskProcessInsert(ImageChapDAO).execute(*imageChap.toTypedArray())
+        //AsyncTaskProcessInsert(ImageChapDAO).execute(*imageChap.toTypedArray())
+        ImageChapDAO?.insertImage(*(imageChap.toTypedArray()))
     }
 
     fun insertStory(story: List<StoryChap>) {
         AsyncTaskProcessInsertStory(ImageChapDAO).execute(*story.toTypedArray())
+    }
+
+    fun insertQueue(imageChap: List<QueueDownload>) {
+        AsyncTaskProcessInsertQueue(ImageChapDAO).execute(*imageChap.toTypedArray())
     }
 
     fun getAllImageWithId(bookId: String, idChap: String): LiveData<List<ImageChap>>? {
@@ -28,6 +33,10 @@ class ImageChapRepository(application: Application) {
         return ImageChapDAO?.getAllDataStory()
     }
 
+    fun getDataQueueById(bookId: String): List<QueueDownload>? {
+        return ImageChapDAO?.getDataQueueById(bookId)
+    }
+
     fun countStory(bookId: String): LiveData<List<String>>? {
         return ImageChapDAO?.countStory(bookId)
     }
@@ -40,6 +49,10 @@ class ImageChapRepository(application: Application) {
         AsyncTaskProcessDelete(ImageChapDAO, booid, chapId).execute()
     }
 
+    fun deleteQueue(booid: String, chapId: String) {
+        AsyncTaskProcessDeleteQueue(ImageChapDAO, booid, chapId).execute()
+    }
+
     fun deleteAll() {
         AsyncTaskProcessDeleteAll(ImageChapDAO).execute()
     }
@@ -47,7 +60,7 @@ class ImageChapRepository(application: Application) {
     private class AsyncTaskProcessInsert internal constructor(val dao: ImageChapDAO?) :
         AsyncTask<ImageChap, Void, Void>() {
         override fun doInBackground(vararg imageChap: ImageChap): Void? {
-            dao?.insert(*(imageChap.toMutableList()).toTypedArray())
+            dao?.insertImage(*(imageChap.toMutableList()).toTypedArray())
             return null
         }
     }
@@ -60,16 +73,29 @@ class ImageChapRepository(application: Application) {
         }
     }
 
-    private class AsyncTaskProcessDelete internal constructor(
-        val dao: ImageChapDAO?,
-        val bookId: String,
-        val chapId: String
-    ) : AsyncTask<Void, Void, Void>() {
+    private class AsyncTaskProcessInsertQueue internal constructor(val dao: ImageChapDAO?) :
+        AsyncTask<QueueDownload, Void, Void>() {
+        override fun doInBackground(vararg imageChap: QueueDownload): Void? {
+            dao?.insert(*(imageChap.toMutableList()).toTypedArray())
+            return null
+        }
+
+    }
+
+    private class AsyncTaskProcessDelete internal constructor(val dao: ImageChapDAO?, val bookId: String, val chapId: String)
+        : AsyncTask<Void, Void, Void>() {
         override fun doInBackground(vararg p0: Void?): Void? {
             dao?.deleteImageWithId(bookId, chapId)
             return null
         }
+    }
 
+    private class AsyncTaskProcessDeleteQueue internal constructor(val dao: ImageChapDAO?, val bookId: String, val chapId: String)
+        : AsyncTask<Void, Void, Void>() {
+        override fun doInBackground(vararg p0: Void?): Void? {
+            dao?.deleteQueue(bookId, chapId)
+            return null
+        }
     }
 
     private class AsyncTaskProcessDeleteAll internal constructor(val dao: ImageChapDAO?) :

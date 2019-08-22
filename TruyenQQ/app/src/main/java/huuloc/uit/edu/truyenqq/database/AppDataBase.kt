@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [ImageChap::class,StoryChap::class], version = 1)
+@Database(entities = [ImageChap::class,StoryChap::class,QueueDownload::class], version = 1)
 abstract class AppDataBase : RoomDatabase() {
 
     abstract fun ImageChapDAO(): ImageChapDAO

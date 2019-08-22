@@ -17,7 +17,6 @@ import java.io.IOException
 
 class AdapterImageDownload(val context: Context, var list: List<ImageChap>?) : RecyclerView.Adapter<AdapterImageDownload.ViewHolder>() {
 
-    val handler = Handler()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
         return ViewHolder(view)
@@ -30,6 +29,7 @@ class AdapterImageDownload(val context: Context, var list: List<ImageChap>?) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try{
+            holder.image.scaleType = ImageView.ScaleType.FIT_XY
             holder.image.setImageBitmap(ImageStorageManager.getImageFromInternalStorage(context,list!![position].name))
         }
         catch (ex :IOException){

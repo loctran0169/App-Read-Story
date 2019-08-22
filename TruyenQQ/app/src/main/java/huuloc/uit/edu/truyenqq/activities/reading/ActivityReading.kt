@@ -37,11 +37,11 @@ class ActivityReading : AppCompatActivity() {
             )
             .get(ViewModelReading::class.java)
         first = intent.getBundleExtra("manga")!!.getString("first")!!
-                rcvImage.run {
-                    adapter = adapterImage
-                    layoutManager = LinearLayoutManager(context)
-                    addItemDecoration(SpaceItem(4))
-                }
+        rcvImage.run {
+            adapter = adapterImage
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(SpaceItem(4))
+        }
         refreshReading.setOnRefreshListener {
             viewModel.loadImage()
         }

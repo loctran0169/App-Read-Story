@@ -30,9 +30,8 @@ class ActivityReadingDownload : AppCompatActivity() {
         chapId = intent.getBundleExtra("manga")!!.getString("chap")!!
         toolbarTextReading.text="Chương "+chapId
         rcvImage.run {
-            layoutManager = LinearLayoutManager(this@ActivityReadingDownload)
             adapter = adapterImageDownload
-            addItemDecoration(SpaceItem(4))
+            layoutManager = LinearLayoutManager(context)
         }
         repo.getAllImageWithId(bookId,chapId)?.observe(this@ActivityReadingDownload, Observer {
             adapterImageDownload.updateData(it)

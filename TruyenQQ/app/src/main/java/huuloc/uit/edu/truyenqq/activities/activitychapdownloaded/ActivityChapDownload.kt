@@ -31,6 +31,8 @@ class ActivityChapDownload : AppCompatActivity(){
         botNavigationReading.visibility= View.INVISIBLE
         toolbarTextReading.maxLines=1
         toolbarTextReading.text=intent.getBundleExtra("manga")!!.getString("name")!!
+        refreshReading.isRefreshing=false
+        refreshReading.isEnabled=false
         bookId=intent.getBundleExtra("manga")!!.getString("book_id")!!
         rcvImage.run {
             layoutManager= LinearLayoutManager(this@ActivityChapDownload)
