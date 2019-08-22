@@ -1,6 +1,5 @@
 package huuloc.uit.edu.truyenqq.activities.activitydownload
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterChapDownload
-import huuloc.uit.edu.truyenqq.database.*
+import huuloc.uit.edu.truyenqq.data.Chap
+import huuloc.uit.edu.truyenqq.database.ImageChapRepository
+import huuloc.uit.edu.truyenqq.database.ImageStorageManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
-import huuloc.uit.edu.truyenqq.services.ServiceDownload
 import kotlinx.android.synthetic.main.activity_download.*
 
 class ActivityDownload : AppCompatActivity() {
@@ -27,7 +27,7 @@ class ActivityDownload : AppCompatActivity() {
         ImageChapRepository(application)
     }
     private val adapterChap: AdapterChapDownload by lazy {
-        AdapterChapDownload(this, mutableListOf(), viewModel.select)
+        AdapterChapDownload(this, mutableListOf(), viewModel.select, viewModel.downloaded)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class ActivityDownload : AppCompatActivity() {
         rcvDownload.run {
             adapter = adapterChap
             layoutManager = GridLayoutManager(this@ActivityDownload, 3)
-            addItemDecoration(SpaceItem(5))
+            addItemDecoration(SpaceItem(4))
         }
         viewModel.listChap.observe(this@ActivityDownload, Observer {
             if (it != null)
@@ -47,7 +47,7 @@ class ActivityDownload : AppCompatActivity() {
         btnDownload.setOnClickListener {
             if (viewModel.select.isEmpty() || !click)
             else {
-                click=false
+                click = false
                 repo.getDataStory(intent.getBundleExtra("manga")!!.getString("book_id")!!)
                     ?.observe(this@ActivityDownload, Observer {
                         if (it == null) {
@@ -64,6 +64,23 @@ class ActivityDownload : AppCompatActivity() {
                     })
                 Toast.makeText(this, "Đang tải vui lòng không thoát app", Toast.LENGTH_SHORT).show()
             }
+        }
+        var all = false
+        btnSelectAll.setOnClickListener {
+            if (!all) {
+                all = true
+                btnSelectAll.text = "Hủy chọn"
+                viewModel.select.clear()
+                viewModel.select.addAll(
+                    viewModel.listChap.value!!.map { chap: Chap -> chap.order }.toCollection(arrayListOf())
+                )
+            } else {
+                all = false
+                btnSelectAll.text = "Chọn tất cả"
+                viewModel.select.clear()
+                viewModel.select.addAll(viewModel.downloaded)
+            }
+            adapterChap.notifyDataSetChanged()
         }
     }
 }

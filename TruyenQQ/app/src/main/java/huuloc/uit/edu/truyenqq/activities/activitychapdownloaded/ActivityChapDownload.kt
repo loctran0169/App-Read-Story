@@ -37,11 +37,14 @@ class ActivityChapDownload : AppCompatActivity(){
         rcvImage.run {
             layoutManager= LinearLayoutManager(this@ActivityChapDownload)
             adapter=adapterListChapDownload
-            addItemDecoration(SpaceItem(4))
+            addItemDecoration(SpaceItem(1))
         }
         repo.countStory(bookId)?.observe(this@ActivityChapDownload, Observer {
             if(it!=null)
                 adapterListChapDownload.updateData(it)
         })
+        btnBackReading.setOnClickListener {
+            onBackPressed()
+        }
     }
 }

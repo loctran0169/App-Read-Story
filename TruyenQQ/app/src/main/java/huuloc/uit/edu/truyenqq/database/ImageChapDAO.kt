@@ -29,7 +29,7 @@ interface ImageChapDAO {
     fun getDataStory(bookId: String): LiveData<StoryChap>
 
     @Query("select distinct chapId from ImageChap where bookId = :bookId order by chapId ASC")
-    fun countStory(bookId: String): LiveData<List<String>>
+    fun countStory(bookId: String): LiveData<List<String>>?
 
     @Query("select count(distinct chapId) from ImageChap where bookId = :bookId and chapId=:chapId")
     fun findChapId(bookId: String, chapId: String): String

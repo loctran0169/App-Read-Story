@@ -2,6 +2,7 @@ package huuloc.uit.edu.truyenqq.activities.readingdownload
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,7 +17,7 @@ class ActivityReadingDownload : AppCompatActivity() {
     private val repo: ImageChapRepository by lazy {
         ImageChapRepository(application)
     }
-    val adapterImageDownload: AdapterImageDownload by lazy {
+    private val adapterImageDownload: AdapterImageDownload by lazy {
         AdapterImageDownload(this, mutableListOf())
     }
     var bookId = ""
@@ -26,15 +27,21 @@ class ActivityReadingDownload : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reading)
         botNavigationReading.visibility = View.INVISIBLE
+        refreshReading.isRefreshing=false
+        refreshReading.isEnabled=false
         bookId = intent.getBundleExtra("manga")!!.getString("book_id")!!
         chapId = intent.getBundleExtra("manga")!!.getString("chap")!!
         toolbarTextReading.text="Chương "+chapId
         rcvImage.run {
             adapter = adapterImageDownload
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(SpaceItem(0))
         }
         repo.getAllImageWithId(bookId,chapId)?.observe(this@ActivityReadingDownload, Observer {
             adapterImageDownload.updateData(it)
         })
+        btnBackReading.setOnClickListener {
+            onBackPressed()
+        }
     }
 }

@@ -29,7 +29,6 @@ class AdapterImageDownload(val context: Context, var list: List<ImageChap>?) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try{
-            holder.image.scaleType = ImageView.ScaleType.FIT_XY
             holder.image.setImageBitmap(ImageStorageManager.getImageFromInternalStorage(context,list!![position].name))
         }
         catch (ex :IOException){

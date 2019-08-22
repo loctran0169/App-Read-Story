@@ -105,7 +105,7 @@ class FragmentHome : Fragment() {
         //Schedule
         imgCalendar.setOnClickListener {
             viewModel.sLoadingSchedulers.observe(this@FragmentHome, Observer {
-                var dialog = AlertDialog.Builder(activity!!)
+                val dialog = AlertDialog.Builder(activity!!)
                 val view: View = LayoutInflater.from(activity!!).inflate(R.layout.fragment_schedule, null)
                 val schedule = view.findViewById<RecyclerView>(R.id.rcvSchedule)
                 val date = view.findViewById<TextView>(R.id.tvScheduleDate)

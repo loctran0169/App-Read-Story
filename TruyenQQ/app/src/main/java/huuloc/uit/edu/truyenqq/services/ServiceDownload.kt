@@ -9,10 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.IBinder
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.main.MainActivity
@@ -52,7 +54,6 @@ class ServiceDownload : Service() {
     }
 
     override fun onDestroy() {
-        println("### ondestroy")
         super.onDestroy()
     }
 
@@ -74,8 +75,9 @@ class ServiceDownload : Service() {
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setSound(defaultRingtone)
             .setContentIntent(pending)
-            .setContentTitle("Test cái nhẹ")
+            .setContentTitle("Đang tải truyện")
             .setContentText(message)
+            .setColor(Color.parseColor("#ffff7043"))
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val chanel = NotificationChannel(
@@ -95,10 +97,9 @@ class ServiceDownload : Service() {
     inner class AsyncTaskLoad internal constructor(val context: Context, val chap: String, val list: List<String>) :
         AsyncTask<Void, Void, Void>() {
         override fun doInBackground(vararg p0: Void?): Void? {
-            println("### Vào chap $chap")
             if (repo.findChapId(bookId, chap) == "0") {
                 list.forEachIndexed { i, it ->
-                    showNotification("Đang tải chap $chap($i/${list.size})")
+                    showNotification("$number/$require\nĐang tải chap $chap($i/${list.size})")
                     val bitmap = getBitmapFromURL(it)
                     if (bitmap != null) {
                         try {
@@ -113,7 +114,6 @@ class ServiceDownload : Service() {
                                     )
                                 )
                             )
-                            println("### $bookId+$chap+$i")
                         } catch (ex: Exception) {
 
                         }
@@ -129,6 +129,7 @@ class ServiceDownload : Service() {
             number++
             if(number==require) {
                 showNotification("Tải xuống hoàn thành")
+                Toast.makeText(context,"Tải xuống hoàn thành",Toast.LENGTH_SHORT).show()
                 this@ServiceDownload.onDestroy()
             }
         }

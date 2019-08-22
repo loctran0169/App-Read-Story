@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
@@ -16,7 +18,7 @@ import huuloc.uit.edu.truyenqq.activities.readingdownload.ActivityReadingDownloa
 class AdapterListChapDownload(val context: Context, val bookId: String, var list: List<String>) :
     RecyclerView.Adapter<AdapterListChapDownload.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item_chaps, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_chaps_download, parent, false)
         return ViewHolder(view)
     }
 
@@ -27,9 +29,8 @@ class AdapterListChapDownload(val context: Context, val bookId: String, var list
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p0 = list[position]
-        holder.chapDate.isVisible = false
         holder.chapName.text="Chương $p0"
-        holder.itemView.setOnClickListener {
+        holder.chapName.setOnClickListener {
             val intent = Intent(context, ActivityReadingDownload::class.java)
             val bundle = Bundle()
             bundle.putString("book_id", bookId)
@@ -37,11 +38,14 @@ class AdapterListChapDownload(val context: Context, val bookId: String, var list
             intent.putExtra("manga", bundle)
             context.startActivity(intent)
         }
+        holder.chapDate.setOnClickListener {
+            Toast.makeText(context,"Xóa",Toast.LENGTH_SHORT).show()
+        }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var chapName = view.findViewById<TextView>(R.id.tvChapName)
-        var chapDate = view.findViewById<TextView>(R.id.tvChapDate)
+        var chapName = view.findViewById<TextView>(R.id.tvChapNameDownload)
+        var chapDate = view.findViewById<ImageView>(R.id.btnChapDateDelete)
     }
 
     fun updateData(items: List<String>) {

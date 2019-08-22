@@ -8,7 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.Toolbar
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                app:layout_scrollFlags="scroll|enterAlways"
                 android:id="@+id/toolBarRank"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
