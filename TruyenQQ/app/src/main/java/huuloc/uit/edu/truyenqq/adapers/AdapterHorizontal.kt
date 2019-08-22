@@ -64,7 +64,8 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
                 Glide.with(context)
                     .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
                     .into(itemView.imgStoryItemHorizontal)
-            } finally {
+            }
+            finally {
                 Glide.with(context)
                     .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
                     .into(itemView.imgStoryItemHorizontal)

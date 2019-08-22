@@ -8,6 +8,7 @@ import huuloc.uit.edu.truyenqq.data.LoadMoreObject
 import huuloc.uit.edu.truyenqq.data.MysharedPreferences
 import huuloc.uit.edu.truyenqq.data.StoryInformation
 import huuloc.uit.edu.truyenqq.data.USER_ID
+import huuloc.uit.edu.truyenqq.database.ImageChapRepository
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -26,6 +27,7 @@ class ViewModelBook(conText: Context) : ViewModel() {
     var offsetHis = 0
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
+
     var subcribe = MutableLiveData<List<StoryInformation>>().apply { value = itemsSub }
     var itemsSub = mutableListOf<StoryInformation>()
 

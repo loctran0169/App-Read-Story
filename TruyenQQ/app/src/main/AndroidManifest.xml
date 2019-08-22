@@ -34,6 +34,8 @@
         <activity android:name=".activities.personal.ActivityPersonalInformation"
                   android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activities.activitydownload.ActivityDownload"/>
+        <activity android:name=".activities.activitychapdownloaded.ActivityChapDownload"/>
+        <activity android:name=".activities.readingdownload.ActivityReadingDownload"/>
 
         <service android:name=".services.FCMservies"
                  android:exported="false">

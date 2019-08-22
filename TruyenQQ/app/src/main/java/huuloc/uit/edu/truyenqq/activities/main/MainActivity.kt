@@ -60,10 +60,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.isShow.observe(this@MainActivity, Observer {
             botNavigation.selectedItemId = it
         })
+        //repo.deleteImageWithId("456","1")
         val share = MysharedPreferences(this)
         Glide.with(this)
             .asBitmap()
-            .load("http://mangaqq.com/7737/10/0.jpg?thang=t515")
+            .load("http://mangaqq.com/7737/10/0.jg?thang=t515")
             .into(object : CustomTarget<Bitmap>(){
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     println("### save ${ImageStorageManager.saveToInternalStorage(this@MainActivity,resource,"7737-1")}")

@@ -110,4 +110,5 @@ class ActivityPersonalInformation : AppCompatActivity() {
         else
             checkboxFemale.isChecked = true
     }
+
 }

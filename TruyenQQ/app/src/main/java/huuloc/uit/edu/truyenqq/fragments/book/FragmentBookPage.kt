@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontal
+import huuloc.uit.edu.truyenqq.adapers.AdapterHorizontalDownload
+import huuloc.uit.edu.truyenqq.database.ImageChapRepository
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.fragment_list_item_vertical.*
 
@@ -25,6 +27,14 @@ class FragmentBookPage : Fragment() {
     private val adapterHorizontal: AdapterHorizontal by lazy {
         AdapterHorizontal(activity!!, mutableListOf())
     }
+
+    private val adapterHorizontalDownload: AdapterHorizontalDownload by lazy {
+        AdapterHorizontalDownload(activity!!, activity!!.application, mutableListOf())
+    }
+
+    val repo: ImageChapRepository by lazy {
+        ImageChapRepository(activity!!.application)
+    }
     var _tag: Int = 0
     var isLogin: Boolean = true
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,9 +43,12 @@ class FragmentBookPage : Fragment() {
             _tag = bundle.getInt("tag")
             isLogin = bundle.getBoolean("login")
         }
-        if (!isLogin)
+        if (_tag == 2)
+            return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
+        else if (!isLogin)
             return inflater.inflate(R.layout.fragment_require, container, false)
-        return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
+        else
+            return inflater.inflate(R.layout.fragment_list_item_vertical, container, false)
     }
 
     @SuppressLint("CheckResult")
@@ -84,7 +97,13 @@ class FragmentBookPage : Fragment() {
                     })
                 }
                 2 -> {
-
+                    rcvHorizontal.adapter = adapterHorizontalDownload
+                    repo.getAllDataStory()?.observe(this@FragmentBookPage, Observer {
+                        if (it != null) {
+                            adapterHorizontalDownload.updateData(it)
+                            progressBarRank.visibility = View.INVISIBLE
+                        }
+                    })
                 }
             }
             refreshRank.setOnRefreshListener {
@@ -103,11 +122,29 @@ class FragmentBookPage : Fragment() {
                         viewModel.loadHistory()
                     }
                     2 -> {
-
+                        refreshRank.isRefreshing = false
                     }
                 }
             }
             initScrollListener()
+        } else {
+            if (_tag == 2) {
+                rcvHorizontal.run {
+                    layoutManager = LinearLayoutManager(activity)
+                    addItemDecoration(SpaceItem(4))
+                }
+                rcvHorizontal.adapter = adapterHorizontalDownload
+                repo.getAllDataStory()?.observe(this@FragmentBookPage, Observer {
+                    if (it != null) {
+                        adapterHorizontalDownload.updateData(it)
+                        progressBarRank.visibility = View.INVISIBLE
+                        isLoading = false
+                        refreshRank.isRefreshing = false
+                    }
+                })
+                refreshRank.isRefreshing=false
+                refreshRank.isEnabled=false
+            }
         }
     }
 
@@ -129,6 +166,9 @@ class FragmentBookPage : Fragment() {
                             isLoading = true
                             viewModel.loadHistory()
                         }
+                    }
+                    2 -> {
+                        isLoading = true
                     }
                 }
             }

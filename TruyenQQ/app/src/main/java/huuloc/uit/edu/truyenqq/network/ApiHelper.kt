@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.network
 
 import huuloc.uit.edu.truyenqq.data.*
+import huuloc.uit.edu.truyenqq.database.StoryChap
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -93,6 +94,13 @@ interface ApiHelper {
         @Query("id") book_id: String,
         @Query("user_id") user_id: String?
     ): Call<StoryRead>
+
+    @GET("book/book")
+    fun getStoryImageChap(
+        @Header("token") token: String = token_api,
+        @Header("User-Agent") Accept: String = user_agnet,
+        @Query("id") book_id: String
+    ): Call<StoryChap>
 
     @GET("book/manga")
     fun getListImage(

@@ -1,12 +1,15 @@
 package huuloc.uit.edu.truyenqq.activities.activitydownload
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.adapers.AdapterChapDownload
+import huuloc.uit.edu.truyenqq.database.ImageChapRepository
+import huuloc.uit.edu.truyenqq.database.ImageStorageManager
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_download.*
 
@@ -19,8 +22,10 @@ class ActivityDownload : AppCompatActivity() {
             )
             .get(ViewModelDownload::class.java)
     }
-
-    val adapterChap: AdapterChapDownload by lazy {
+    private val repo: ImageChapRepository by lazy {
+        ImageChapRepository(application)
+    }
+    private val adapterChap: AdapterChapDownload by lazy {
         AdapterChapDownload(this, mutableListOf(), viewModel.select)
     }
 
@@ -34,13 +39,24 @@ class ActivityDownload : AppCompatActivity() {
             addItemDecoration(SpaceItem(5))
         }
         viewModel.listChap.observe(this@ActivityDownload, Observer {
-            adapterChap.updateData(it)
+            if (it != null)
+                adapterChap.updateData(it)
         })
         btnDownload.setOnClickListener {
-//            if (viewModel.select.isEmpty())
-//            else {
-                viewModel.downloadList("1")
-//            }
+            if (viewModel.select.isEmpty())
+            else {
+                repo.getDataStory(intent.getBundleExtra("manga")!!.getString("book_id")!!)
+                    ?.observe(this@ActivityDownload, Observer {
+                        if (it == null) {
+                            if(viewModel.bitmap.value!=null){
+                                viewModel.insertStory()
+                                ImageStorageManager.saveToInternalStorage(this,viewModel.bitmap.value!!,viewModel.bookId)
+                            }
+                        }
+                    })
+                viewModel.downloadListChap(viewModel.select)
+                Toast.makeText(this, "Đang tải vui lòng không thoát app", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

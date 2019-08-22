@@ -1,6 +1,7 @@
 package huuloc.uit.edu.truyenqq.network
 
 import huuloc.uit.edu.truyenqq.data.*
+import huuloc.uit.edu.truyenqq.database.StoryChap
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -128,6 +129,10 @@ class ApiManager {
 
     fun getStoryReading(_id: String, _user_id: String?): Single<StoryRead> {
         return buildRequest(_apiRestFull.getStoryReading(book_id = _id, user_id = _user_id))
+    }
+
+    fun getStoryImageChap(_id: String): Single<StoryChap> {
+        return buildRequest(_apiRestFull.getStoryImageChap(book_id = _id))
     }
 
     fun getListImage(_book_id: String, _chap: String): Single<StoryImage> {
