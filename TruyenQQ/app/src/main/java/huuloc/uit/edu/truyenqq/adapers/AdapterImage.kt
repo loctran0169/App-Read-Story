@@ -1,15 +1,12 @@
 package huuloc.uit.edu.truyenqq.adapers
 
 import android.content.Context
-import android.content.res.Resources
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.github.chrisbanes.photoview.PhotoView
 import huuloc.uit.edu.truyenqq.R
 
 class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView.Adapter<AdapterImage.ViewHolder>() {
@@ -26,12 +23,8 @@ class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try {
-            val width = Resources.getSystem().displayMetrics.widthPixels
-            val height = Resources.getSystem().displayMetrics.heightPixels
             Glide.with(context)
                 .load(list!![position])
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .override(width, height + height)
                 .error(R.drawable.ic_errorload)
                 .into(holder.image)
         } catch (ex: Exception) {
@@ -45,6 +38,6 @@ class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var image = view.findViewById<ImageView>(R.id.imgImage)
+        var image = view.findViewById<PhotoView>(R.id.imgImage)
     }
 }

@@ -9,13 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.readingdownload.ActivityReadingDownload
 
-class AdapterListChapDownload(val context: Context, val bookId: String, var list: List<String>) :
+class AdapterListChapDownload(
+    val context: Context,
+    val bookId: String,
+    var list: List<String>,
+    var select: MutableList<String>
+) :
     RecyclerView.Adapter<AdapterListChapDownload.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.item_chaps_download, parent, false)
@@ -29,7 +32,13 @@ class AdapterListChapDownload(val context: Context, val bookId: String, var list
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p0 = list[position]
-        holder.chapName.text="Chương $p0"
+        var selectChap = false
+        holder.chapName.text = "Chương $p0"
+        holder.btnRemove.isSelected=false
+        if(select.contains(p0)){
+            selectChap=true
+            holder.btnRemove.isSelected=true
+        }
         holder.chapName.setOnClickListener {
             val intent = Intent(context, ActivityReadingDownload::class.java)
             val bundle = Bundle()
@@ -38,14 +47,19 @@ class AdapterListChapDownload(val context: Context, val bookId: String, var list
             intent.putExtra("manga", bundle)
             context.startActivity(intent)
         }
-        holder.chapDate.setOnClickListener {
-            Toast.makeText(context,"Xóa",Toast.LENGTH_SHORT).show()
+        holder.btnRemove.setOnClickListener {
+            selectChap = !selectChap
+            holder.btnRemove.isSelected = selectChap
+            if(select.contains(p0))
+                select.remove(p0)
+            else
+                select.add(p0)
         }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var chapName = view.findViewById<TextView>(R.id.tvChapNameDownload)
-        var chapDate = view.findViewById<ImageView>(R.id.btnChapDateDelete)
+        var btnRemove = view.findViewById<ImageView>(R.id.btnChapDateDelete)
     }
 
     fun updateData(items: List<String>) {

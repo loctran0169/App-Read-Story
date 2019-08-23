@@ -41,8 +41,7 @@ class ViewModelHome : ViewModel() {
             loadStoryMale()
         if (storyStoryFemale.value.isNullOrEmpty())
             loadStoryFemale()
-        if (sLoadingSchedulers.value == null)
-            loadSchedule()
+        loadSchedule()
         if (storyNew.value.isNullOrEmpty())
             loadCategory()
     }

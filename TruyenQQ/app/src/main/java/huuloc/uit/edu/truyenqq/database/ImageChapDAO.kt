@@ -19,6 +19,9 @@ interface ImageChapDAO {
     @Query("select *from ImageChap where bookId = :bookId and chapId=:idChap order by position asc")
     fun getAllImageWithId(bookId: String, idChap: String): LiveData<List<ImageChap>>
 
+    @Query("select *from ImageChap where bookId = :bookId and chapId=:idChap order by position asc")
+    fun getAllImageWithIdNow(bookId: String, idChap: String): List<ImageChap>
+
     @Query("select *from StoryChap")
     fun getAllDataStory(): LiveData<List<StoryChap>>
 
@@ -31,11 +34,17 @@ interface ImageChapDAO {
     @Query("select distinct chapId from ImageChap where bookId = :bookId order by chapId ASC")
     fun countStory(bookId: String): LiveData<List<String>>?
 
+    @Query("select distinct chapId from ImageChap where bookId = :bookId order by chapId ASC")
+    fun countChapWithId(bookId: String): List<String>?
+
     @Query("select count(distinct chapId) from ImageChap where bookId = :bookId and chapId=:chapId")
     fun findChapId(bookId: String, chapId: String): String
 
     @Query("delete from ImageChap where bookId = :bookId and chapId = :idChap")
     fun deleteImageWithId(bookId: String, idChap: String)
+
+    @Query("delete from StoryChap where id = :bookId")
+    fun deleteBook(bookId: String)
 
     @Query("delete from QueueDownload where bookId = :bookId and chapId = :idChap")
     fun deleteQueue(bookId: String, idChap: String)

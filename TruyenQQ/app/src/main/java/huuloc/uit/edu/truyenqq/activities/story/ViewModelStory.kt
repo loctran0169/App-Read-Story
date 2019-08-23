@@ -23,6 +23,7 @@ class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     var loadChap = false
     var loadStory = false
+    var offsetCom =0
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
     var Story = MutableLiveData<StoryRead>().apply {
@@ -32,6 +33,11 @@ class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
     var book_id = ""
     var listChap = MutableLiveData<List<Chap>>().apply { value = itemChap }
     var itemChap = mutableListOf<Chap>()
+
+    var comment = MutableLiveData<List<Comment>>().apply { value = itemsCom }
+    var itemsCom = mutableListOf<Comment>()
+    val loadMore = MutableLiveData<LoadMoreObject>()
+
     var Subscribe = MutableLiveData<Subscribe>().apply { value = Subscribe(0, 0) }
     var isReaded = MutableLiveData<StatusRead>().apply { value = null }
 
@@ -39,10 +45,16 @@ class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
         book_id = bookId
         loadListChap(bookId)
         loadStoryReading(bookId)
+        getListComment()
         if (user_id != null)
             loadHistoryReading(bookId)
     }
 
+    fun reload(){
+        loadListChap(bookId)
+        loadStoryReading(bookId)
+        getListComment()
+    }
     fun loadListChap(_bookId: String) {
         compo.add(
             apiManager.getListChaps(0, null, _bookId)
@@ -55,6 +67,30 @@ class ViewModelStory(val bookId: String, val context: Context) : ViewModel() {
                     loadChap = true
                     if (loadStory)
                         refresh.value = false
+                }, {
+
+                })
+        )
+    }
+
+    fun getListComment() {
+        val loadMore = itemsCom.isNotEmpty()
+        compo.add(
+            apiManager.getListComment(bookId,offsetCom)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (!loadMore) {
+                        itemsCom.clear()
+                        itemsCom.addAll(it.list)
+                        comment.value = itemsCom
+                    } else {
+                        val start = itemsCom.lastIndex
+                        val end = start + it.list.size
+                        itemsCom.addAll(it.list)
+                        this.loadMore.value = LoadMoreObject(start, end)
+                    }
+                    offsetCom += 20
                 }, {
 
                 })

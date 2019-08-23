@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import huuloc.uit.edu.truyenqq.data.LoadMoreObject
-import huuloc.uit.edu.truyenqq.data.MysharedPreferences
-import huuloc.uit.edu.truyenqq.data.StoryInformation
-import huuloc.uit.edu.truyenqq.data.USER_ID
+import huuloc.uit.edu.truyenqq.data.*
 import huuloc.uit.edu.truyenqq.database.ImageChapRepository
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -3,8 +3,7 @@ package huuloc.uit.edu.truyenqq.activities.main
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
 import huuloc.uit.edu.truyenqq.activities.changepassword.ActivityChangePassWord
@@ -24,8 +20,6 @@ import huuloc.uit.edu.truyenqq.activities.personal.ActivityPersonalInformation
 import huuloc.uit.edu.truyenqq.activities.rank.ActivityRank
 import huuloc.uit.edu.truyenqq.data.MysharedPreferences
 import huuloc.uit.edu.truyenqq.data.USER_ID
-import huuloc.uit.edu.truyenqq.database.ImageChapRepository
-import huuloc.uit.edu.truyenqq.database.ImageStorageManager
 import huuloc.uit.edu.truyenqq.fragments.book.FragmentBook
 import huuloc.uit.edu.truyenqq.fragments.category.FragmentCategory
 import huuloc.uit.edu.truyenqq.fragments.home.FragmentHome
@@ -40,9 +34,6 @@ class MainActivity : AppCompatActivity() {
             .of(this)
             .get(ViewModelHome::class.java)
     }
-    val repo: ImageChapRepository by lazy {
-        ImageChapRepository(application)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         ViewModelProviders
             .of(this)
             .get(ViewModelHome::class.java)
-        //repo.insert(listOf(ImageChap("123", "123", "123")))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -60,19 +50,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.isShow.observe(this@MainActivity, Observer {
             botNavigation.selectedItemId = it
         })
-        //repo.deleteImageWithId("456","1")
         val share = MysharedPreferences(this)
-        Glide.with(this)
-            .asBitmap()
-            .load("http://mangaqq.com/7737/10/0.jg?thang=t515")
-            .into(object : CustomTarget<Bitmap>(){
-                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    println("### save ${ImageStorageManager.saveToInternalStorage(this@MainActivity,resource,"7737-1")}")
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {
-
-                }
-            })
         viewModel.dataLogin.value = share.loadData()
         botNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -99,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navUser -> {
                     if (share.getShare.getString(USER_ID, null) == null) {
+                        viewModel.isShow.value = it.itemId
                         val intend1 = Intent(this, ActivityUser::class.java)
                         startActivity(intend1)
                     } else {
@@ -148,6 +127,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             viewModel.dataLogin.value = share.loadData()
             if (viewModel.dataLogin.value == null) {
+                showFragment(FragmentHome())
+                viewModel.isShow.value = R.id.navHome
+            }
+            else if (share.getShare.getString(USER_ID, null) != null)
+            {
+                botNavigation.selectedItemId = viewModel.isShow.value!!
                 showFragment(FragmentHome())
                 viewModel.isShow.value = R.id.navHome
             }
@@ -236,5 +221,10 @@ class MainActivity : AppCompatActivity() {
     fun changeInfor(view: View) {
         val intent = Intent(this, ActivityPersonalInformation::class.java)
         startActivity(intent)
+    }
+
+    fun openFacebook(view : View){
+        val inten = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/fantruyenqq/"))
+        startActivity(inten)
     }
 }

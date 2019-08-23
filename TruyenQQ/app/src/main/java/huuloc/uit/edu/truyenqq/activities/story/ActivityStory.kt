@@ -127,6 +127,7 @@ class ActivityStory : AppCompatActivity() {
         })
         refreshStory.setOnRefreshListener {
             viewModel.refresh.value = true
+            viewModel.refresh
         }
         btnDownloadStory.setOnClickListener {
             val intent1 = Intent(this, ActivityDownload::class.java)

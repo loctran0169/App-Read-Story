@@ -1,5 +1,6 @@
 package huuloc.uit.edu.truyenqq.fragments.user
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,16 +30,13 @@ class FragmentUser : Fragment() {
         loadData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadData() {
         val p0 = viewModel.dataLogin.value!!
-//        Glide.with(context!!)
-//            .load("http://avatar.mangaqq.com/160x160/"+p0.avatar)
-//            .into(imgAvatar)
-        try {
-            imgAvatar.setImageBitmap(ImageStorageManager.getImageFromInternalStorage(activity!!, "456+1+0"))
-        }
-        catch (ex :Exception){
-
-        }
+        tvName.text=p0.last_name+" "+p0.first_name
+        Glide.with(context!!)
+            .load("http://avatar.mangaqq.com/160x160/"+p0.avatar)
+            .error(R.drawable.ic_noavatar)
+            .into(imgAvatarUser)
     }
 }

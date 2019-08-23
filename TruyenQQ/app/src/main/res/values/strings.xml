@@ -56,4 +56,6 @@
     <string name="lbDownloadName">Chọn chương để tải xuống</string>
     <string name="lbSeteclAll">Chọn tất cả</string>
     <string name="lbDownload">Tải Xuống</string>
+    <string name="lbDelete">Xóa</string>
+    <string name="lbNameCommentPost">Nhập tên bạn muốn</string>
 </resources>

@@ -209,4 +209,33 @@ class ApiManager {
             )
         )
     }
+
+    fun postComment(
+        bookId: String,
+        userId: String,
+        name : String,
+        email : String,
+        content: String,
+        level : String,
+        type_book: String,
+        status: String,
+        user_parent: String
+    ): Single<Success> {
+        return buildRequest(
+            _apiRestFull.postComment(
+                book_id = bookId,
+                user_id = userId,
+                name = name,
+                email = email,
+                content = content,
+                level = level,
+                type_book = type_book,
+                status = status,
+                user_parent = user_parent
+            )
+        )
+    }
+    fun getListComment(bookId: String, offset : Int): Single<ListComment> {
+        return buildRequest(_apiRestFull.getListComment(book_id = bookId, offset = offset))
+    }
 }

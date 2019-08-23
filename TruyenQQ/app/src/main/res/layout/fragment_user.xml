@@ -6,24 +6,33 @@
         android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <com.github.siyamed.shapeimageview.RoundedImageView
-            android:id="@+id/imgAvatar"
-            app:layout_constraintTop_toTopOf="@id/glTopUser"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:siRadius="50dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
-    <TextView
-            android:id="@+id/tvName"
-            android:text="Hữu Lộc"
-            android:textSize="18sp"
+    <LinearLayout
+            android:id="@+id/groupInfo"
+            android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/imgAvatar"
-            app:layout_constraintEnd_toEndOf="@id/imgAvatar"
-            app:layout_constraintStart_toStartOf="@id/imgAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:background="#FAFF9700"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/glTopUser"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        <com.github.siyamed.shapeimageview.RoundedImageView
+                android:id="@+id/imgAvatarUser"
+                app:siRadius="50dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_noavatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        <TextView
+                android:id="@+id/tvName"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
     <TextView
             android:id="@+id/tvInformation"
             android:text="@string/lbInformation"
@@ -36,7 +45,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:layout_constraintTop_toBottomOf="@id/groupInfo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="0dp"
@@ -94,7 +103,7 @@
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/glTopUser"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1"
+            app:layout_constraintGuide_percent="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

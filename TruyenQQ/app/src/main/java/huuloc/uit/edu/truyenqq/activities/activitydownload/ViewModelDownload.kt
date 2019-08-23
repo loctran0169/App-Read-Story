@@ -93,6 +93,7 @@ class ViewModelDownload(val application: Application, val context: Context, val 
     fun loadDownloaded(){
         repo.countStory(bookId)?.observeForever {
             downloaded.addAll(it)
+            select.clear()
             select_temp.addAll(it)
         }
     }
@@ -116,6 +117,7 @@ class ViewModelDownload(val application: Application, val context: Context, val 
             val inten = Intent(application, ServiceDownload::class.java)
             val bundle = Bundle()
             bundle.putString("bookId", bookId)
+            bundle.putInt("require", list.size)
             inten.putExtras(bundle)
             context.startService(inten)
         }

@@ -48,13 +48,10 @@ class ServiceDownload : Service() {
     @SuppressLint("CheckResult")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         bookId = intent!!.getStringExtra("bookId")!!
+        require = intent.getIntExtra("require",0)
         context = applicationContext
         AsyncTaskLoadQueue().execute()
         return START_STICKY
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     fun showNotification(message: String) {
@@ -130,7 +127,7 @@ class ServiceDownload : Service() {
             if(number==require) {
                 showNotification("Tải xuống hoàn thành")
                 Toast.makeText(context,"Tải xuống hoàn thành",Toast.LENGTH_SHORT).show()
-                this@ServiceDownload.onDestroy()
+                context.stopService(Intent(application,ServiceDownload::class.java))
             }
         }
     }
@@ -147,7 +144,7 @@ class ServiceDownload : Service() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             if (!listQueue.isNullOrEmpty()) {
-                require = listQueue.size
+                require=listQueue.size
                 for (i: QueueDownload in listQueue) {
                     apiManager.getListImage(bookId, i.chapId)
                         .subscribeOn(Schedulers.io())

@@ -18,7 +18,5 @@ class ViewModelChapDownload(val application: Application, val context: Context, 
     val repo: ImageChapRepository by lazy {
         ImageChapRepository(application)
     }
-    val listChap = MutableLiveData<List<String>>().apply { value = null }
-
-
+    val select = mutableListOf<String>()
 }

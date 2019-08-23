@@ -205,5 +205,30 @@ interface ApiHelper {
         @Field("year") year: String,
         @Field("typeAction") typeAction: String = "edit"
     ): Call<ChangeInformation>
+
+    @FormUrlEncoded
+    @POST("book/comment")
+    fun postComment(
+        @Header("token") token: String = token_api,
+        @Header("User-Agent") Accept: String = user_agnet,
+        @Field("book_id") book_id: String,
+        @Field("user_id") user_id: String,
+        @Field("name_comment") name: String,
+        @Field("email_comment") email: String,
+        @Field("content") content: String,
+        @Field("level") level: String,
+        @Field("type_book") type_book: String = "2",
+        @Field("status") status: String = "1",
+        @Field("user_parent") user_parent: String
+    ): Call<Success>
+
+    @GET("book/comment")
+    fun getListComment(
+        @Header("token") token: String = token_api,
+        @Header("User-Agent") Accept: String = user_agnet,
+        @Query("book_id") book_id: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int = 20
+    ): Call<ListComment>
 }
 

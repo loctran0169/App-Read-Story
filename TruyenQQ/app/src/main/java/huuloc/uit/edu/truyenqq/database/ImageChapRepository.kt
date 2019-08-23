@@ -1,10 +1,11 @@
 package huuloc.uit.edu.truyenqq.database
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 
-class ImageChapRepository(application: Application) {
+class ImageChapRepository(val application: Application) {
 
     private val ImageChapDAO: ImageChapDAO? = AppDataBase.get(application)?.ImageChapDAO()
 
@@ -53,6 +54,10 @@ class ImageChapRepository(application: Application) {
         AsyncTaskProcessDeleteQueue(ImageChapDAO, booid, chapId).execute()
     }
 
+    fun deleteBook(bookId: String) {
+        AsyncTaskProcessDeleteBook(bookId).execute()
+    }
+
     fun deleteAll() {
         AsyncTaskProcessDeleteAll(ImageChapDAO).execute()
     }
@@ -82,16 +87,46 @@ class ImageChapRepository(application: Application) {
 
     }
 
-    private class AsyncTaskProcessDelete internal constructor(val dao: ImageChapDAO?, val bookId: String, val chapId: String)
-        : AsyncTask<Void, Void, Void>() {
-        override fun doInBackground(vararg p0: Void?): Void? {
+    @SuppressLint("StaticFieldLeak")
+    inner class AsyncTaskProcessDelete internal constructor(
+        val dao: ImageChapDAO?,
+        val bookId: String,
+        val chapId: String
+    ) : AsyncTask<Void, Void, Boolean>() {
+        override fun doInBackground(vararg p0: Void?): Boolean? {
+            dao?.getAllImageWithIdNow(bookId,chapId)?.forEachIndexed { index, imageChap ->
+                ImageStorageManager.deleteImageFromInternalStorage(application,imageChap.name)
+            }
             dao?.deleteImageWithId(bookId, chapId)
-            return null
+            return ImageChapDAO?.countChapWithId(bookId)!!.isNullOrEmpty()
+        }
+
+        override fun onPostExecute(result: Boolean?) {
+            super.onPostExecute(result)
+            if(result == true)
+                AsyncTaskProcessDeleteBook(bookId).execute()
         }
     }
 
-    private class AsyncTaskProcessDeleteQueue internal constructor(val dao: ImageChapDAO?, val bookId: String, val chapId: String)
-        : AsyncTask<Void, Void, Void>() {
+    @SuppressLint("StaticFieldLeak")
+    inner class AsyncTaskProcessDeleteBook internal constructor(val bookId: String) :
+        AsyncTask<Void, Void, Void>() {
+        override fun doInBackground(vararg p0: Void?): Void? {
+            ImageChapDAO?.deleteBook(bookId)
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            super.onPostExecute(result)
+            ImageStorageManager.deleteImageFromInternalStorage(application,bookId)
+        }
+    }
+
+    private class AsyncTaskProcessDeleteQueue internal constructor(
+        val dao: ImageChapDAO?,
+        val bookId: String,
+        val chapId: String
+    ) : AsyncTask<Void, Void, Void>() {
         override fun doInBackground(vararg p0: Void?): Void? {
             dao?.deleteQueue(bookId, chapId)
             return null

@@ -40,9 +40,11 @@ class FragmentRegister : Fragment() {
                             val dialog = AlertDialog.Builder(context!!)
                             var message = ""
                             if (it.error!!.email != null)
-                                message += "Email: email không chính xác\n"
+                                message += "${it.error!!.email}\n"
                             if (it.error!!.password != null)
                                 message += it.error!!.password + "\n"
+                            if (it.error!!.username != null)
+                                message += it.error!!.username
                             dialog.setMessage(message)
                             val dislay = dialog.create()
                             dislay.show()

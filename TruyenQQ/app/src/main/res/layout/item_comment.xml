@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <com.github.siyamed.shapeimageview.RoundedImageView
             android:id="@+id/imgAvatarComment"
             android:layout_marginTop="10dp"
@@ -24,13 +25,13 @@
             android:layout_height="wrap_content">
         <TextView
                 android:id="@+id/tvNameComment"
-                android:text="Hữu Lộc"
-                android:textStyle="bold"
+                android:textColor="@android:color/black"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         <TextView
+                android:id="@+id/tvChrome"
                 android:text="Ẩn Danh"
                 android:textSize="12sp"
                 android:paddingStart="5dp"
@@ -50,16 +51,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
         <TextView
-                android:id="@+id/tvTime"
-                android:text="6 Phút"
-                android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/tvIntent"
-                app:layout_constraintStart_toStartOf="@id/tvIntent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        <TextView
                 android:id="@+id/numComment"
-                android:text="12"
+                android:text="0"
                 android:drawablePadding="3dp"
                 android:drawableStart="@drawable/ic_comment"
                 app:layout_constraintTop_toBottomOf="@id/tvIntent"
@@ -68,7 +61,7 @@
                 android:layout_height="wrap_content"/>
         <TextView
                 android:id="@+id/numLike"
-                android:text="12"
+                android:text="0"
                 android:drawablePadding="3dp"
                 android:layout_marginEnd="10dp"
                 android:drawableStart="@drawable/ic_like_comment"

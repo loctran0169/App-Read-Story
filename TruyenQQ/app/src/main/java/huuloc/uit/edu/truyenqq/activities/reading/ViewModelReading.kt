@@ -1,6 +1,9 @@
 package huuloc.uit.edu.truyenqq.activities.reading
 
 import android.content.Context
+import android.text.Editable
+import android.widget.EditText
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -83,6 +86,26 @@ class ViewModelReading(val bookId: String, var chap: String, val context: Contex
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listChap.value = it
+                }, {
+
+                })
+        )
+    }
+
+    fun postComment(edit : EditText, name : String, email : String, content: String, level : String, type_book: String, status: String, user_parent: String){
+        compo.add(
+            apiManager.postComment(bookId, user_id ?:"0", name, email, content, level, type_book, status, user_parent)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if(it.status=="1"){
+                        edit.text.clear()
+                        Toast.makeText(context,"Đã gữi comment",Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        edit.text.clear()
+                        Toast.makeText(context,"Gữi comment thất bại",Toast.LENGTH_SHORT).show()
+                    }
                 }, {
 
                 })

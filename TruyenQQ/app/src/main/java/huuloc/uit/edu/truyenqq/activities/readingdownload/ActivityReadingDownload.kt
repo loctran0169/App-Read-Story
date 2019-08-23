@@ -2,7 +2,6 @@ package huuloc.uit.edu.truyenqq.activities.readingdownload
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,6 +11,7 @@ import huuloc.uit.edu.truyenqq.adapers.AdapterImageDownload
 import huuloc.uit.edu.truyenqq.database.ImageChapRepository
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
 import kotlinx.android.synthetic.main.activity_reading.*
+
 
 class ActivityReadingDownload : AppCompatActivity() {
     private val repo: ImageChapRepository by lazy {
@@ -35,7 +35,6 @@ class ActivityReadingDownload : AppCompatActivity() {
         rcvImage.run {
             adapter = adapterImageDownload
             layoutManager = LinearLayoutManager(context)
-            addItemDecoration(SpaceItem(0))
         }
         repo.getAllImageWithId(bookId,chapId)?.observe(this@ActivityReadingDownload, Observer {
             adapterImageDownload.updateData(it)

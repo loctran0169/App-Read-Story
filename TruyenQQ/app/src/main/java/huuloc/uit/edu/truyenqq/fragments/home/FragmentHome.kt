@@ -123,6 +123,26 @@ class FragmentHome : Fragment() {
                 dislay.show()
             })
         }
+        lbCalendar.setOnClickListener {
+            viewModel.sLoadingSchedulers.observe(this@FragmentHome, Observer {
+                val dialog = AlertDialog.Builder(activity!!)
+                val view: View = LayoutInflater.from(activity!!).inflate(R.layout.fragment_schedule, null)
+                val schedule = view.findViewById<RecyclerView>(R.id.rcvSchedule)
+                val date = view.findViewById<TextView>(R.id.tvScheduleDate)
+                date.text =
+                    "Ngày cập nhật : ${cal.get(Calendar.DAY_OF_MONTH)}-${cal.get(Calendar.MONTH) + 1}-${cal.get(Calendar.YEAR)}"
+                schedule.run {
+                    adapter = adapterSchedule
+                    layoutManager = LinearLayoutManager(activity)
+                }
+                adapterSchedule.updateData(it.list!!)
+                dialog.setView(view)
+                    .setIcon(R.drawable.ic_calendar)
+                val dislay = dialog.create()
+                dislay.setTitle("Lịch ra truyện")
+                dislay.show()
+            })
+        }
         refresh.setOnRefreshListener {
             progressNewStory.visibility = View.VISIBLE
             progressStoryMale.visibility = View.VISIBLE

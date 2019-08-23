@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.data.AVATAR
 import huuloc.uit.edu.truyenqq.data.DataLogin
@@ -101,14 +102,26 @@ class ActivityPersonalInformation : AppCompatActivity() {
         editLastName.setText(data.last_name)
         editPhone.setText(data.phone)
         editEmail.setText(data.email)
-        if(data.birthday_string!!.split("-")[0].toInt()>32)
-            editDate.setText(data.birthday_string!!.split("-")[2] +"-"+ data.birthday_string!!.split("-")[1] +"-"+data.birthday_string!!.split("-")[0])
+        if (data.birthday_string!!.split("-")[0].toInt() > 32)
+            editDate.setText(
+                data.birthday_string!!.split("-")[2] + "-" + data.birthday_string!!.split("-")[1] + "-" + data.birthday_string!!.split(
+                    "-"
+                )[0]
+            )
         else
-            editDate.setText(data.birthday_string!!.split("-")[0] +"-"+ data.birthday_string!!.split("-")[1] +"-"+data.birthday_string!!.split("-")[2])
+            editDate.setText(
+                data.birthday_string!!.split("-")[0] + "-" + data.birthday_string!!.split("-")[1] + "-" + data.birthday_string!!.split(
+                    "-"
+                )[2]
+            )
         if (data.sex == "1")
             checkboxMale.isChecked = true
         else
             checkboxFemale.isChecked = true
+        Glide.with(this)
+            .load("http://avatar.mangaqq.com/160x160/" + data.avatar)
+            .error(R.drawable.ic_noavatar)
+            .into(imgAvatar)
     }
 
 }

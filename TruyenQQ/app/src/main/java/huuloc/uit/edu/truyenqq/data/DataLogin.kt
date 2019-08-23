@@ -45,7 +45,9 @@ data class Error(
     @SerializedName("email")
     var email: String?,
     @SerializedName("password")
-    var password: String?
+    var password: String?,
+    @SerializedName("username")
+    var username: String?
 )
 
 data class ErrorChangePassWord(
