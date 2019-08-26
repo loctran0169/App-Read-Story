@@ -16,6 +16,6 @@ class WaitingActivity : AppCompatActivity() {
             val inten = Intent(this, MainActivity::class.java)
             startActivity(inten)
             finish()
-        }, 3000)
+        }, 1000)
     }
 }
