@@ -41,7 +41,7 @@ class AdapterComment(val context: Context, var list: List<Comment>) :
                 .load("http://avatar.mangaqq.com/160x160/" + p0.avatar + "?thang=t515")
                 .into(holder.avatar)
         else
-            holder.avatar.setImageResource(R.drawable.ic_noavatar)
+            holder.avatar.setImageResource(R.drawable.ic_nouser)
     }
 
     fun updateDate(items: List<Comment>) {

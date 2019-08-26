@@ -62,13 +62,13 @@ class AdapterHorizontal(var context: Context, var items: List<StoryInformation>)
             itemView.tvStoryNameHorizontal.text = p0.name
             try {
                 Glide.with(context)
-                    .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
+                    .load("https://truyenqq.com/ebook/163x212/" + p0.image)
                     .into(itemView.imgStoryItemHorizontal)
             }
             finally {
-                Glide.with(context)
-                    .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
-                    .into(itemView.imgStoryItemHorizontal)
+//                Glide.with(context)
+//                    .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
+//                    .into(itemView.imgStoryItemHorizontal)
             }
             var chapter = "Chương " + p0.episode
             if (!p0.chap_order.isNullOrEmpty())

@@ -47,6 +47,7 @@ class FragmentRegister : Fragment() {
                                 message += it.error!!.username
                             dialog.setMessage(message)
                             val dislay = dialog.create()
+                            dislay.setTitle("Thông báo")
                             dislay.show()
                             viewModel.register.value = null
                         }

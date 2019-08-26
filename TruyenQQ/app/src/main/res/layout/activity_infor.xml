@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"/>
         <com.github.siyamed.shapeimageview.RoundedImageView
                 android:id="@+id/imgAvatar"
+                android:src="@drawable/ic_nouser"
                 android:layout_marginTop="100dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

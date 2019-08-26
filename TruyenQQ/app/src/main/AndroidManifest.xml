@@ -17,20 +17,23 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.WaitingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
         <service
                 android:name=".services.ServiceDownload"
                 android:enabled="true"
                 android:exported="true">
         </service>
 
-        <activity
-                android:name=".activities.main.MainActivity"
-                android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".activities.main.MainActivity"
+                  android:windowSoftInputMode="adjustPan">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".activities.rank.ActivityRank"/>
         <activity android:name=".activities.newactivity.ActivityNewUpdate"/>

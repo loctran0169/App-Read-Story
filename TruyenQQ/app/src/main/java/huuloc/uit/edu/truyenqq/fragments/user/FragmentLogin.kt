@@ -44,6 +44,7 @@ class FragmentLogin : Fragment() {
                     val dialog = AlertDialog.Builder(context!!)
                     dialog.setMessage("Tài khoản hoặc mật khẩu không chính xác")
                     val dislay = dialog.create()
+                    dislay.setTitle("Thông báo")
                     dislay.show()
                 }
             }

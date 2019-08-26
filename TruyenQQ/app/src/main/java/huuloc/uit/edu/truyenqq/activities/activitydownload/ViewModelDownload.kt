@@ -57,7 +57,7 @@ class ViewModelDownload(val application: Application, val context: Context, val 
                     Story.value = it
                     Glide.with(context)
                         .asBitmap()
-                        .load("http://i.mangaqq.com/ebook/190x247/" + it.image + "?thang=t515")
+                        .load("https://truyenqq.com/ebook/163x212/" + it.image)
                         .into(object : CustomTarget<Bitmap>() {
                             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                                 bitmap.value = resource
@@ -90,7 +90,7 @@ class ViewModelDownload(val application: Application, val context: Context, val 
         repo.insertStory(listOf(Story.value!!))
     }
 
-    fun loadDownloaded(){
+    fun loadDownloaded() {
         repo.countStory(bookId)?.observeForever {
             downloaded.addAll(it)
             select.clear()

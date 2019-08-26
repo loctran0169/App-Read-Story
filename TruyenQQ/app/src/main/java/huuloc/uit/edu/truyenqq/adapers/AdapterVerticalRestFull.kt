@@ -31,12 +31,12 @@ class AdapterVerticalRestFull(var context: Context, var items: List<StoryInforma
         holder.itemName.text = p0.name
         try {
             Glide.with(context)
-                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t2121")
+                .load("https://truyenqq.com/ebook/163x212/" + p0.image)
                 .into(holder.itemImage)
         } finally {
-            Glide.with(context)
-                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
-                .into(holder.itemImage)
+//            Glide.with(context)
+//                .load("http://i.mangaqq.com/ebook/190x247/" + p0.image + "?thang=t515")
+//                .into(holder.itemImage)
         }
         holder.itemTime.text = timeStampToString((System.currentTimeMillis() / 1000).toInt() - p0.modified!!.toInt())
         holder.itemView.setOnClickListener {

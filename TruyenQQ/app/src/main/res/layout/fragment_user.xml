@@ -20,7 +20,7 @@
                 app:siRadius="50dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_noavatar"
+                android:src="@drawable/ic_nouser"
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
         <TextView

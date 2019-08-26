@@ -156,12 +156,9 @@ class ActivityStory : AppCompatActivity() {
         tvSubscribe.text = story.total_subscribe
         try {
             Glide.with(this)
-                .load("http://i.mangaqq.com/ebook/190x247/" + story.image + "?thang=t2121")
+                .load("https://truyenqq.com/ebook/163x212/" + story.image)
                 .into(imgStory)
         } finally {
-            Glide.with(this)
-                .load("http://i.mangaqq.com/ebook/190x247/" + story.image + "?thang=t515")
-                .into(imgStory)
         }
         if (story.subscribe == "1") {
             btnSubscribe.isSelected = true

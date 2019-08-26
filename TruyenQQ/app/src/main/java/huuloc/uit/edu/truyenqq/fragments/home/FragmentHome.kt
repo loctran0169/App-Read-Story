@@ -154,6 +154,8 @@ class FragmentHome : Fragment() {
             }, 200
             )
         }
+        viewPagerSlider.flipInterval=5000
+        viewPagerSlider.isAutoStart=true
         viewPagerSlider.setOnTouchListener { p0, event ->
             if (event!!.action == MotionEvent.ACTION_DOWN) {
                 firstX = event.x

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
 import com.github.chrisbanes.photoview.PhotoView
 import huuloc.uit.edu.truyenqq.R
 
@@ -25,6 +26,8 @@ class AdapterImage(val context: Context, var list: List<String>?) : RecyclerView
         try {
             Glide.with(context)
                 .load(list!![position])
+                .format(DecodeFormat.PREFER_ARGB_8888)
+                .dontTransform()
                 .error(R.drawable.ic_errorload)
                 .into(holder.image)
         } catch (ex: Exception) {

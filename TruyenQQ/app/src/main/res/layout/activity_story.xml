@@ -120,7 +120,6 @@
                             android:id="@+id/tvSubscribe"
                             android:gravity="center"
                             android:textSize="12sp"
-                            android:textColor="#ff2853"
                             android:drawableStart="@drawable/ic_heart"
                             android:drawablePadding="5dp"
                             android:layout_marginStart="15dp"

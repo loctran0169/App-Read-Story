@@ -28,7 +28,7 @@
     <string name="lbHistory">Lịch sử tìm kiếm</string>
     <string name="lbLoginText">Vui lòng đăng nhập vào tài khoản của bạn để tiếp tục sử dụng dịch vụ,</string>
     <string name="lbEmail">Nhập email</string>
-    <string name="lbPassword">Nhập mật khẩu</string>
+    <string name="lbPassword">Nhập mật khẩu(lớn hơn 6)</string>
     <string name="lbRegister">Đăng ký tài khoản mới</string>
     <string name="lbLogin">Đăng Nhập</string>
     <string name="lbForgotPassword">Quên mật khẩu?</string>
@@ -58,4 +58,5 @@
     <string name="lbDownload">Tải Xuống</string>
     <string name="lbDelete">Xóa</string>
     <string name="lbNameCommentPost">Nhập tên bạn muốn</string>
+    <string name="lbVersion">Version 1.0</string>
 </resources>

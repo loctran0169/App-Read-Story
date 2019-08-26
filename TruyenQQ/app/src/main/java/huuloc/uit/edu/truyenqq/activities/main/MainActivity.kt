@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.ActivityUser
+import huuloc.uit.edu.truyenqq.activities.WaitingActivity
 import huuloc.uit.edu.truyenqq.activities.changepassword.ActivityChangePassWord
 import huuloc.uit.edu.truyenqq.activities.newactivity.ActivityNewUpdate
 import huuloc.uit.edu.truyenqq.activities.personal.ActivityPersonalInformation
@@ -28,7 +30,7 @@ import huuloc.uit.edu.truyenqq.fragments.user.FragmentUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
+    private val SPLASH_TIME_OUT:Long=3000
     val viewModel: ViewModelHome by lazy {
         ViewModelProviders
             .of(this)
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navUser -> {
                     if (share.getShare.getString(USER_ID, null) == null) {
-                        viewModel.isShow.value = it.itemId
+                        //viewModel.isShow.value = it.itemId
                         val intend1 = Intent(this, ActivityUser::class.java)
                         startActivity(intend1)
                     } else {
@@ -129,9 +131,7 @@ class MainActivity : AppCompatActivity() {
             if (viewModel.dataLogin.value == null) {
                 showFragment(FragmentHome())
                 viewModel.isShow.value = R.id.navHome
-            }
-            else if (share.getShare.getString(USER_ID, null) != null)
-            {
+            } else if (share.getShare.getString(USER_ID, null) != null) {
                 botNavigation.selectedItemId = viewModel.isShow.value!!
                 showFragment(FragmentHome())
                 viewModel.isShow.value = R.id.navHome
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun openFacebook(view : View){
+    fun openFacebook(view: View) {
         val inten = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/fantruyenqq/"))
         startActivity(inten)
     }

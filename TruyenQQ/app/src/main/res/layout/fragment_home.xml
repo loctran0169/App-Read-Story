@@ -26,14 +26,17 @@
                         android:layout_height="220dp">
                     <ImageView
                             android:src="@drawable/test1"
+                            android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     <ImageView
                             android:src="@drawable/test2"
+                            android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                     <ImageView
                             android:src="@drawable/test3"
+                            android:scaleType="center"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"/>
                 </ViewFlipper>
