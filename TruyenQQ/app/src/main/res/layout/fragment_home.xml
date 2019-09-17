@@ -19,27 +19,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <ViewFlipper
+                <com.smarteist.autoimageslider.SliderView
                         android:id="@+id/viewPagerSlider"
+                        android:overScrollMode="ifContentScrolls"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_width="match_parent"
-                        android:layout_height="220dp">
-                    <ImageView
-                            android:src="@drawable/test1"
-                            android:scaleType="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                    <ImageView
-                            android:src="@drawable/test2"
-                            android:scaleType="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                    <ImageView
-                            android:src="@drawable/test3"
-                            android:scaleType="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                </ViewFlipper>
+                        android:layout_height="220dp"/>
                 <ImageButton
                         android:id="@+id/imgRank"
                         android:background="@drawable/ic_rank"

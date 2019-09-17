@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -14,10 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import huuloc.uit.edu.truyenqq.R
 import huuloc.uit.edu.truyenqq.activities.main.ViewModelHome
 import huuloc.uit.edu.truyenqq.adapers.AdapterSchedule
+import huuloc.uit.edu.truyenqq.adapers.AdapterSliderView
 import huuloc.uit.edu.truyenqq.adapers.AdapterVerticalRestFull
 import huuloc.uit.edu.truyenqq.databinding.FragmentHomeBinding
 import huuloc.uit.edu.truyenqq.recyclerview.SpaceItem
@@ -43,8 +45,6 @@ class FragmentHome : Fragment() {
             .of(activity!!)
             .get(ViewModelHome::class.java)
     }
-    var firstX = 0.0f
-    var secondX = 0.0f
     var _new = false
     var _male = false
     var _female = false
@@ -57,11 +57,17 @@ class FragmentHome : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this@FragmentHome
         return binding.root
-
     }
 
     @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val snapHelperNew : SnapHelper = LinearSnapHelper()
+        val snapHelperMale : SnapHelper = LinearSnapHelper()
+        val snapHelperFemale : SnapHelper = LinearSnapHelper()
+
+        snapHelperNew.attachToRecyclerView(rcvNewUpdate)
+        snapHelperMale.attachToRecyclerView(rcvStoryMale)
+        snapHelperFemale.attachToRecyclerView(rcvStoryFemale)
         rcvNewUpdate.run {
             layoutManager = LinearLayoutManager(activity, LinearLayout.HORIZONTAL, false)
             adapter = adapterNewRestFull
@@ -101,6 +107,12 @@ class FragmentHome : Fragment() {
             _female = true
             if (_male && _new)
                 refresh.isRefreshing = false
+        })
+        //slider
+        viewModel.slider.observe(this@FragmentHome, Observer {
+            viewPagerSlider.sliderAdapter = AdapterSliderView(activity!!, it)
+            viewPagerSlider.scrollTimeInSec = 4
+            viewPagerSlider.startAutoCycle()
         })
         //Schedule
         imgCalendar.setOnClickListener {
@@ -149,34 +161,12 @@ class FragmentHome : Fragment() {
             progressStoryFeMale.visibility = View.VISIBLE
             viewModel.refresh()
             val handle = Handler()
-            handle.postDelayed({
-                refresh.isRefreshing = false
-            }, 200
+            handle.postDelayed(
+                {
+                    refresh.isRefreshing = false
+                }, 200
             )
         }
-        viewPagerSlider.flipInterval=5000
-        viewPagerSlider.isAutoStart=true
-        viewPagerSlider.setOnTouchListener { p0, event ->
-            if (event!!.action == MotionEvent.ACTION_DOWN) {
-                firstX = event.x
-            } else if (event.action == MotionEvent.ACTION_UP) {
-                secondX = event.x
-                if (firstX < secondX) {
-                    if (viewPagerSlider.displayedChild != 1) {
-                        viewPagerSlider.setInAnimation(activity!!, R.anim.in_from_left)
-                        viewPagerSlider.setOutAnimation(activity!!, R.anim.out_from_left)
-                        viewPagerSlider.showNext()
-                    }
-                }
-                if (firstX > secondX) {
-                    if (viewPagerSlider.displayedChild != 0) {
-                        viewPagerSlider.setInAnimation(activity!!, R.anim.in_from_right)
-                        viewPagerSlider.setOutAnimation(activity!!, R.anim.out_from_right)
-                        viewPagerSlider.showPrevious()
-                    }
-                }
-            }
-            true
-        }
+
     }
 }

@@ -230,5 +230,10 @@ interface ApiHelper {
         @Query("offset") offset: Int,
         @Query("limit") limit: Int = 20
     ): Call<ListComment>
+
+    @GET("book/slider?typeList=slider")
+    fun getSlider(
+        @Header("token") token: String = token_api
+    ): Call<List<Slider>>
 }
 

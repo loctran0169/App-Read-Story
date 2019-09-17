@@ -15,7 +15,7 @@ class AdapterImageDownload(val context: Context, var list: List<ImageChap>?) :
     RecyclerView.Adapter<AdapterImageDownload.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false)
+        val view: View = LayoutInflater.from(context).inflate(R.layout.item_image_photoview, parent, false)
         return ViewHolder(view)
     }
 

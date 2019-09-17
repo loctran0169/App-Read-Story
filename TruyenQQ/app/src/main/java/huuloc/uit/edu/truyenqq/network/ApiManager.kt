@@ -238,4 +238,8 @@ class ApiManager {
     fun getListComment(bookId: String, offset : Int): Single<ListComment> {
         return buildRequest(_apiRestFull.getListComment(book_id = bookId, offset = offset))
     }
+
+    fun getSlider():Single<List<Slider>> {
+        return buildRequest(_apiRestFull.getSlider())
+    }
 }

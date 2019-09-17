@@ -3,10 +3,7 @@ package huuloc.uit.edu.truyenqq.activities.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import huuloc.uit.edu.truyenqq.R
-import huuloc.uit.edu.truyenqq.data.CategoryList
-import huuloc.uit.edu.truyenqq.data.DataLogin
-import huuloc.uit.edu.truyenqq.data.ScheduleStoryList
-import huuloc.uit.edu.truyenqq.data.StoryInformation
+import huuloc.uit.edu.truyenqq.data.*
 import huuloc.uit.edu.truyenqq.network.ApiManager
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -31,6 +28,8 @@ class ViewModelHome : ViewModel() {
 
     val dataLogin = MutableLiveData<DataLogin>().apply { value = null }
 
+    val slider = MutableLiveData<List<Slider>>().apply { value = mutableListOf() }
+
     private val compo by lazy { CompositeDisposable() }
     private val apiManager: ApiManager by lazy { ApiManager() }
 
@@ -44,6 +43,7 @@ class ViewModelHome : ViewModel() {
         loadSchedule()
         if (storyNew.value.isNullOrEmpty())
             loadCategory()
+        getSlider()
     }
 
     fun refresh() {
@@ -52,6 +52,7 @@ class ViewModelHome : ViewModel() {
         loadStoryFemale()
         loadSchedule()
         loadCategory()
+        getSlider()
     }
 
     fun loadNewStory() {
@@ -110,6 +111,19 @@ class ViewModelHome : ViewModel() {
                 .subscribe({
                     sLoadingCategory.value = it
                 }, {
+                })
+        )
+    }
+
+    fun getSlider() {
+        compo.add(
+            apiManager.getSlider()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    slider.value = it
+                }, {
+
                 })
         )
     }
