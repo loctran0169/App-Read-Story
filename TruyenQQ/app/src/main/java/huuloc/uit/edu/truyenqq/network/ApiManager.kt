@@ -190,7 +190,7 @@ class ApiManager {
         last_name: String,
         sex: String,
         avatar: String?,
-        phone : String?,
+        phone: String?,
         day: String,
         month: String,
         year: String
@@ -213,10 +213,10 @@ class ApiManager {
     fun postComment(
         bookId: String,
         userId: String,
-        name : String,
-        email : String,
+        name: String,
+        email: String,
         content: String,
-        level : String,
+        level: String,
         type_book: String,
         status: String,
         user_parent: String
@@ -235,11 +235,12 @@ class ApiManager {
             )
         )
     }
-    fun getListComment(bookId: String, offset : Int): Single<ListComment> {
+
+    fun getListComment(bookId: String, offset: Int): Single<ListComment> {
         return buildRequest(_apiRestFull.getListComment(book_id = bookId, offset = offset))
     }
 
-    fun getSlider():Single<List<Slider>> {
+    fun getSlider(): Single<List<Slider>> {
         return buildRequest(_apiRestFull.getSlider())
     }
 }
